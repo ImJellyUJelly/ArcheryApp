@@ -56,11 +56,11 @@ namespace ArcheryApplication.Classes
         public void testSchutters()
         {
             //testdata schutters
-            schutters.Add(new Schutter("Jelle Schraeder", Klasse.Senior, Discipline.Recurve, Geslacht.Heren));
-            schutters.Add(new Schutter("Florentina Schwanen", Klasse.Junior, Discipline.Compound, Geslacht.Dames));
-            schutters.Add(new Schutter("Stijn Koijen", Klasse.Senior, Discipline.Compound, Geslacht.Heren));
-            schutters.Add(new Schutter("Mark van Broekhoven", Klasse.Cadet, Discipline.Recurve, Geslacht.Heren));
-            schutters.Add(new Schutter("Ad van Vught", Klasse.Veteraan, Discipline.Barebow, Geslacht.Heren));
+            schutters.Add(new Schutter("Jelle Schraeder", Klasse.Senior, Discipline.Recurve, Geslacht.Heren, ""));
+            schutters.Add(new Schutter("Florentina Schwanen", Klasse.Junior, Discipline.Compound, Geslacht.Dames, ""));
+            schutters.Add(new Schutter("Stijn Koijen", Klasse.Senior, Discipline.Compound, Geslacht.Heren, ""));
+            schutters.Add(new Schutter("Mark van Broekhoven", Klasse.Cadet, Discipline.Recurve, Geslacht.Heren, ""));
+            schutters.Add(new Schutter("Ad van Vught", Klasse.Veteraan, Discipline.Barebow, Geslacht.Heren, ""));
         }
 
         private void aantalBanenBepalen()
@@ -103,7 +103,29 @@ namespace ArcheryApplication.Classes
         {
             for (int baannr = 1; baannr <= aantalBanen; baannr++)
             {
-                banen.Add(new Baan(baannr, "A"));
+                for (int letter = 0; letter <= 3; letter++)
+                {
+                    if (letter == 0)
+                    {
+                        banen.Add(new Baan(baannr, letter, 70));
+                    }
+                    else if (letter == 1)
+                    {
+                        banen.Add(new Baan(baannr, letter, 70));
+                    }
+                    else if (letter == 2)
+                    {
+                        banen.Add(new Baan(baannr, letter, 70));
+                    }
+                    else if (letter == 3)
+                    {
+                        banen.Add(new Baan(baannr, letter, 70));
+                    }
+                    else
+                    {
+                        MessageBox.Show("Er is iets fout gegaan, raadpleeg uw nerd voor verdere instructies.");
+                    }
+                }
                 //hier moet nog wat komen dat A, B, C en D automatisch ophoogt
             }
         }

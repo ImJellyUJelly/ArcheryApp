@@ -12,18 +12,25 @@ namespace ArcheryApplication.Classes
         public string Naam { get; set; }
         public DateTime Geboortedatum { get; set; }
         public Score TotaalScore { get; set; }
-        public Baan Baan { get; set; }
+        public Baan Baan { get; }
         public Klasse Klasse { get; set; }
         public Discipline Discipline { get; set; }
         public Geslacht Geslacht { get; set; }
+        public string Opmerking { get; set; }
 
-        public Schutter(string n, Klasse k, Discipline d, Geslacht g)
+        public Schutter(string naam, Klasse k, Discipline d, Geslacht g, string opmerking)
         {
-            Naam = n;
-            Baan = new Classes.Baan(1, "A");
+
+            Naam = naam;
             Klasse = k;
             Discipline = d;
             Geslacht = g;
+            Opmerking = opmerking;
+        }
+
+        public void editSchutter(string naam, Klasse k, Discipline d, Geslacht g, string opmerking)
+        {
+
         }
 
         public int compareSchutters(Schutter andereSchutter)
@@ -39,7 +46,7 @@ namespace ArcheryApplication.Classes
         }
         public override string ToString()
         {
-            return $"{Naam}, Klasse: {Klasse}, Discipline: {Discipline}";
+            return $"{ Baan }: { Naam }, Klasse: { Klasse }, Discipline: { Discipline }";
         }
     }
 }

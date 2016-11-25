@@ -17,34 +17,50 @@ namespace ArcheryApplication
     public partial class WedstrijdForm : Form
     {
         List<Wedstrijd> wedstrijden = new List<Wedstrijd>();
+        SchutterAanmelden SA;
         public WedstrijdForm()
         {
             InitializeComponent();
             cbSoort.DataSource = Enum.GetValues(typeof(Soort));
+            lbWedstrijden.DataSource = wedstrijden;
         }
 
         private void NieuweWedstrijd_Click(object sender, EventArgs e)
         {
-            if (cbSoort.Text != "")
+            try
             {
-                Soort geselecteerd = (Soort)cbSoort.SelectedItem;
-                wedstrijden.Add(new Wedstrijd(tbNaam.Text, geselecteerd, dtDatum.Value));
-                foreach (Wedstrijd wedstrijd in wedstrijden)
+                if (cbSoort.Text != "")
                 {
-                    lbWedstrijden.Items.Add(wedstrijd);
+                    Soort geselecteerd = (Soort)cbSoort.SelectedItem;
+                    wedstrijden.Add(new Wedstrijd(tbNaam.Text, geselecteerd, dtDatum.Value));
+                    lbWedstrijden.Items.Clear();
+                    foreach (Wedstrijd wedstrijd in wedstrijden)
+                    {
+                        lbWedstrijden.Items.Add(wedstrijd);
+                    }
+                }
+                else
+                {
+                    MessageBox.Show("Vul een wedstrijdsoort in.");
                 }
             }
-            else
+            catch(Exception ex)
             {
-                MessageBox.Show("Vul een wedstrijdsoort in.");
+                MessageBox.Show(ex.Message);
             }
         }
         private void selectedWedstrijd()
         {
-            var geselecteerd = lbWedstrijden.SelectedItem as Wedstrijd;
-            foreach (Baan banen in geselecteerd.getBanen())
+            try
             {
-                lbSchutters.Items.Add(banen);
+                var geselecteerd = lbWedstrijden.SelectedItem as Wedstrijd;
+                lbSchutters.Items.Clear();
+
+                lbSchutters.DataSource = geselecteerd.getBanen();
+            }
+            catch(Exception ex)
+            {
+                MessageBox.Show(ex.Message);
             }
         }
 
@@ -56,11 +72,51 @@ namespace ArcheryApplication
         private void lbSchutters_SelectedIndexChanged(object sender, EventArgs e)
         {
             var geselecteerd = lbSchutters.SelectedItem as Baan;
+            lbSchutters.Items.Clear();
             if (geselecteerd.Schutter == null)
             {
-                SchutterAanmelden SA = new SchutterAanmelden();
+                SchuttersLijst SL = new SchuttersLijst();
+            }
+        }
+
+        private void button1_Click(object sender, EventArgs e)
+        {
+            SA = new SchutterAanmelden();
+            SA.ShowDialog();
+        }
+
+        private void button2_Click(object sender, EventArgs e)
+        {
+            try
+            {
+                var geselecteerdeSchutter = lbSchutters.SelectedItem as Schutter;
+                SA = new SchutterAanmelden();
+                SA.editSchutter(geselecteerdeSchutter);
                 SA.ShowDialog();
             }
+            catch (Exception ex)
+            {
+                MessageBox.Show(ex.Message);
+            }
+        }
+
+        private void btBaanToewijzen_Click(object sender, EventArgs e)
+        {
+            try
+            {
+                var geselecteerdeSchutter = lbSchutters.SelectedItem as Schutter;
+
+            }
+            catch(Exception ex)
+            {
+                MessageBox.Show(ex.Message);
+            }
+        }
+
+        private void button3_Click(object sender, EventArgs e)
+        {
+            var geselecteerd = lbWedstrijden.SelectedItem as Wedstrijd;
+            geselecteerd.testSchutters();
         }
     }
 }

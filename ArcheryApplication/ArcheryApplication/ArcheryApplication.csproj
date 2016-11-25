@@ -50,7 +50,9 @@
     <Compile Include="Classes\Enums\Discipline.cs" />
     <Compile Include="Classes\Enums\Geslacht.cs" />
     <Compile Include="Classes\Enums\Klasse.cs" />
+    <Compile Include="Classes\Enums\EnumLetter.cs" />
     <Compile Include="Classes\Enums\Soort.cs" />
+    <Compile Include="Classes\Letter.cs" />
     <Compile Include="Classes\Schutter.cs" />
     <Compile Include="Classes\Score.cs" />
     <Compile Include="Classes\Scoreformulier.cs" />
@@ -62,6 +64,12 @@
     <Compile Include="GUIs\SchutterAanmelden.Designer.cs">
       <DependentUpon>SchutterAanmelden.cs</DependentUpon>
     </Compile>
+    <Compile Include="GUIs\SchuttersLijst.cs">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="GUIs\SchuttersLijst.Designer.cs">
+      <DependentUpon>SchuttersLijst.cs</DependentUpon>
+    </Compile>
     <Compile Include="GUIs\WedstrijdForm.cs">
       <SubType>Form</SubType>
     </Compile>
@@ -72,6 +80,9 @@
     <Compile Include="Properties\AssemblyInfo.cs" />
     <EmbeddedResource Include="GUIs\SchutterAanmelden.resx">
       <DependentUpon>SchutterAanmelden.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="GUIs\SchuttersLijst.resx">
+      <DependentUpon>SchuttersLijst.cs</DependentUpon>
     </EmbeddedResource>
     <EmbeddedResource Include="GUIs\WedstrijdForm.resx">
       <DependentUpon>WedstrijdForm.cs</DependentUpon>

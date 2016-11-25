@@ -4,11 +4,13 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 
-namespace ArcheryApplication.Classes
+namespace ArcheryApplication.Classes.Enums
 {
-    public enum Geslacht
+    public enum EnumLetter
     {
-        Heren,
-        Dames
+        A,
+        B,
+        C,
+        D
     }
 }

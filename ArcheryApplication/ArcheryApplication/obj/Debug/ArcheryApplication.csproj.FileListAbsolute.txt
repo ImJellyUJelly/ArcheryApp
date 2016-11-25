@@ -7,6 +7,5 @@ C:\Users\JelleSchrader\Documents\GitHub\ArcheryApplication\ArcheryApplication\ob
 C:\Users\JelleSchrader\Documents\GitHub\ArcheryApplication\ArcheryApplication\obj\Debug\ArcheryApplication.exe
 C:\Users\JelleSchrader\Documents\GitHub\ArcheryApplication\ArcheryApplication\obj\Debug\ArcheryApplication.pdb
 C:\Users\JelleSchrader\Documents\GitHub\ArcheryApplication\ArcheryApplication\obj\Debug\ArcheryApplication.WedstrijdForm.resources
-C:\Users\JelleSchrader\Source\Repos\ArcheryApp\ArcheryApplication\ArcheryApplication\bin\Debug\ArcheryApplication.exe.config
-C:\Users\JelleSchrader\Source\Repos\ArcheryApp\ArcheryApplication\ArcheryApplication\obj\Debug\ArcheryApplication.exe
-C:\Users\JelleSchrader\Source\Repos\ArcheryApp\ArcheryApplication\ArcheryApplication\obj\Debug\ArcheryApplication.pdb
+C:\Users\JelleSchrader\Documents\GitHub\ArcheryApplication\ArcheryApplication\obj\Debug\ArcheryApplication.GUIs.SchutterAanmelden.resources
+C:\Users\JelleSchrader\Documents\GitHub\ArcheryApplication\ArcheryApplication\obj\Debug\ArcheryApplication.GUIs.SchuttersLijst.resources
