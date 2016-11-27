@@ -18,7 +18,7 @@ namespace ArcheryApplication.Classes
 
         public Score()
         {
-
+            
         }
 
         //Wedstrijd met 6 pijlen per serie
