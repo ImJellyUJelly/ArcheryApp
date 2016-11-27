@@ -21,7 +21,6 @@ namespace ArcheryApplication.Classes
 
         public Schutter(string naam, Klasse k, Discipline d, Geslacht g, string opmerking)
         {
-
             Naam = naam;
             Klasse = k;
             Discipline = d;
@@ -31,7 +30,11 @@ namespace ArcheryApplication.Classes
 
         public void editSchutter(string naam, Klasse k, Discipline d, Geslacht g, string opmerking)
         {
-
+            Naam = naam;
+            Klasse = k;
+            Discipline = d;
+            Geslacht = g;
+            Opmerking = opmerking;
         }
 
         public int compareSchutters(Schutter andereSchutter)
