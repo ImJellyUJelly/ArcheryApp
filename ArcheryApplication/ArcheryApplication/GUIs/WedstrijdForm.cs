@@ -22,7 +22,6 @@ namespace ArcheryApplication
         {
             InitializeComponent();
             cbSoort.DataSource = Enum.GetValues(typeof(Soort));
-            lbWedstrijden.DataSource = wedstrijden;
         }
 
         private void NieuweWedstrijd_Click(object sender, EventArgs e)
@@ -56,7 +55,7 @@ namespace ArcheryApplication
                 var geselecteerd = lbWedstrijden.SelectedItem as Wedstrijd;
                 lbSchutters.Items.Clear();
 
-                lbSchutters.DataSource = geselecteerd.getBanen();
+                //lbSchutters.DataSource = geselecteerd.getBanen();
             }
             catch(Exception ex)
             {
@@ -71,12 +70,11 @@ namespace ArcheryApplication
 
         private void lbSchutters_SelectedIndexChanged(object sender, EventArgs e)
         {
-            var geselecteerd = lbSchutters.SelectedItem as Baan;
-            lbSchutters.Items.Clear();
-            if (geselecteerd.Schutter == null)
-            {
-                SchuttersLijst SL = new SchuttersLijst();
-            }
+            //var geselecteerd = lbSchutters.SelectedItem as Baan;
+            //if (geselecteerd.Schutter == null)
+            //{
+
+            //}
         }
 
         private void button1_Click(object sender, EventArgs e)
@@ -87,36 +85,50 @@ namespace ArcheryApplication
 
         private void button2_Click(object sender, EventArgs e)
         {
-            try
-            {
-                var geselecteerdeSchutter = lbSchutters.SelectedItem as Schutter;
-                SA = new SchutterAanmelden();
-                SA.editSchutter(geselecteerdeSchutter);
-                SA.ShowDialog();
-            }
-            catch (Exception ex)
-            {
-                MessageBox.Show(ex.Message);
-            }
+            //try
+            //{
+            //    var geselecteerdeSchutter = lbSchutters.SelectedItem as Schutter;
+            //    SA = new SchutterAanmelden();
+            //    SA.editSchutter(geselecteerdeSchutter);
+            //    SA.ShowDialog();
+            //}
+            //catch (Exception ex)
+            //{
+            //    MessageBox.Show(ex.Message);
+            //}
         }
 
         private void btBaanToewijzen_Click(object sender, EventArgs e)
         {
-            try
-            {
-                var geselecteerdeSchutter = lbSchutters.SelectedItem as Schutter;
+            //try
+            //{
+            //    var geselecteerdeSchutter = lbSchutters.SelectedItem as Schutter;
 
-            }
-            catch(Exception ex)
-            {
-                MessageBox.Show(ex.Message);
-            }
+            //}
+            //catch(Exception ex)
+            //{
+            //    MessageBox.Show(ex.Message);
+            //}
         }
 
         private void button3_Click(object sender, EventArgs e)
         {
             var geselecteerd = lbWedstrijden.SelectedItem as Wedstrijd;
             geselecteerd.testSchutters();
+        }
+
+        private void lbWedstrijden_MouseDoubleClick(object sender, MouseEventArgs e)
+        {
+            try
+            {
+                var geselecteerde_Wedstrijd = lbWedstrijden.SelectedItem as Wedstrijd;
+                Wedstrijdoverzicht WO = new Wedstrijdoverzicht(geselecteerde_Wedstrijd);
+                WO.ShowDialog();
+            }
+            catch (Exception ex)
+            {
+                MessageBox.Show(ex.Message);
+            }
         }
     }
 }

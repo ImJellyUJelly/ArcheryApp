@@ -9,6 +9,7 @@ namespace ArcheryApplication.Classes
 {
     public class Baan
     {
+
         public int Baannummer { get; set; }
         public List<Letter> Letters { get; set; }
         public Schutter Schutter { get; set; }
@@ -18,8 +19,8 @@ namespace ArcheryApplication.Classes
         public Baan(int baanNummer, int letter, int afstand)
         {
             Letter = letter;
-            Letters = new List<Letter>();
-            voegLettersToe();
+            Letters = new List<Letter>() { new Letter("A"), new Classes.Letter("B"), new Letter("C"), new Letter("D") }; //zoiets moet het worden
+            //voegLettersToe(); 
             Baannummer = baanNummer;
             Schutter = null;
             Afstand = afstand;
@@ -32,16 +33,17 @@ namespace ArcheryApplication.Classes
         //}
         public void voegSchutterAanLetter(Schutter schutter)
         {
-            for (int i = 0; i <= 3; i++)
+            foreach (Letter L in Letters)
             {
-                if (Schutter == null)
+                if (schutter.Baan == null)
                 {
-                    Schutter = schutter;
+                    L.Schutter = schutter;
+                    break;
                 }
             }
         }
         private void voegLettersToe()
-        {
+        {//niet meer nodig
             Letters.Add(new Letter("A"));
             Letters.Add(new Letter("B"));
             Letters.Add(new Letter("C"));
@@ -49,7 +51,7 @@ namespace ArcheryApplication.Classes
         }
         public override string ToString()
         {
-            return $"{Baannummer}{Letters[Letter]}";
+            return $"{Baannummer}";
         }
     }
 }

@@ -24,6 +24,8 @@ namespace ArcheryApplication.Classes
             Soort = soort;
             Datum = datum;
             aantalBanenBepalen();
+            testSchutters();
+            schuttersaanbaantoevoegen();
         }
 
         //edit stuff
@@ -99,33 +101,64 @@ namespace ArcheryApplication.Classes
         {
             return banen;
         }
+        public void schuttersaanbaantoevoegen()
+        {
+            if (schutters != null)
+            {
+                foreach (Schutter schutter in schutters)
+                {
+                    if (schutter.Baan == null)
+                    {
+                        foreach (Baan b in banen)
+                        {
+                           for(int i=0; i<b.Letters.Count;i++)
+                            {
+                                if (schutter.Baan == null)
+                                {
+                                    if (b.Letters[i].Schutter == null)
+                                    { 
+                                        b.Letters[i].Schutter = schutter;
+                                        schutter.Baan = b;
+                                        schutter.Letter = b.Letters[i];
+                                        break;
+                                    }
+                                }
+                                else { break; }
+                            }
+                        }
+                    }
+                }
+            }
+        }
+
         private void banenAanmaken(int aantalBanen)
         {
             for (int baannr = 1; baannr <= aantalBanen; baannr++)
             {
-                for (int letter = 0; letter <= 3; letter++)
-                {
-                    if (letter == 0)
-                    {
-                        banen.Add(new Baan(baannr, letter, 70));
-                    }
-                    else if (letter == 1)
-                    {
-                        banen.Add(new Baan(baannr, letter, 70));
-                    }
-                    else if (letter == 2)
-                    {
-                        banen.Add(new Baan(baannr, letter, 70));
-                    }
-                    else if (letter == 3)
-                    {
-                        banen.Add(new Baan(baannr, letter, 70));
-                    }
-                    else
-                    {
-                        MessageBox.Show("Er is iets fout gegaan, raadpleeg uw nerd voor verdere instructies.");
-                    }
-                }
+                banen.Add(new Baan(baannr, 0, 70));
+                //for (int letter = 0; letter <= 3; letter++)
+                //{
+                //    if (letter == 0)
+                //    {
+                //        banen.Add(new Baan(baannr, letter, 70));
+                //    }
+                //    else if (letter == 1)
+                //    {
+                //        banen.Add(new Baan(baannr, letter, 70));
+                //    }
+                //    else if (letter == 2)
+                //    {
+                //        banen.Add(new Baan(baannr, letter, 70));
+                //    }
+                //    else if (letter == 3)
+                //    {
+                //        banen.Add(new Baan(baannr, letter, 70));
+                //    }
+                //    else
+                //    {
+                //        MessageBox.Show("Er is iets fout gegaan, raadpleeg uw nerd voor verdere instructies.");
+                //    }
+                //}
                 //hier moet nog wat komen dat A, B, C en D automatisch ophoogt
             }
         }

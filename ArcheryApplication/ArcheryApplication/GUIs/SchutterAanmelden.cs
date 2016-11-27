@@ -30,19 +30,7 @@ namespace ArcheryApplication.GUIs
 
         private void btOpslaan_Click(object sender, EventArgs e)
         {
-            var geselecteerd_D = (Discipline)cbDiscipline.SelectedItem;
-            var geselecteerd_K = (Klasse)cbKlasse.SelectedItem;
-            var geselecteerd_G = (Geslacht)cbGeslacht.SelectedItem;
-            Naam = tbNaam.Text;
-            Leeftijd = dtLeeftijd.Value;
-            _Discipline = geselecteerd_D;
-            _Klasse = geselecteerd_K;
-            _Geslacht = geselecteerd_G;
-            Opmerking = tbOpmerking.Text;
-
-            Schutter schutter = new Schutter(Naam, _Klasse, _Discipline, _Geslacht, Opmerking);
-
-            Close();
+            createSchutter();
         }
 
         public void editSchutter(Schutter schutter)
@@ -64,6 +52,22 @@ namespace ArcheryApplication.GUIs
 
         private void btCancel_Click(object sender, EventArgs e)
         {
+            Close();
+        }
+        public void createSchutter()
+        {
+            var geselecteerd_D = (Discipline)cbDiscipline.SelectedItem;
+            var geselecteerd_K = (Klasse)cbKlasse.SelectedItem;
+            var geselecteerd_G = (Geslacht)cbGeslacht.SelectedItem;
+            Naam = tbNaam.Text;
+            Leeftijd = dtLeeftijd.Value;
+            _Discipline = geselecteerd_D;
+            _Klasse = geselecteerd_K;
+            _Geslacht = geselecteerd_G;
+            Opmerking = tbOpmerking.Text;
+
+            Schutter schutter = new Schutter(Naam, _Klasse, _Discipline, _Geslacht, Opmerking);
+
             Close();
         }
     }

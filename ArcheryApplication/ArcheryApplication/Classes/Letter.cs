@@ -9,7 +9,7 @@ namespace ArcheryApplication.Classes
     public class Letter
     {
         public string _Letter { get; set; }
-        public Schutter Schutter { get; set; }
+        public Schutter Schutter { get; set; } 
         public Letter(string letter)
         {
             _Letter = letter;
