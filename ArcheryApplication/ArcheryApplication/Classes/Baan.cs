@@ -20,7 +20,6 @@ namespace ArcheryApplication.Classes
         {
             Letter = letter;
             Letters = new List<Letter>() { new Letter("A"), new Classes.Letter("B"), new Letter("C"), new Letter("D") }; //zoiets moet het worden
-            //voegLettersToe(); 
             Baannummer = baanNummer;
             Schutter = null;
             Afstand = afstand;
@@ -41,13 +40,6 @@ namespace ArcheryApplication.Classes
                     break;
                 }
             }
-        }
-        private void voegLettersToe()
-        {//niet meer nodig
-            Letters.Add(new Letter("A"));
-            Letters.Add(new Letter("B"));
-            Letters.Add(new Letter("C"));
-            Letters.Add(new Letter("D"));
         }
         public override string ToString()
         {

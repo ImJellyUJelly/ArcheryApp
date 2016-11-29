@@ -47,7 +47,7 @@ namespace ArcheryApplication.Classes
         }
         public override string ToString()
         {
-            return $"{ Baan }: { Naam }, Klasse: { Klasse }, Discipline: { Discipline }";
+            return $"{ Baan }{ Letter }: { Naam }, Klasse: { Klasse }, Discipline: { Discipline }";
         }
     }
 }
