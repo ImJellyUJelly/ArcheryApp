@@ -15,24 +15,24 @@ namespace ArcheryApplication.Classes
         public List<Score> AnyPijlen { get; set; }
 
         //constructor voor 36 pijlen
-        public Scoreformulier(int score)
-        {
+        //public Scoreformulier(int score)
+        //{
 
-        }
-        //constructor voor 30 pijlen
-        public Scoreformulier(int score)
-        {
+        //}
+        ////constructor voor 30 pijlen
+        //public Scoreformulier(int score)
+        //{
 
-        }
-        //constructor voor 25 pijlen
-        public Scoreformulier(int score)
-        {
+        //}
+        ////constructor voor 25 pijlen
+        //public Scoreformulier(int score)
+        //{
 
-        }
-        //constructor voor een andere aantal pijlen
-        public Scoreformulier(int score)
-        {
+        //}
+        ////constructor voor een andere aantal pijlen
+        //public Scoreformulier(int score)
+        //{
 
-        }
+        //}
     }
 }

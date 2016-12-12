@@ -34,7 +34,7 @@ namespace ArcheryApplication.GUIs
         {
             SchutterAanmelden SA = new SchutterAanmelden();
             SA.ShowDialog();
-            //wedstrijd.schutterAanmelden();
+            
         }
     }
 }

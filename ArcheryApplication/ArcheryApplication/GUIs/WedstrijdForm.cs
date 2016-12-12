@@ -34,6 +34,7 @@ namespace ArcheryApplication
                     wedstrijden.Add(new Wedstrijd(tbNaam.Text, geselecteerd, dtDatum.Value));
                     lbWedstrijden.Items.Clear();
                     foreach (Wedstrijd wedstrijd in wedstrijden)
+
                     {
                         lbWedstrijden.Items.Add(wedstrijd);
                     }

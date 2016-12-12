@@ -9,9 +9,11 @@ namespace ArcheryApplication.Classes
     public class Letter
     {
         public string _Letter { get; set; }
-        public Schutter Schutter { get; set; } 
-        public Letter(string letter)
+        public Schutter Schutter { get; set; }
+        public Baan Baan { get; set; }
+        public Letter(string letter, Baan baan)
         {
+            Baan = baan;
             _Letter = letter;
             Schutter = null;
         }
@@ -22,7 +24,7 @@ namespace ArcheryApplication.Classes
         }
         public override string ToString()
         {
-            return $"{_Letter}: {Schutter}";
+            return $"{Baan}{_Letter}: {Schutter}";
         }
     }
 }

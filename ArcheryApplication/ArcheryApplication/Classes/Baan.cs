@@ -14,12 +14,10 @@ namespace ArcheryApplication.Classes
         public List<Letter> Letters { get; set; }
         public Schutter Schutter { get; set; }
         public int Afstand { get; set; }
-        public int Letter { get; set; }
 
-        public Baan(int baanNummer, int letter, int afstand)
+        public Baan(int baanNummer, int afstand)
         {
-            Letter = letter;
-            Letters = new List<Letter>() { new Letter("A"), new Classes.Letter("B"), new Letter("C"), new Letter("D") }; //zoiets moet het worden
+            Letters = new List<Letter>() { new Letter("A", this), new Letter("B", this), new Letter("C", this), new Letter("D", this) };
             Baannummer = baanNummer;
             Schutter = null;
             Afstand = afstand;
@@ -41,9 +39,19 @@ namespace ArcheryApplication.Classes
                 }
             }
         }
+
+        private Letter returnletters()
+        {
+            Letter Le = null;
+            foreach (Letter L in Letters)
+            {
+                Le = L;
+            }
+            return Le;
+        }
         public override string ToString()
         {
-            return $"{Baannummer}";
+            return $"{Baannummer}{returnletters()}";
         }
     }
 }
