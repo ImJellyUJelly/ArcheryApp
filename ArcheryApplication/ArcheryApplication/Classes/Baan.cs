@@ -9,49 +9,46 @@ namespace ArcheryApplication.Classes
 {
     public class Baan
     {
-
         public int Baannummer { get; set; }
         public List<Letter> Letters { get; set; }
-        public Schutter Schutter { get; set; }
+        public List<Schutter> Schutters { get; set; }
         public int Afstand { get; set; }
 
         public Baan(int baanNummer, int afstand)
         {
-            Letters = new List<Letter>() { new Letter("A", this), new Letter("B", this), new Letter("C", this), new Letter("D", this) };
             Baannummer = baanNummer;
-            Schutter = null;
+            Letters = new List<Letter>() { new Letter("A"), new Letter("B"), new Letter("C"), new Letter("D") };
             Afstand = afstand;
         }
-        //public Baan(int baanNummer, string letter, int afstand)
-        //{
-        //    Baannummer = baanNummer;
-        //    Schutter = null;
-        //    Afstand = afstand;
-        //}
+
         public void voegSchutterAanLetter(Schutter schutter)
         {
             foreach (Letter L in Letters)
             {
-                if (schutter.Baan == null)
+                if (schutter.Letter == null)
                 {
                     L.Schutter = schutter;
+                    schutter.Letter = L;
+                    schutter.Baan = this;
+                }
+                if (schutter.Letter != null)
+                {
                     break;
                 }
             }
         }
-
-        private Letter returnletters()
+        public List<Schutter> schutters()
         {
-            Letter Le = null;
-            foreach (Letter L in Letters)
+            List<Schutter> schuttersOpLetter = new List<Schutter>();
+            foreach (Schutter S in Schutters)
             {
-                Le = L;
+                schuttersOpLetter.Add(S);
             }
-            return Le;
+            return schuttersOpLetter;
         }
         public override string ToString()
         {
-            return $"{Baannummer}{returnletters()}";
+            return $"{Baannummer}";
         }
     }
 }

@@ -8,7 +8,7 @@ using ArcheryApplication.Classes;
 
 namespace ArcheryApplication.Exceptions
 {
-    public class AlAangemeldException
+    public class AlAangemeldException : Exception
     {
         public AlAangemeldException(Schutter schutter)
         {

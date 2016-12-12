@@ -36,5 +36,15 @@ namespace ArcheryApplication.GUIs
             SA.ShowDialog();
             
         }
+
+        private void lbBanen_SelectedIndexChanged(object sender, EventArgs e)
+        {
+            var geselecteerd = lbBanen.SelectedItem as Baan;
+            lbLetters.Items.Clear();
+            foreach (Letter L in geselecteerd.Letters)
+            {
+                lbLetters.Items.Add(L);
+            }
+        }
     }
 }

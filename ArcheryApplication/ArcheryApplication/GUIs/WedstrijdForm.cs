@@ -28,10 +28,12 @@ namespace ArcheryApplication
         {
             try
             {
-                if (cbSoort.Text != "")
+                if (cbSoort.SelectedItem != null)
                 {
+                    var dateAndTime = dtDatum.Value;
+                    var date = dateAndTime.ToString("dd/MM/yyyy");
                     Soort geselecteerd = (Soort)cbSoort.SelectedItem;
-                    wedstrijden.Add(new Wedstrijd(tbNaam.Text, geselecteerd, dtDatum.Value));
+                    wedstrijden.Add(new Wedstrijd(tbNaam.Text, geselecteerd, date));
                     lbWedstrijden.Items.Clear();
                     foreach (Wedstrijd wedstrijd in wedstrijden)
 

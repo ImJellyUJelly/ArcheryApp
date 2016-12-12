@@ -23,7 +23,7 @@ namespace ArcheryApplication.GUIs
         public SchutterAanmelden()
         {
             InitializeComponent();
-            cbDiscipline.DataSource = Enum.GetValues(typeof(Soort));
+            cbDiscipline.DataSource = Enum.GetValues(typeof(Discipline));
             cbKlasse.DataSource = Enum.GetValues(typeof(Klasse));
             cbGeslacht.DataSource = Enum.GetValues(typeof(Geslacht));
         }
