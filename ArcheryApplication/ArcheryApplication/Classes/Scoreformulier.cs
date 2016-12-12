@@ -19,20 +19,20 @@ namespace ArcheryApplication.Classes
         {
 
         }
-        //constructor voor 30 pijlen
-        public Scoreformulier(int score)
-        {
+        ////constructor voor 30 pijlen
+        //public Scoreformulier(int score)
+        //{
 
-        }
-        //constructor voor 25 pijlen
-        public Scoreformulier(int score)
-        {
+        //}
+        ////constructor voor 25 pijlen
+        //public Scoreformulier(int score)
+        //{
 
-        }
-        //constructor voor een andere aantal pijlen
-        public Scoreformulier(int score)
-        {
+        //}
+        ////constructor voor een andere aantal pijlen
+        //public Scoreformulier(int score)
+        //{
 
-        }
+        //}
     }
 }

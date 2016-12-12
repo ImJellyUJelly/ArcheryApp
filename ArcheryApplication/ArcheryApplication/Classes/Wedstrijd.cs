@@ -16,9 +16,9 @@ namespace ArcheryApplication.Classes
         List<Schutter> schutters = new List<Schutter>();
         public string Naam { get; set; }
         public Soort Soort { get; set; }
-        public DateTime Datum { get; set; }
+        public string Datum { get; set; }
 
-        public Wedstrijd(string naam, Soort soort, DateTime datum)
+        public Wedstrijd(string naam, Soort soort, string datum)
         {
             Naam = naam;
             Soort = soort;
@@ -135,31 +135,30 @@ namespace ArcheryApplication.Classes
         {
             for (int baannr = 1; baannr <= aantalBanen; baannr++)
             {
-                banen.Add(new Baan(baannr, 0, 70));
+                banen.Add(new Baan(baannr, 70));
                 //for (int letter = 0; letter <= 3; letter++)
                 //{
                 //    if (letter == 0)
                 //    {
-                //        banen.Add(new Baan(baannr, letter, 70));
+                //        banen.Add(new Baan(baannr, 70));
                 //    }
                 //    else if (letter == 1)
                 //    {
-                //        banen.Add(new Baan(baannr, letter, 70));
+                //        banen.Add(new Baan(baannr, 70));
                 //    }
                 //    else if (letter == 2)
                 //    {
-                //        banen.Add(new Baan(baannr, letter, 70));
+                //        banen.Add(new Baan(baannr, 70));
                 //    }
                 //    else if (letter == 3)
                 //    {
-                //        banen.Add(new Baan(baannr, letter, 70));
+                //        banen.Add(new Baan(baannr, 70));
                 //    }
                 //    else
                 //    {
                 //        MessageBox.Show("Er is iets fout gegaan, raadpleeg uw nerd voor verdere instructies.");
                 //    }
                 //}
-                //hier moet nog wat komen dat A, B, C en D automatisch ophoogt
             }
         }
         public override string ToString()
