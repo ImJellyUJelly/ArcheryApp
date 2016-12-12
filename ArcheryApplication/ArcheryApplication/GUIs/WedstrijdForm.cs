@@ -55,8 +55,9 @@ namespace ArcheryApplication
             try
             {
                 var geselecteerd = lbWedstrijden.SelectedItem as Wedstrijd;
-                lbSchutters.Items.Clear();
 
+                Wedstrijdoverzicht WO = new Wedstrijdoverzicht(geselecteerd);
+                WO.ShowDialog();
                 //lbSchutters.DataSource = geselecteerd.getBanen();
             }
             catch(Exception ex)

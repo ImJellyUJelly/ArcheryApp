@@ -31,6 +31,7 @@ namespace ArcheryApplication.GUIs
         private void btOpslaan_Click(object sender, EventArgs e)
         {
             createSchutter();
+            Close();
         }
 
         public void editSchutter(Schutter schutter)
