@@ -34,19 +34,42 @@ namespace ArcheryApplication.GUIs
         {
             if (tbBN.Text != null && tbNaam.Text != null && dtLeeftijd.Value != null && cbDiscipline.Text != null && cbKlasse.Text != null && cbGeslacht.Text != null)
             {
-                Bondsnummer = Convert.ToInt32(tbBN.Text);
-                Naam = tbNaam.Text;
-                Geboortedatum = dtLeeftijd.Value;
-                _Discipline = (Discipline)cbDiscipline.SelectedItem;
-                _Klasse = (Klasse)cbKlasse.SelectedItem;
-                _Geslacht = (Geslacht)cbGeslacht.SelectedItem;
-                Opmerking = tbOpmerking.Text;
+                if (tbBN.Text == "")
+                {
+                    Bondsnummer = -1;
+                    Naam = tbNaam.Text;
+                    Geboortedatum = dtLeeftijd.Value;
+                    _Discipline = (Discipline)cbDiscipline.SelectedItem;
+                    _Klasse = (Klasse)cbKlasse.SelectedItem;
+                    _Geslacht = (Geslacht)cbGeslacht.SelectedItem;
+                    Opmerking = tbOpmerking.Text;
 
-                tbBN.Clear();
-                tbNaam.Clear();
-                dtLeeftijd.Value = DateTime.Now;
-                tbOpmerking.Clear();
-                Close();
+                    tbBN.Clear();
+                    tbNaam.Clear();
+                    dtLeeftijd.Value = DateTime.Now;
+                    tbOpmerking.Clear();
+                    Close();
+                }
+                else
+                {
+                    Bondsnummer = Convert.ToInt32(tbBN.Text);
+                    Naam = tbNaam.Text;
+                    Geboortedatum = dtLeeftijd.Value;
+                    _Discipline = (Discipline)cbDiscipline.SelectedItem;
+                    _Klasse = (Klasse)cbKlasse.SelectedItem;
+                    _Geslacht = (Geslacht)cbGeslacht.SelectedItem;
+                    Opmerking = tbOpmerking.Text;
+
+                    tbBN.Clear();
+                    tbNaam.Clear();
+                    dtLeeftijd.Value = DateTime.Now;
+                    tbOpmerking.Clear();
+                    Close();
+                }
+            }
+            else
+            {
+                MessageBox.Show("Aanmelden mislukt, raadpleeg uw nerd voor hulp.");
             }
         }
 
@@ -76,20 +99,5 @@ namespace ArcheryApplication.GUIs
         {
             Close();
         }
-        //public void createSchutter()
-        //{
-        //    var geselecteerd_D = (Discipline)cbDiscipline.SelectedItem;
-        //    var geselecteerd_K = (Klasse)cbKlasse.SelectedItem;
-        //    var geselecteerd_G = (Geslacht)cbGeslacht.SelectedItem;
-        //    Bondsnummer = Convert.ToInt32(tbBN.Text);
-        //    Naam = tbNaam.Text;
-        //    Geboortedatum = dtLeeftijd.Value;
-        //    _Discipline = geselecteerd_D;
-        //    _Klasse = geselecteerd_K;
-        //    _Geslacht = geselecteerd_G;
-        //    Opmerking = tbOpmerking.Text;
-
-        //    Schutter schutter = new Schutter(Bondsnummer, Naam, _Klasse, _Discipline, _Geslacht, Geboortedatum, Opmerking);
-        //}
     }
 }

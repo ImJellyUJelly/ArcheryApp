@@ -58,6 +58,7 @@
     <Compile Include="Classes\Scoreformulier.cs" />
     <Compile Include="Classes\Wedstrijd.cs" />
     <Compile Include="Exceptions\AlAangemeldException.cs" />
+    <Compile Include="Exceptions\NormalException.cs" />
     <Compile Include="GUIs\Wedstrijdoverzicht.cs">
       <SubType>Form</SubType>
     </Compile>

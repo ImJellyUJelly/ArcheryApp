@@ -12,12 +12,28 @@ namespace ArcheryApplication.Classes
 {
     public class Wedstrijd
     {
+        Database db = new Database();
         List<Baan> banen = new List<Baan>();
         List<Schutter> schutters = new List<Schutter>();
+        public int ID { get; set; }
         public string Naam { get; set; }
         public Soort Soort { get; set; }
         public string Datum { get; set; }
 
+        public Wedstrijd(int id, string naam, Soort soort, string datum)
+        {
+            ID = id;
+            Naam = naam;
+            Soort = soort;
+            Datum = datum;
+            aantalBanenBepalen();
+            testSchutters();
+            schuttersaanbaantoevoegen();
+
+            //banen = db.GetBanen();
+            //schutters = db.GetSchutters();
+
+        }
         public Wedstrijd(string naam, Soort soort, string datum)
         {
             Naam = naam;
@@ -26,6 +42,9 @@ namespace ArcheryApplication.Classes
             aantalBanenBepalen();
             testSchutters();
             schuttersaanbaantoevoegen();
+
+            //banen = db.GetBanen();
+            //schutters = db.GetSchutters();
         }
 
         //edit stuff

@@ -16,11 +16,13 @@ namespace ArcheryApplication
 {
     public partial class WedstrijdForm : Form
     {
+        Database db = new Database();
         List<Wedstrijd> wedstrijden = new List<Wedstrijd>();
         public WedstrijdForm()
         {
             InitializeComponent();
             cbSoort.DataSource = Enum.GetValues(typeof(Soort));
+            //wedstrijden = db.GetWedstrijden();
             if (wedstrijden != null)
             {
                 foreach (Wedstrijd W in wedstrijden)

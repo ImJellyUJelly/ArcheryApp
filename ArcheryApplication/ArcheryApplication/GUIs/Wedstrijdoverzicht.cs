@@ -14,6 +14,7 @@ namespace ArcheryApplication.GUIs
 {
     public partial class Wedstrijdoverzicht : Form
     {
+        Database db = new Database();
         public Wedstrijd wedstrijd { get; set; }
         public Wedstrijdoverzicht(Wedstrijd wedstrijd)
         {
