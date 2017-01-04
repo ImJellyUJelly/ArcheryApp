@@ -40,9 +40,9 @@
             this.groupBox3 = new System.Windows.Forms.GroupBox();
             this.lbWedstrijdnaam = new System.Windows.Forms.Label();
             this.groupBox7 = new System.Windows.Forms.GroupBox();
+            this.btNieuweBaan = new System.Windows.Forms.Button();
             this.btBewerkSchutter = new System.Windows.Forms.Button();
             this.btNieuweSchutter = new System.Windows.Forms.Button();
-            this.btNieuweBaan = new System.Windows.Forms.Button();
             this.groupBox1.SuspendLayout();
             this.groupBox2.SuspendLayout();
             this.groupBox6.SuspendLayout();
@@ -92,7 +92,7 @@
             this.groupBox6.Size = new System.Drawing.Size(237, 43);
             this.groupBox6.TabIndex = 7;
             this.groupBox6.TabStop = false;
-            this.groupBox6.Text = "Aantal aangemelde schutters";
+            this.groupBox6.Text = "Datum";
             // 
             // lbDatum
             // 
@@ -176,6 +176,15 @@
             this.groupBox7.TabStop = false;
             this.groupBox7.Text = "Schutter informatie";
             // 
+            // btNieuweBaan
+            // 
+            this.btNieuweBaan.Location = new System.Drawing.Point(101, 20);
+            this.btNieuweBaan.Name = "btNieuweBaan";
+            this.btNieuweBaan.Size = new System.Drawing.Size(88, 36);
+            this.btNieuweBaan.TabIndex = 2;
+            this.btNieuweBaan.Text = "Geef nieuwe baan";
+            this.btNieuweBaan.UseVisualStyleBackColor = true;
+            // 
             // btBewerkSchutter
             // 
             this.btBewerkSchutter.Location = new System.Drawing.Point(7, 65);
@@ -195,15 +204,6 @@
             this.btNieuweSchutter.Text = "Nieuwe schutter";
             this.btNieuweSchutter.UseVisualStyleBackColor = true;
             this.btNieuweSchutter.Click += new System.EventHandler(this.btNieuweSchutter_Click);
-            // 
-            // btNieuweBaan
-            // 
-            this.btNieuweBaan.Location = new System.Drawing.Point(101, 20);
-            this.btNieuweBaan.Name = "btNieuweBaan";
-            this.btNieuweBaan.Size = new System.Drawing.Size(88, 36);
-            this.btNieuweBaan.TabIndex = 2;
-            this.btNieuweBaan.Text = "Geef nieuwe baan";
-            this.btNieuweBaan.UseVisualStyleBackColor = true;
             // 
             // Wedstrijdoverzicht
             // 

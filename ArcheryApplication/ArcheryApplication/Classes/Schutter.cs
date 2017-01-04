@@ -12,7 +12,6 @@ namespace ArcheryApplication.Classes
         public int Bondsnummer { get; set; }
         public string Naam { get; set; }
         public DateTime Geboortedatum { get; set; }
-        //public Score TotaalScore { get; set; }
         public Baan Baan { get; set; }
         public Klasse Klasse { get; set; }
         public Discipline Discipline { get; set; }

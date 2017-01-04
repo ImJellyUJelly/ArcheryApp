@@ -20,7 +20,7 @@ namespace ArcheryApplication.Classes
             Baannummer = baanNummer;
             Letter = letter;
             Afstand = afstand;
-            ID = $"{Baannummer}{Letter}";
+            ID = Baannummer.ToString() + Letter;
         }
         public void VoegSchutterToe(Schutter schutter)
         {
@@ -33,9 +33,9 @@ namespace ArcheryApplication.Classes
         {
             if (Schutter == null)
             {
-                return $"{ Baannummer }{ Letter }: Geen schutter";
+                return $"{ ID }: Geen schutter";
             }
-            return $"{ Baannummer }{ Letter }: { Schutter.ToString() }";
+            return $"{ ID }: { Schutter.ToString() }";
         }
     }
 }

@@ -21,11 +21,10 @@ namespace ArcheryApplication.GUIs
         public Klasse _Klasse { get; set; }
         public Geslacht _Geslacht { get; set; }
         public string Opmerking { get; set; }
-        public Wedstrijd Wedstrijd { get; set; }
-        public SchutterAanmelden(Wedstrijd wedstrijd)
+
+        public SchutterAanmelden()
         {
             InitializeComponent();
-            Wedstrijd = wedstrijd;
             cbDiscipline.DataSource = Enum.GetValues(typeof(Discipline));
             cbKlasse.DataSource = Enum.GetValues(typeof(Klasse));
             cbGeslacht.DataSource = Enum.GetValues(typeof(Geslacht));
@@ -33,48 +32,64 @@ namespace ArcheryApplication.GUIs
 
         private void btOpslaan_Click(object sender, EventArgs e)
         {
-            createSchutter();
-            Close();
+            if (tbBN.Text != null && tbNaam.Text != null && dtLeeftijd.Value != null && cbDiscipline.Text != null && cbKlasse.Text != null && cbGeslacht.Text != null)
+            {
+                Bondsnummer = Convert.ToInt32(tbBN.Text);
+                Naam = tbNaam.Text;
+                Geboortedatum = dtLeeftijd.Value;
+                _Discipline = (Discipline)cbDiscipline.SelectedItem;
+                _Klasse = (Klasse)cbKlasse.SelectedItem;
+                _Geslacht = (Geslacht)cbGeslacht.SelectedItem;
+                Opmerking = tbOpmerking.Text;
+
+                tbBN.Clear();
+                tbNaam.Clear();
+                dtLeeftijd.Value = DateTime.Now;
+                tbOpmerking.Clear();
+                Close();
+            }
         }
 
-        public void editSchutter(Schutter schutter)
+        public void editSchutter(int b, string n, DateTime G, Discipline D, Klasse K, Geslacht Ge, string O)
         {
-            //bondsnummer
-            Naam = schutter.Naam;
-            Geboortedatum = schutter.Geboortedatum;
-            _Discipline = schutter.Discipline;
-            _Klasse = schutter.Klasse;
-            _Geslacht = schutter.Geslacht;
-            Opmerking = schutter.Opmerking;
+            string Dis = D.ToString();
+            string Kla = K.ToString();
+            string Ges = G.ToString();
+            tbBN.Text = b.ToString();
+            tbNaam.Text = n;
+            dtLeeftijd.Value = G;
+            cbDiscipline.Text = Dis;
+            cbKlasse.Text = Kla;
+            cbGeslacht.Text = Ges;
+            tbOpmerking.Text = O;
 
-            tbNaam.Text = Naam;
-            dtLeeftijd.Value = Geboortedatum;
-            cbDiscipline.Text = _Discipline.ToString();
-            cbKlasse.Text = _Klasse.ToString();
-            cbGeslacht.Text = _Geslacht.ToString();
-            tbOpmerking.Text = Opmerking;
+            Bondsnummer = Convert.ToInt32(tbBN.Text);
+            Naam = tbNaam.Text;
+            Geboortedatum = dtLeeftijd.Value;
+            _Discipline = (Discipline)cbDiscipline.SelectedItem;
+            _Klasse = (Klasse)cbKlasse.SelectedItem;
+            _Geslacht = (Geslacht)cbGeslacht.SelectedItem;
+            Opmerking = tbOpmerking.Text;
         }
 
         private void btCancel_Click(object sender, EventArgs e)
         {
             Close();
         }
-        public void createSchutter()
-        {
-            var geselecteerd_D = (Discipline)cbDiscipline.SelectedItem;
-            var geselecteerd_K = (Klasse)cbKlasse.SelectedItem;
-            var geselecteerd_G = (Geslacht)cbGeslacht.SelectedItem;
-            Bondsnummer = Convert.ToInt32(tbBN.Text);
-            Naam = tbNaam.Text;
-            Geboortedatum = dtLeeftijd.Value;
-            _Discipline = geselecteerd_D;
-            _Klasse = geselecteerd_K;
-            _Geslacht = geselecteerd_G;
-            Opmerking = tbOpmerking.Text;
+        //public void createSchutter()
+        //{
+        //    var geselecteerd_D = (Discipline)cbDiscipline.SelectedItem;
+        //    var geselecteerd_K = (Klasse)cbKlasse.SelectedItem;
+        //    var geselecteerd_G = (Geslacht)cbGeslacht.SelectedItem;
+        //    Bondsnummer = Convert.ToInt32(tbBN.Text);
+        //    Naam = tbNaam.Text;
+        //    Geboortedatum = dtLeeftijd.Value;
+        //    _Discipline = geselecteerd_D;
+        //    _Klasse = geselecteerd_K;
+        //    _Geslacht = geselecteerd_G;
+        //    Opmerking = tbOpmerking.Text;
 
-            //Schutter schutter = new Schutter(Naam, _Klasse, _Discipline, _Geslacht, Opmerking);
-            Wedstrijd.schutterAanmelden(new Schutter(Bondsnummer, Naam, _Klasse, _Discipline, _Geslacht, Geboortedatum, Opmerking));
-            Close();
-        }
+        //    Schutter schutter = new Schutter(Bondsnummer, Naam, _Klasse, _Discipline, _Geslacht, Geboortedatum, Opmerking);
+        //}
     }
 }

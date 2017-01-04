@@ -43,24 +43,24 @@ namespace ArcheryApplication.Classes
             //de schuttercheck moet worden gefixt, deze werkt niet (schutter wordt altijd afgeslagen)
             //foreach (Schutter schutter in schutters)
             //{
-                //check of de schutter die wordt aangemeld, niet al is aangemeld.
-                //int schuttercheck = schutter.compareSchutters(nieuweSchutter);
-                //if (schuttercheck == 0)
-                //{
-                    schutters.Add(nieuweSchutter);
-                    MessageBox.Show($"{nieuweSchutter.Naam} is aangemeld voor {this.Soort.ToString()}");
+            //check of de schutter die wordt aangemeld, niet al is aangemeld.
+            //int schuttercheck = schutter.compareSchutters(nieuweSchutter);
+            //if (schuttercheck == 0)
+            //{
+            schutters.Add(nieuweSchutter);
+            MessageBox.Show($"{nieuweSchutter.Naam} is aangemeld voor {this.Soort.ToString()}");
             schuttersaanbaantoevoegen();
-                //}
-                //else if (schuttercheck == 1)
-                //{
-                //    new AlAangemeldException(nieuweSchutter);
-                //}
+            //}
+            //else if (schuttercheck == 1)
+            //{
+            //    new AlAangemeldException(nieuweSchutter);
+            //}
             //}
         }
         public void testSchutters()
         {
             //testdata schutters
-            schutters.Add(new Schutter(161378,"Jelle Schraeder", Klasse.Senior, Discipline.Recurve, Geslacht.Heren, DateTime.Now, ""));
+            schutters.Add(new Schutter(161378, "Jelle Schraeder", Klasse.Senior, Discipline.Recurve, Geslacht.Heren, DateTime.Now, ""));
             schutters.Add(new Schutter(111111, "Florentina Schwanen", Klasse.Junior, Discipline.Compound, Geslacht.Dames, DateTime.Now, ""));
             schutters.Add(new Schutter(222222, "Stijn Koijen", Klasse.Senior, Discipline.Compound, Geslacht.Heren, DateTime.Now, ""));
             schutters.Add(new Schutter(333333, "Mark van Broekhoven", Klasse.Cadet, Discipline.Recurve, Geslacht.Heren, DateTime.Now, ""));
@@ -130,28 +130,32 @@ namespace ArcheryApplication.Classes
 
         private void banenAanmaken(int aantalBanen)
         {
-            int letter = 0;
             for (int baannr = 1; baannr <= aantalBanen; baannr++)
             {
-                if (letter == 0)
+                int letter = 0;
+                for (int i = 0; i < 4; i++)
                 {
-                    banen.Add(new Baan(baannr, "A", 70));
-                    letter++;
-                }
-                else if (letter == 1)
-                {
-                    banen.Add(new Baan(baannr, "B", 70));
-                    letter++;
-                }
-                else if (letter == 2)
-                {
-                    banen.Add(new Baan(baannr, "C", 70));
-                    letter++;
-                }
-                else if (letter == 3)
-                {
-                    banen.Add(new Baan(baannr, "D", 70));
-                    letter = 0;
+
+                    if (letter == 0)
+                    {
+                        banen.Add(new Baan(baannr, "A", 70));
+                        letter++;
+                    }
+                    else if (letter == 1)
+                    {
+                        banen.Add(new Baan(baannr, "B", 70));
+                        letter++;
+                    }
+                    else if (letter == 2)
+                    {
+                        banen.Add(new Baan(baannr, "C", 70));
+                        letter++;
+                    }
+                    else if (letter == 3)
+                    {
+                        banen.Add(new Baan(baannr, "D", 70));
+                        letter = 0;
+                    }
                 }
             }
         }

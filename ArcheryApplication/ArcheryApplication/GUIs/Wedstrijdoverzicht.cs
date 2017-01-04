@@ -32,8 +32,12 @@ namespace ArcheryApplication.GUIs
 
         private void btNieuweSchutter_Click(object sender, EventArgs e)
         {
-            SchutterAanmelden SA = new SchutterAanmelden(wedstrijd);
+            SchutterAanmelden SA = new SchutterAanmelden();
             SA.ShowDialog();
+
+            wedstrijd.schutterAanmelden(new Schutter(SA.Bondsnummer, SA.Naam, SA._Klasse, SA._Discipline, SA._Geslacht, SA.Geboortedatum, SA.Opmerking));
+
+            lbAantalSchutters.Text = wedstrijd.getSchutters().Count.ToString();
             BaanUpdate();
         }
 
@@ -55,9 +59,17 @@ namespace ArcheryApplication.GUIs
             var geselecteerd = lbBanen.SelectedItem as Baan;
             if (geselecteerd.Schutter != null)
             {
-                SchutterAanmelden SA = new SchutterAanmelden(wedstrijd);
-                SA.editSchutter(geselecteerd.Schutter);
-                SA.ShowDialog();
+                SchutterAanmelden SE = new SchutterAanmelden();
+                SE.editSchutter(geselecteerd.Schutter.Bondsnummer, geselecteerd.Schutter.Naam, geselecteerd.Schutter.Geboortedatum, geselecteerd.Schutter.Discipline, geselecteerd.Schutter.Klasse, geselecteerd.Schutter.Geslacht, geselecteerd.Schutter.Opmerking);
+
+                SE.ShowDialog();
+                geselecteerd.Schutter.Bondsnummer = SE.Bondsnummer;
+                geselecteerd.Schutter.Naam = SE.Naam;
+                geselecteerd.Schutter.Geboortedatum = SE.Geboortedatum;
+                geselecteerd.Schutter.Discipline = SE._Discipline;
+                geselecteerd.Schutter.Klasse = SE._Klasse;
+                geselecteerd.Schutter.Geslacht = SE._Geslacht;
+                geselecteerd.Schutter.Opmerking = SE.Opmerking;
                 BaanUpdate();
             }
             else if (geselecteerd.Schutter == null)

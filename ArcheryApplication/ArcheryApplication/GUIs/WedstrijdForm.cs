@@ -17,11 +17,17 @@ namespace ArcheryApplication
     public partial class WedstrijdForm : Form
     {
         List<Wedstrijd> wedstrijden = new List<Wedstrijd>();
-        SchutterAanmelden SA;
         public WedstrijdForm()
         {
             InitializeComponent();
             cbSoort.DataSource = Enum.GetValues(typeof(Soort));
+            if (wedstrijden != null)
+            {
+                foreach (Wedstrijd W in wedstrijden)
+                {
+                    lbWedstrijden.Items.Add(W);
+                }
+            }
         }
 
         private void NieuweWedstrijd_Click(object sender, EventArgs e)
@@ -72,48 +78,6 @@ namespace ArcheryApplication
             selectedWedstrijd();
         }
 
-        private void lbSchutters_SelectedIndexChanged(object sender, EventArgs e)
-        {
-            //var geselecteerd = lbSchutters.SelectedItem as Baan;
-            //if (geselecteerd.Schutter == null)
-            //{
-
-            //}
-        }
-
-        private void button1_Click(object sender, EventArgs e)
-        {
-            //SA = new SchutterAanmelden();
-            //SA.ShowDialog();
-        }
-
-        private void button2_Click(object sender, EventArgs e)
-        {
-            //try
-            //{
-            //    var geselecteerdeSchutter = lbSchutters.SelectedItem as Schutter;
-            //    SA = new SchutterAanmelden();
-            //    SA.editSchutter(geselecteerdeSchutter);
-            //    SA.ShowDialog();
-            //}
-            //catch (Exception ex)
-            //{
-            //    MessageBox.Show(ex.Message);
-            //}
-        }
-
-        private void btBaanToewijzen_Click(object sender, EventArgs e)
-        {
-            //try
-            //{
-            //    var geselecteerdeSchutter = lbSchutters.SelectedItem as Schutter;
-
-            //}
-            //catch(Exception ex)
-            //{
-            //    MessageBox.Show(ex.Message);
-            //}
-        }
 
         private void button3_Click(object sender, EventArgs e)
         {
