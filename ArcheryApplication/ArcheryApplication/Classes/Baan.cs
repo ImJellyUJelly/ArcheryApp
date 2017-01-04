@@ -9,46 +9,33 @@ namespace ArcheryApplication.Classes
 {
     public class Baan
     {
+        public string ID { get; set; }
         public int Baannummer { get; set; }
-        public List<Letter> Letters { get; set; }
-        public List<Schutter> Schutters { get; set; }
+        public string Letter { get; set; }
+        public Schutter Schutter { get; private set; }
         public int Afstand { get; set; }
 
-        public Baan(int baanNummer, int afstand)
+        public Baan(int baanNummer, string letter, int afstand)
         {
             Baannummer = baanNummer;
-            Letters = new List<Letter>() { new Letter("A"), new Letter("B"), new Letter("C"), new Letter("D") };
+            Letter = letter;
             Afstand = afstand;
+            ID = $"{Baannummer}{Letter}";
         }
-
-        public void voegSchutterAanLetter(Schutter schutter)
+        public void VoegSchutterToe(Schutter schutter)
         {
-            foreach (Letter L in Letters)
+            if (Schutter == null)
             {
-                if (schutter.Letter == null)
-                {
-                    L.Schutter = schutter;
-                    schutter.Letter = L;
-                    schutter.Baan = this;
-                }
-                if (schutter.Letter != null)
-                {
-                    break;
-                }
+                Schutter = schutter;
             }
-        }
-        public List<Schutter> schutters()
-        {
-            List<Schutter> schuttersOpLetter = new List<Schutter>();
-            foreach (Schutter S in Schutters)
-            {
-                schuttersOpLetter.Add(S);
-            }
-            return schuttersOpLetter;
         }
         public override string ToString()
         {
-            return $"{Baannummer}";
+            if (Schutter == null)
+            {
+                return $"{ Baannummer }{ Letter }: Geen schutter";
+            }
+            return $"{ Baannummer }{ Letter }: { Schutter.ToString() }";
         }
     }
 }

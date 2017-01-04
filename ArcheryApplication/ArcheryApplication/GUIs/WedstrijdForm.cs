@@ -83,8 +83,8 @@ namespace ArcheryApplication
 
         private void button1_Click(object sender, EventArgs e)
         {
-            SA = new SchutterAanmelden();
-            SA.ShowDialog();
+            //SA = new SchutterAanmelden();
+            //SA.ShowDialog();
         }
 
         private void button2_Click(object sender, EventArgs e)

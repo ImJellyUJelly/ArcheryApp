@@ -8,60 +8,27 @@ namespace ArcheryApplication.Classes
 {
     public class Score
     {
-        public int PijlEen { get; set; }
-        public int PijlTwee { get; set; }
-        public int PijlDrie { get; set; }
-        public int PijlVier { get; set; }
-        public int PijlVijf { get; set; }
-        public int PijlZes { get; set; }
-        public int TotaalScore { get; set; }
-
+        public int _Score { get; private set; }
         public Score()
         {
-            
+            _Score = 0;
+        }
+        public Score(int score)
+        {
+            _Score = score;
         }
 
-        //Wedstrijd met 6 pijlen per serie
-        public void VerhoogScore(int p1, int p2, int p3, int p4, int p5, int p6)
+        public void VerhoogScore(int score)
         {
-            PijlEen = p1;
-            PijlTwee = p2;
-            PijlDrie = p3;
-            PijlVier = p4;
-            PijlVijf = p5;
-            PijlZes = p6;
-            TotaalScore += PijlEen + PijlTwee + PijlDrie + PijlVier + PijlVijf + PijlZes;
+            _Score += score;
         }
-        //Wedstrijd met 3 pijlen per serie
-        public void VerhoogScore(int p1, int p2, int p3)
+        public void EditScore(int score)
         {
-            PijlEen = p1;
-            PijlTwee = p2;
-            PijlDrie = p3;
-            TotaalScore += PijlEen + PijlTwee + PijlDrie;
+            _Score = score;
         }
-        //Wedstrijd met 1 pijl per serie
-        public void VerhoogScore(int p1)
+        public void DeleteScore()
         {
-            PijlEen = p1;
-            TotaalScore += PijlEen;
-        }
-
-        public int RondjeZesPijlen()
-        {
-            return TotaalScore;
-        }
-        public int RondjeDriePijlen()
-        {
-            int totaalScore;
-            totaalScore = PijlEen + PijlTwee + PijlDrie;
-            return totaalScore;
-        }
-        public int RondjeEenPijl()
-        {
-            int totaalScore;
-            totaalScore = PijlEen;
-            return totaalScore;
+            _Score = 0;
         }
     }
 }

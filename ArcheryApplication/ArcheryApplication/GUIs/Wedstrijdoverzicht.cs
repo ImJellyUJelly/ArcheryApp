@@ -32,18 +32,37 @@ namespace ArcheryApplication.GUIs
 
         private void btNieuweSchutter_Click(object sender, EventArgs e)
         {
-            SchutterAanmelden SA = new SchutterAanmelden();
+            SchutterAanmelden SA = new SchutterAanmelden(wedstrijd);
             SA.ShowDialog();
-            
+            BaanUpdate();
         }
 
         private void lbBanen_SelectedIndexChanged(object sender, EventArgs e)
         {
             var geselecteerd = lbBanen.SelectedItem as Baan;
-            lbLetters.Items.Clear();
-            foreach (Letter L in geselecteerd.Letters)
+        }
+        private void BaanUpdate()
+        {
+            lbBanen.Items.Clear();
+            foreach (Baan B in wedstrijd.getBanen())
             {
-                lbLetters.Items.Add(L);
+                lbBanen.Items.Add(B);
+            }
+        }
+
+        private void btBewerkSchutter_Click(object sender, EventArgs e)
+        {
+            var geselecteerd = lbBanen.SelectedItem as Baan;
+            if (geselecteerd.Schutter != null)
+            {
+                SchutterAanmelden SA = new SchutterAanmelden(wedstrijd);
+                SA.editSchutter(geselecteerd.Schutter);
+                SA.ShowDialog();
+                BaanUpdate();
+            }
+            else if (geselecteerd.Schutter == null)
+            {
+                MessageBox.Show("Schutter not found.");
             }
         }
     }

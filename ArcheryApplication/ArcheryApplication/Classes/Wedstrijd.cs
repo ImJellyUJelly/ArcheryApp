@@ -40,29 +40,31 @@ namespace ArcheryApplication.Classes
 
         public void schutterAanmelden(Schutter nieuweSchutter)
         {
-            foreach (Schutter schutter in schutters)
-            {
+            //de schuttercheck moet worden gefixt, deze werkt niet (schutter wordt altijd afgeslagen)
+            //foreach (Schutter schutter in schutters)
+            //{
                 //check of de schutter die wordt aangemeld, niet al is aangemeld.
-                int schuttercheck = schutter.compareSchutters(nieuweSchutter);
-                if (schuttercheck == 0)
-                {
+                //int schuttercheck = schutter.compareSchutters(nieuweSchutter);
+                //if (schuttercheck == 0)
+                //{
                     schutters.Add(nieuweSchutter);
                     MessageBox.Show($"{nieuweSchutter.Naam} is aangemeld voor {this.Soort.ToString()}");
-                }
-                else if (schuttercheck == 1)
-                {
-                    new AlAangemeldException(nieuweSchutter);
-                }
-            }
+            schuttersaanbaantoevoegen();
+                //}
+                //else if (schuttercheck == 1)
+                //{
+                //    new AlAangemeldException(nieuweSchutter);
+                //}
+            //}
         }
         public void testSchutters()
         {
             //testdata schutters
-            schutters.Add(new Schutter("Jelle Schraeder", Klasse.Senior, Discipline.Recurve, Geslacht.Heren, ""));
-            schutters.Add(new Schutter("Florentina Schwanen", Klasse.Junior, Discipline.Compound, Geslacht.Dames, ""));
-            schutters.Add(new Schutter("Stijn Koijen", Klasse.Senior, Discipline.Compound, Geslacht.Heren, ""));
-            schutters.Add(new Schutter("Mark van Broekhoven", Klasse.Cadet, Discipline.Recurve, Geslacht.Heren, ""));
-            schutters.Add(new Schutter("Ad van Vught", Klasse.Veteraan, Discipline.Barebow, Geslacht.Heren, ""));
+            schutters.Add(new Schutter(161378,"Jelle Schraeder", Klasse.Senior, Discipline.Recurve, Geslacht.Heren, DateTime.Now, ""));
+            schutters.Add(new Schutter(111111, "Florentina Schwanen", Klasse.Junior, Discipline.Compound, Geslacht.Dames, DateTime.Now, ""));
+            schutters.Add(new Schutter(222222, "Stijn Koijen", Klasse.Senior, Discipline.Compound, Geslacht.Heren, DateTime.Now, ""));
+            schutters.Add(new Schutter(333333, "Mark van Broekhoven", Klasse.Cadet, Discipline.Recurve, Geslacht.Heren, DateTime.Now, ""));
+            schutters.Add(new Schutter(444444, "Ad van Vught", Klasse.Veteraan, Discipline.Barebow, Geslacht.Heren, DateTime.Now, ""));
         }
 
         private void aantalBanenBepalen()
@@ -105,25 +107,20 @@ namespace ArcheryApplication.Classes
         {
             if (schutters != null)
             {
-                foreach (Schutter schutter in schutters)
+                foreach (Schutter S in schutters)
                 {
-                    if (schutter.Baan == null)
+                    if (S.Baan == null)
                     {
-                        foreach (Baan b in banen)
+                        foreach (Baan B in banen)
                         {
-                           for(int i=0; i<b.Letters.Count;i++)
+                            if (B.Schutter == null)
                             {
-                                if (schutter.Baan == null)
-                                {
-                                    if (b.Letters[i].Schutter == null)
-                                    { 
-                                        b.Letters[i].Schutter = schutter;
-                                        schutter.Baan = b;
-                                        schutter.Letter = b.Letters[i];
-                                        break;
-                                    }
-                                }
-                                else { break; }
+                                B.VoegSchutterToe(S);
+                                S.Baan = B;
+                            }
+                            if (S.Baan != null)
+                            {
+                                break;
                             }
                         }
                     }
@@ -133,32 +130,29 @@ namespace ArcheryApplication.Classes
 
         private void banenAanmaken(int aantalBanen)
         {
+            int letter = 0;
             for (int baannr = 1; baannr <= aantalBanen; baannr++)
             {
-                banen.Add(new Baan(baannr, 70));
-                //for (int letter = 0; letter <= 3; letter++)
-                //{
-                //    if (letter == 0)
-                //    {
-                //        banen.Add(new Baan(baannr, 70));
-                //    }
-                //    else if (letter == 1)
-                //    {
-                //        banen.Add(new Baan(baannr, 70));
-                //    }
-                //    else if (letter == 2)
-                //    {
-                //        banen.Add(new Baan(baannr, 70));
-                //    }
-                //    else if (letter == 3)
-                //    {
-                //        banen.Add(new Baan(baannr, 70));
-                //    }
-                //    else
-                //    {
-                //        MessageBox.Show("Er is iets fout gegaan, raadpleeg uw nerd voor verdere instructies.");
-                //    }
-                //}
+                if (letter == 0)
+                {
+                    banen.Add(new Baan(baannr, "A", 70));
+                    letter++;
+                }
+                else if (letter == 1)
+                {
+                    banen.Add(new Baan(baannr, "B", 70));
+                    letter++;
+                }
+                else if (letter == 2)
+                {
+                    banen.Add(new Baan(baannr, "C", 70));
+                    letter++;
+                }
+                else if (letter == 3)
+                {
+                    banen.Add(new Baan(baannr, "D", 70));
+                    letter = 0;
+                }
             }
         }
         public override string ToString()
