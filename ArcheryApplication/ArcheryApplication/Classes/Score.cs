@@ -8,27 +8,29 @@ namespace ArcheryApplication.Classes
 {
     public class Score
     {
+        public  int ID { get; private set; }
         public int _Score { get; private set; }
+        public int Afstand { get; private set; }
+
         public Score()
         {
-            _Score = 0;
-        }
-        public Score(int score)
-        {
-            _Score = score;
-        }
 
-        public void VerhoogScore(int score)
-        {
-            _Score += score;
         }
-        public void EditScore(int score)
+        public Score(int score, int afstand)
         {
             _Score = score;
+            Afstand = afstand;
         }
-        public void DeleteScore()
+        //change
+        public bool ChangeScore(int score)
         {
-            _Score = 0;
+            _Score = score;
+            return true;
+        }
+        public bool ChangeAfstand(int afstand)
+        {
+            Afstand = afstand;
+            return true;
         }
     }
 }

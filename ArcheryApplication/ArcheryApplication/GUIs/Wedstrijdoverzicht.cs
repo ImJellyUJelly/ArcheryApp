@@ -14,7 +14,6 @@ namespace ArcheryApplication.GUIs
 {
     public partial class Wedstrijdoverzicht : Form
     {
-        Database db = new Database();
         public Wedstrijd wedstrijd { get; set; }
         public Wedstrijdoverzicht(Wedstrijd wedstrijd)
         {
@@ -24,6 +23,13 @@ namespace ArcheryApplication.GUIs
             lbSoort.Text = wedstrijd.Soort.ToString();
             lbAantalSchutters.Text = wedstrijd.getSchutters().Count.ToString();
             lbDatum.Text = wedstrijd.Datum.ToString();
+
+            if (wedstrijd.Soort == Soort.Indoorcompetitie)
+            {
+                tbP4.Enabled = false;
+                tbP5.Enabled = false;
+                tbP6.Enabled = false;
+            }
 
             foreach (Baan B in wedstrijd.getBanen())
             {
@@ -75,7 +81,32 @@ namespace ArcheryApplication.GUIs
             }
             else if (geselecteerd.Schutter == null)
             {
-                MessageBox.Show("Schutter not found.");
+                MessageBox.Show("Schutter not found. Raadpleeg uw nerd voor hulp.");
+            }
+        }
+
+        private void button1_Click(object sender, EventArgs e)
+        {
+            if (wedstrijd.Soort == Soort.Indoorcompetitie)
+            { 
+                var baan = lbBanen.SelectedItem as Baan;
+                baan.Schutter.AddScore();
+            }
+            else if (wedstrijd.Soort == Soort.JeugdFITA)
+            {
+
+            }
+            else if (wedstrijd.Soort == Soort.WA1440)
+            {
+
+            }
+            else if (wedstrijd.Soort == Soort.Veld)
+            {
+
+            }
+            else
+            {
+
             }
         }
     }

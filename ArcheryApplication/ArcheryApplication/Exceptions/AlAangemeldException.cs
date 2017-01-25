@@ -10,9 +10,13 @@ namespace ArcheryApplication.Exceptions
 {
     public class AlAangemeldException : Exception
     {
-        public AlAangemeldException(Schutter schutter)
+        public AlAangemeldException()
         {
-            MessageBox.Show($"{schutter.Naam} is al aangemeld.");
+            
+        }
+        public AlAangemeldException(string message) : base(message)
+        {
+
         }
     }
 }

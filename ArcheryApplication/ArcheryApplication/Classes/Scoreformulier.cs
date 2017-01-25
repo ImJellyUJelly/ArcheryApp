@@ -8,21 +8,36 @@ namespace ArcheryApplication.Classes
 {
     public class Scoreformulier
     {
-        List<Score> TotaalScore = new List<Score>();
-        public Wedstrijd Wedstrijd { get; set; }
-
-
-        public Scoreformulier(Wedstrijd wedstrijd)
+        public List<Score> Scores { get; private set; }
+        public int TotaalScore { get; private set; }
+        public Scoreformulier()
         {
-            Wedstrijd = wedstrijd;
+            Scores = new List<Score>();
+            TotaalScore = 0;
         }
-
-        public void BepaalAantalBeurten()
+        //update
+        public bool AddScore(Score score)
         {
-            if (Wedstrijd.Soort == Enums.Soort.Indoorcompetitie)
+            Scores.Add(score);
+            return true;
+        }
+        public bool ChangeScore(Score score)
+        {
+            foreach (Score S in Scores)
             {
-
+                if (S.ID == score.ID)
+                {
+                    S.ChangeScore(score._Score);
+                    S.ChangeAfstand(score.Afstand);
+                    return true;
+                }
             }
+            return false;
+        }
+        public bool RemoveScore(Score score)
+        {
+            Scores.Remove(score);
+            return true;
         }
     }
 }

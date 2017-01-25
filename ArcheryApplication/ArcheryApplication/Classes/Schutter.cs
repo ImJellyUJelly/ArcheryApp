@@ -17,6 +17,8 @@ namespace ArcheryApplication.Classes
         public Discipline Discipline { get; set; }
         public Geslacht Geslacht { get; set; }
         public string Opmerking { get; set; }
+        public Scoreformulier ScoreFormulier { get; private set; }
+        public Vereniging Vereniging { get; set; }
 
         public Schutter(int bondsnr, string naam, Klasse k, Discipline d, Geslacht g, DateTime geb, string opmerking)
         {
@@ -27,6 +29,7 @@ namespace ArcheryApplication.Classes
             Geslacht = g;
             Geboortedatum = geb;
             Opmerking = opmerking;
+            ScoreFormulier = new Scoreformulier();
         }
 
         public void editSchutter(string naam, Klasse k, Discipline d, Geslacht g, DateTime geb, string opmerking)
@@ -37,18 +40,18 @@ namespace ArcheryApplication.Classes
             Geslacht = g;
             Geboortedatum = geb;
             Opmerking = opmerking;
+            ScoreFormulier = new Scoreformulier();
+        }
+
+        public void AddScore(Score score)
+        {
+            ScoreFormulier.AddScore(score);
         }
 
         public int compareSchutters(Schutter andereSchutter)
         {
-            if (this.Naam.CompareTo(andereSchutter.Naam) == 1)
-            {
-                return 1;
-            }
-            else
-            {
-                return 0;
-            }
+            int result = Bondsnummer.CompareTo(andereSchutter.Bondsnummer);
+            return result;
         }
         public override string ToString()
         {

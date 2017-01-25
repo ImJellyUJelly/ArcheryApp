@@ -12,7 +12,6 @@ namespace ArcheryApplication.Classes
 {
     public class Wedstrijd
     {
-        Database db = new Database();
         List<Baan> banen = new List<Baan>();
         List<Schutter> schutters = new List<Schutter>();
         public int ID { get; set; }
@@ -59,22 +58,16 @@ namespace ArcheryApplication.Classes
 
         public void schutterAanmelden(Schutter nieuweSchutter)
         {
-            //de schuttercheck moet worden gefixt, deze werkt niet (schutter wordt altijd afgeslagen)
-            //foreach (Schutter schutter in schutters)
-            //{
-            //check of de schutter die wordt aangemeld, niet al is aangemeld.
-            //int schuttercheck = schutter.compareSchutters(nieuweSchutter);
-            //if (schuttercheck == 0)
-            //{
-            schutters.Add(nieuweSchutter);
-            MessageBox.Show($"{nieuweSchutter.Naam} is aangemeld voor {this.Soort.ToString()}");
-            schuttersaanbaantoevoegen();
-            //}
-            //else if (schuttercheck == 1)
-            //{
-            //    new AlAangemeldException(nieuweSchutter);
-            //}
-            //}
+            if (schutterCheck(nieuweSchutter.Bondsnummer))
+            {
+                schutters.Add(nieuweSchutter);
+                MessageBox.Show($"{nieuweSchutter.Naam} is aangemeld voor {Soort.ToString()}");
+                schuttersaanbaantoevoegen();
+            }
+            else
+            {
+                MessageBox.Show($"Error: {nieuweSchutter.Naam} met bondsnummer {nieuweSchutter.Bondsnummer} is al aangemeld voor {Soort.ToString()}");
+            }
         }
         public void testSchutters()
         {
@@ -84,6 +77,18 @@ namespace ArcheryApplication.Classes
             schutters.Add(new Schutter(222222, "Stijn Koijen", Klasse.Senior, Discipline.Compound, Geslacht.Heren, DateTime.Now, ""));
             schutters.Add(new Schutter(333333, "Mark van Broekhoven", Klasse.Cadet, Discipline.Recurve, Geslacht.Heren, DateTime.Now, ""));
             schutters.Add(new Schutter(444444, "Ad van Vught", Klasse.Veteraan, Discipline.Barebow, Geslacht.Heren, DateTime.Now, ""));
+        }
+
+        public bool schutterCheck(int bondsnummer)
+        {
+            foreach (Schutter s in schutters)
+            {
+                if (bondsnummer == s.Bondsnummer)
+                {
+                    return false;
+                }
+            }
+            return true;
         }
 
         private void aantalBanenBepalen()

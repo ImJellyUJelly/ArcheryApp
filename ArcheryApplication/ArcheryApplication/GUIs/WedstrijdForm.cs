@@ -3,6 +3,7 @@ using System.Collections.Generic;
 using System.ComponentModel;
 using System.Data;
 using System.Drawing;
+using System.Globalization;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
@@ -10,13 +11,11 @@ using System.Windows.Forms;
 using ArcheryApplication.Classes;
 using ArcheryApplication.Classes.Enums;
 using ArcheryApplication.GUIs;
-using ArcheryApplication.Exceptions;
 
 namespace ArcheryApplication
 {
     public partial class WedstrijdForm : Form
     {
-        Database db = new Database();
         List<Wedstrijd> wedstrijden = new List<Wedstrijd>();
         public WedstrijdForm()
         {
@@ -38,15 +37,28 @@ namespace ArcheryApplication
             {
                 if (cbSoort.SelectedItem != null)
                 {
-                    var dateAndTime = dtDatum.Value;
-                    var date = dateAndTime.ToString("dd/MM/yyyy");
-                    Soort geselecteerd = (Soort)cbSoort.SelectedItem;
-                    wedstrijden.Add(new Wedstrijd(tbNaam.Text, geselecteerd, date));
-                    lbWedstrijden.Items.Clear();
-                    foreach (Wedstrijd wedstrijd in wedstrijden)
-
+                    if (dtDatum.Value != null)
                     {
-                        lbWedstrijden.Items.Add(wedstrijd);
+                        if (tbNaam.Text != "")
+                        {
+                            var dateAndTime = dtDatum.Value;
+                            var date = dateAndTime.ToString("dd/MM/yyyy");
+                            Soort geselecteerd = (Soort)cbSoort.SelectedItem;
+                            wedstrijden.Add(new Wedstrijd(tbNaam.Text, geselecteerd, date));
+                            lbWedstrijden.Items.Clear();
+                            foreach (Wedstrijd wedstrijd in wedstrijden)
+                            {
+                                lbWedstrijden.Items.Add(wedstrijd);
+                            }
+                        }
+                        else
+                        {
+                            MessageBox.Show("Vul een naam in.");
+                        }
+                    }
+                    else
+                    {
+                        MessageBox.Show("Vul een datum in.");
                     }
                 }
                 else
@@ -54,9 +66,27 @@ namespace ArcheryApplication
                     MessageBox.Show("Vul een wedstrijdsoort in.");
                 }
             }
-            catch(Exception ex)
+            catch (Exception ex)
             {
                 MessageBox.Show(ex.Message);
+            }
+        }
+
+        private void lbWedstrijden_MouseDoubleClick(object sender, MouseEventArgs e)
+        {
+            selectedWedstrijd();
+        }
+
+        //om de listboxen op het form te refreshen, nadat er changes hebben plaatsgevonden
+        private void RefreshListboxen()
+        {
+            if (wedstrijden != null)
+            {
+                lbWedstrijden.Items.Clear();
+                foreach (Wedstrijd W in wedstrijden)
+                {
+                    lbWedstrijden.Items.Add(W);
+                }
             }
         }
         private void selectedWedstrijd()
@@ -67,33 +97,76 @@ namespace ArcheryApplication
 
                 Wedstrijdoverzicht WO = new Wedstrijdoverzicht(geselecteerd);
                 WO.ShowDialog();
-                //lbSchutters.DataSource = geselecteerd.getBanen();
+                RefreshListboxen();
             }
-            catch(Exception ex)
+            catch (Exception ex)
             {
                 MessageBox.Show(ex.Message);
             }
         }
 
-        private void lbWedstrijden_SelectedIndexChanged(object sender, EventArgs e)
-        {
-            selectedWedstrijd();
-        }
-
-
-        private void button3_Click(object sender, EventArgs e)
-        {
-            var geselecteerd = lbWedstrijden.SelectedItem as Wedstrijd;
-            geselecteerd.testSchutters();
-        }
-
-        private void lbWedstrijden_MouseDoubleClick(object sender, MouseEventArgs e)
+        private void lbWedstrijden_MouseClick(object sender, MouseEventArgs e)
         {
             try
             {
-                var geselecteerde_Wedstrijd = lbWedstrijden.SelectedItem as Wedstrijd;
-                Wedstrijdoverzicht WO = new Wedstrijdoverzicht(geselecteerde_Wedstrijd);
-                WO.ShowDialog();
+                var geselecteerd = lbWedstrijden.SelectedItem as Wedstrijd;
+                if (geselecteerd != null)
+                {
+                    tbNaam.Text = geselecteerd.Naam;
+                    DateTime datum = DateTime.Parse(geselecteerd.Datum);
+                    dtDatum.Value = datum;
+                    cbSoort.Text = geselecteerd.Soort.ToString();
+                }
+            }
+            catch (Exception ex)
+            {
+                MessageBox.Show(ex.Message);
+            }
+        }
+
+        private void btBewerkWedstrijd_Click(object sender, EventArgs e)
+        {
+            try
+            {
+                var geselecteerdeWedstrijd = lbWedstrijden.SelectedItem as Wedstrijd;
+                if (geselecteerdeWedstrijd != null)
+                {
+                    var dateAndTime = dtDatum.Value;
+                    var date = dateAndTime.ToString("dd/MM/yyyy");
+
+                    geselecteerdeWedstrijd.Naam = tbNaam.Text;
+                    geselecteerdeWedstrijd.Datum = date;
+                    geselecteerdeWedstrijd.Soort = (Soort)cbSoort.SelectedItem;
+
+                    RefreshListboxen();
+                }
+            }
+            catch (Exception ex)
+            {
+                MessageBox.Show(ex.Message);
+            }
+        }
+
+        private void btVerwijderWedstrijd_Click(object sender, EventArgs e)
+        {
+            try
+            {
+                var geselecteerdeWedstrijd = lbWedstrijden.SelectedItem as Wedstrijd;
+                if (geselecteerdeWedstrijd != null)
+                {
+                    WarningBox WB = new WarningBox();
+                    WB.ShowDialog();
+                    if (WB.Doorgaan() == false)
+                    {
+                        MessageBox.Show("Wedstrijd is verwijderd.");
+                        wedstrijden.Remove(geselecteerdeWedstrijd);
+                        RefreshListboxen();
+                    }
+                    else
+                    {
+                        MessageBox.Show("U bent niet gemachtigd een wedstrijd te verwijderen. Raadpleeg uw nerd voor meer informatie.");
+                    }
+                }
             }
             catch (Exception ex)
             {

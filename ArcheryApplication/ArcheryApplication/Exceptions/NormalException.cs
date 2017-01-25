@@ -8,9 +8,13 @@ namespace ArcheryApplication.Exceptions
 {
     class NormalException : Exception
     {
+        public NormalException()
+        {
+
+        }
         public NormalException(string message)
         {
-            System.Windows.Forms.MessageBox.Show(message);
+            
         }
     }
 }

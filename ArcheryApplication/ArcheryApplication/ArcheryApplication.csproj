@@ -47,7 +47,13 @@
   </ItemGroup>
   <ItemGroup>
     <Compile Include="Classes\Baan.cs" />
-    <Compile Include="Classes\Database.cs" />
+    <Compile Include="Classes\Database2.cs" />
+    <Compile Include="Classes\Database\Interfaces\ISchutterServices.cs" />
+    <Compile Include="Classes\Database\Interfaces\IWedstrijdServices.cs" />
+    <Compile Include="Classes\Database\Repositories\SchutterRepository.cs" />
+    <Compile Include="Classes\Database\Repositories\WedstrijdRepository.cs" />
+    <Compile Include="Classes\Database\SQL\MssqlSchutterLogic.cs" />
+    <Compile Include="Classes\Database\SQL\MssqlWedstrijdLogic.cs" />
     <Compile Include="Classes\Enums\Discipline.cs" />
     <Compile Include="Classes\Enums\Geslacht.cs" />
     <Compile Include="Classes\Enums\Klasse.cs" />
@@ -56,9 +62,16 @@
     <Compile Include="Classes\Schutter.cs" />
     <Compile Include="Classes\Score.cs" />
     <Compile Include="Classes\Scoreformulier.cs" />
+    <Compile Include="Classes\Vereniging.cs" />
     <Compile Include="Classes\Wedstrijd.cs" />
     <Compile Include="Exceptions\AlAangemeldException.cs" />
     <Compile Include="Exceptions\NormalException.cs" />
+    <Compile Include="GUIs\WarningBox.cs">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="GUIs\WarningBox.Designer.cs">
+      <DependentUpon>WarningBox.cs</DependentUpon>
+    </Compile>
     <Compile Include="GUIs\Wedstrijdoverzicht.cs">
       <SubType>Form</SubType>
     </Compile>
@@ -71,12 +84,6 @@
     <Compile Include="GUIs\SchutterAanmelden.Designer.cs">
       <DependentUpon>SchutterAanmelden.cs</DependentUpon>
     </Compile>
-    <Compile Include="GUIs\SchuttersLijst.cs">
-      <SubType>Form</SubType>
-    </Compile>
-    <Compile Include="GUIs\SchuttersLijst.Designer.cs">
-      <DependentUpon>SchuttersLijst.cs</DependentUpon>
-    </Compile>
     <Compile Include="GUIs\WedstrijdForm.cs">
       <SubType>Form</SubType>
     </Compile>
@@ -85,14 +92,14 @@
     </Compile>
     <Compile Include="Program.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
+    <EmbeddedResource Include="GUIs\WarningBox.resx">
+      <DependentUpon>WarningBox.cs</DependentUpon>
+    </EmbeddedResource>
     <EmbeddedResource Include="GUIs\Wedstrijdoverzicht.resx">
       <DependentUpon>Wedstrijdoverzicht.cs</DependentUpon>
     </EmbeddedResource>
     <EmbeddedResource Include="GUIs\SchutterAanmelden.resx">
       <DependentUpon>SchutterAanmelden.cs</DependentUpon>
-    </EmbeddedResource>
-    <EmbeddedResource Include="GUIs\SchuttersLijst.resx">
-      <DependentUpon>SchuttersLijst.cs</DependentUpon>
     </EmbeddedResource>
     <EmbeddedResource Include="GUIs\WedstrijdForm.resx">
       <DependentUpon>WedstrijdForm.cs</DependentUpon>
