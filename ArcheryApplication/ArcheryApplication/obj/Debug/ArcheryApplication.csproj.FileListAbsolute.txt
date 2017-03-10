@@ -17,7 +17,6 @@ C:\Users\JelleSchrader\Source\Repos\ArcheryApp\ArcheryApplication\ArcheryApplica
 C:\Users\JelleSchrader\Source\Repos\ArcheryApp\ArcheryApplication\ArcheryApplication\obj\Debug\ArcheryApplication.csprojResolveAssemblyReference.cache
 C:\Users\JelleSchrader\Source\Repos\ArcheryApp\ArcheryApplication\ArcheryApplication\obj\Debug\ArcheryApplication.GUIs.Wedstrijdoverzicht.resources
 C:\Users\JelleSchrader\Source\Repos\ArcheryApp\ArcheryApplication\ArcheryApplication\obj\Debug\ArcheryApplication.GUIs.SchutterAanmelden.resources
-C:\Users\JelleSchrader\Source\Repos\ArcheryApp\ArcheryApplication\ArcheryApplication\obj\Debug\ArcheryApplication.GUIs.SchuttersLijst.resources
 C:\Users\JelleSchrader\Source\Repos\ArcheryApp\ArcheryApplication\ArcheryApplication\obj\Debug\ArcheryApplication.WedstrijdForm.resources
 C:\Users\JelleSchrader\Source\Repos\ArcheryApp\ArcheryApplication\ArcheryApplication\obj\Debug\ArcheryApplication.Properties.Resources.resources
 C:\Users\JelleSchrader\Source\Repos\ArcheryApp\ArcheryApplication\ArcheryApplication\obj\Debug\ArcheryApplication.csproj.GenerateResource.Cache
@@ -33,3 +32,4 @@ C:\Users\jelle\Source\Repos\ArcheryApp\ArcheryApplication\ArcheryApplication\obj
 C:\Users\jelle\Source\Repos\ArcheryApp\ArcheryApplication\ArcheryApplication\obj\Debug\ArcheryApplication.pdb
 C:\Users\jelle\Source\Repos\ArcheryApp\ArcheryApplication\ArcheryApplication\obj\Debug\ArcheryApplication.GUIs.WarningBox.resources
 C:\Users\jelle\Source\Repos\ArcheryApp\ArcheryApplication\ArcheryApplication\obj\Debug\ArcheryApplication.csprojResolveAssemblyReference.cache
+C:\Users\JelleSchrader\Source\Repos\ArcheryApp\ArcheryApplication\ArcheryApplication\obj\Debug\ArcheryApplication.GUIs.WarningBox.resources

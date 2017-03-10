@@ -9,7 +9,7 @@ namespace ArcheryApplication.Classes
     public class Score
     {
         public  int ID { get; private set; }
-        public int _Score { get; private set; }
+        public int AantalPunten { get; private set; }
         public int Afstand { get; private set; }
 
         public Score()
@@ -18,13 +18,13 @@ namespace ArcheryApplication.Classes
         }
         public Score(int score, int afstand)
         {
-            _Score = score;
+            AantalPunten = score;
             Afstand = afstand;
         }
         //change
         public bool ChangeScore(int score)
         {
-            _Score = score;
+            AantalPunten = score;
             return true;
         }
         public bool ChangeAfstand(int afstand)

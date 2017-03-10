@@ -9,18 +9,27 @@ namespace ArcheryApplication.Classes
 {
     public class Baan
     {
-        public string ID { get; set; }
-        public int Baannummer { get; set; }
-        public string Letter { get; set; }
+        public int ID { get; private set; }
+        public string BaanId { get; private set; }
+        public int Baannummer { get; private set; }
+        public string Letter { get; private set; }
         public Schutter Schutter { get; private set; }
-        public int Afstand { get; set; }
+        public int Afstand { get; private set; }
 
         public Baan(int baanNummer, string letter, int afstand)
         {
             Baannummer = baanNummer;
             Letter = letter;
             Afstand = afstand;
-            ID = Baannummer.ToString() + Letter;
+            BaanId = Baannummer.ToString() + Letter;
+        }
+        public Baan(int id, int baannummer, string letter, int afstand)
+        {
+            ID = id;
+            Baannummer = baannummer;
+            Letter = letter;
+            Afstand = afstand;
+            BaanId = Baannummer.ToString() + Letter;
         }
         public void VoegSchutterToe(Schutter schutter)
         {
@@ -29,13 +38,18 @@ namespace ArcheryApplication.Classes
                 Schutter = schutter;
             }
         }
+        public void VerwijderSchutter(Schutter schutter)
+        {
+            //ToDo
+        }
         public override string ToString()
         {
-            if (Schutter == null)
+            if (Schutter != null)
             {
-                return $"{ ID }: Geen schutter";
+                return $"{ BaanId }: { Schutter.ToString() }";
             }
-            return $"{ ID }: { Schutter.ToString() }";
+            return $"{ BaanId }: Geen schutter";
+
         }
     }
 }

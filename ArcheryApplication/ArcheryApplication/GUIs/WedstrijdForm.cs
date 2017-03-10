@@ -11,17 +11,27 @@ using System.Windows.Forms;
 using ArcheryApplication.Classes;
 using ArcheryApplication.Classes.Enums;
 using ArcheryApplication.GUIs;
+using ArcheryApplication.Classes.Database.Repositories;
+using ArcheryApplication.Classes.Database.SQL;
 
 namespace ArcheryApplication
 {
     public partial class WedstrijdForm : Form
     {
+        //WedstrijdRepository wedstrijdRepo = new WedstrijdRepository(new MssqlWedstrijdLogic());
         List<Wedstrijd> wedstrijden = new List<Wedstrijd>();
         public WedstrijdForm()
         {
             InitializeComponent();
             cbSoort.DataSource = Enum.GetValues(typeof(Soort));
-            //wedstrijden = db.GetWedstrijden();
+            try
+            {
+                //wedstrijden = wedstrijdRepo.ListWedstrijden();
+            }
+            catch (Exception ex)
+            {
+                MessageBox.Show(ex.Message);
+            }
             if (wedstrijden != null)
             {
                 foreach (Wedstrijd W in wedstrijden)

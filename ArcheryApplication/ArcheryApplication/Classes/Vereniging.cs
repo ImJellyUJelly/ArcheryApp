@@ -10,12 +10,18 @@ namespace ArcheryApplication.Classes
     {
         private int VerNr { get; set; }
         private string Naam { get; set; }
+        private string Straatnaam { get; set; }
+        private string Huisnummer { get; set; }
+        private string Postcode { get; set; }
         private string Plaats { get; set; }
 
-        public Vereniging(int nr, string naam, string plaats)
+        public Vereniging(int nr, string naam, string straat, string hnr, string postcode, string plaats)
         {
             VerNr = nr;
             Naam = naam;
+            Straatnaam = straat;
+            Huisnummer = hnr;
+            Postcode = postcode;
             Plaats = plaats;
         }
         public Vereniging(int nr, string naam)

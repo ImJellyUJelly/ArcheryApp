@@ -14,7 +14,7 @@ namespace ArcheryApplication.GUIs
 {
     public partial class Wedstrijdoverzicht : Form
     {
-        public Wedstrijd wedstrijd { get; set; }
+        public Wedstrijd wedstrijd { get; private set; }
         public Wedstrijdoverzicht(Wedstrijd wedstrijd)
         {
             InitializeComponent();
@@ -23,18 +23,11 @@ namespace ArcheryApplication.GUIs
             lbSoort.Text = wedstrijd.Soort.ToString();
             lbAantalSchutters.Text = wedstrijd.getSchutters().Count.ToString();
             lbDatum.Text = wedstrijd.Datum.ToString();
-
-            if (wedstrijd.Soort == Soort.Indoorcompetitie)
-            {
-                tbP4.Enabled = false;
-                tbP5.Enabled = false;
-                tbP6.Enabled = false;
-            }
-
-            foreach (Baan B in wedstrijd.getBanen())
-            {
-                lbBanen.Items.Add(B);
-            }
+            BaanUpdate();
+            //foreach (Baan B in wedstrijd.getBanen())
+            //{
+            //    lbBanen.Items.Add(B);
+            //}
         }
 
         private void btNieuweSchutter_Click(object sender, EventArgs e)
@@ -81,32 +74,36 @@ namespace ArcheryApplication.GUIs
             }
             else if (geselecteerd.Schutter == null)
             {
-                MessageBox.Show("Schutter not found. Raadpleeg uw nerd voor hulp.");
+                MessageBox.Show("Schutter niet gevonden. Raadpleeg uw nerd voor hulp.");
             }
         }
 
-        private void button1_Click(object sender, EventArgs e)
+        private void btGeefScore_Click(object sender, EventArgs e)
         {
-            if (wedstrijd.Soort == Soort.Indoorcompetitie)
-            { 
-                var baan = lbBanen.SelectedItem as Baan;
-                baan.Schutter.AddScore();
-            }
-            else if (wedstrijd.Soort == Soort.JeugdFITA)
+            //BUG!
+            var baan = lbBanen.SelectedItem as Baan;
+            if (baan != null)
             {
-
-            }
-            else if (wedstrijd.Soort == Soort.WA1440)
-            {
-
-            }
-            else if (wedstrijd.Soort == Soort.Veld)
-            {
-
+                if (textBox1.Text != "")
+                {
+                    if (baan.Schutter != null)
+                    {
+                        baan.Schutter.AddScore(new Score(Convert.ToInt32(textBox1.Text), baan.Afstand));
+                        BaanUpdate();
+                    }
+                    else
+                    {
+                        MessageBox.Show("Op deze baan staat geen schutter.");
+                    }
+                }
+                else
+                {
+                    MessageBox.Show("Voer een score in.");
+                }
             }
             else
             {
-
+                MessageBox.Show("Selecteer de baan van een schutter.");
             }
         }
     }

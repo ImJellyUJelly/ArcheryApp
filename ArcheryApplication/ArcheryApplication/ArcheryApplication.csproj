@@ -48,10 +48,13 @@
   <ItemGroup>
     <Compile Include="Classes\Baan.cs" />
     <Compile Include="Classes\Database2.cs" />
+    <Compile Include="Classes\Database\Interfaces\IBaanServices.cs" />
     <Compile Include="Classes\Database\Interfaces\ISchutterServices.cs" />
     <Compile Include="Classes\Database\Interfaces\IWedstrijdServices.cs" />
+    <Compile Include="Classes\Database\Repositories\BaanRepository.cs" />
     <Compile Include="Classes\Database\Repositories\SchutterRepository.cs" />
     <Compile Include="Classes\Database\Repositories\WedstrijdRepository.cs" />
+    <Compile Include="Classes\Database\SQL\MssqlBaanLogic.cs" />
     <Compile Include="Classes\Database\SQL\MssqlSchutterLogic.cs" />
     <Compile Include="Classes\Database\SQL\MssqlWedstrijdLogic.cs" />
     <Compile Include="Classes\Enums\Discipline.cs" />

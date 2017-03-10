@@ -9,6 +9,7 @@ namespace ArcheryApplication.Classes
 {
     public class Schutter
     {
+        public int ID { get; private set; }
         public int Bondsnummer { get; set; }
         public string Naam { get; set; }
         public DateTime Geboortedatum { get; set; }
@@ -30,6 +31,19 @@ namespace ArcheryApplication.Classes
             Geboortedatum = geb;
             Opmerking = opmerking;
             ScoreFormulier = new Scoreformulier();
+        }
+        public Schutter(int id, int bondsnr, string naam, Klasse k, Discipline d, Geslacht g, DateTime geb, string opmerking, Vereniging vereniging)
+        {
+            ID = id;
+            Bondsnummer = bondsnr;
+            Naam = naam;
+            Klasse = k;
+            Discipline = d;
+            Geslacht = g;
+            Geboortedatum = geb;
+            Opmerking = opmerking;
+            ScoreFormulier = new Scoreformulier();
+            Vereniging = vereniging;
         }
 
         public void editSchutter(string naam, Klasse k, Discipline d, Geslacht g, DateTime geb, string opmerking)
@@ -55,7 +69,7 @@ namespace ArcheryApplication.Classes
         }
         public override string ToString()
         {
-            return $"{Bondsnummer} { Naam }, Klasse: { Klasse }, Geslacht: { Geslacht } Discipline: { Discipline }, Geb.Datum: { Geboortedatum.ToShortDateString() }";
+            return $"{Bondsnummer} { Naam }, Klasse: { Klasse }, Geslacht: { Geslacht } Discipline: { Discipline }, Geb.Datum: { Geboortedatum.ToShortDateString() } - Score: { ScoreFormulier.TotaalScore.ToString() }";
         }
     }
 }
