@@ -14,14 +14,14 @@ namespace ArcheryApplication.GUIs
 {
     public partial class Wedstrijdoverzicht : Form
     {
-        public Wedstrijd wedstrijd { get; private set; }
+        public Wedstrijd Wedstrijd { get; private set; }
         public Wedstrijdoverzicht(Wedstrijd wedstrijd)
         {
             InitializeComponent();
-            this.wedstrijd = wedstrijd;
+            this.Wedstrijd = wedstrijd;
             lbWedstrijdnaam.Text = wedstrijd.Naam;
             lbSoort.Text = wedstrijd.Soort.ToString();
-            lbAantalSchutters.Text = wedstrijd.getSchutters().Count.ToString();
+            lbAantalSchutters.Text = wedstrijd.GetSchutters().Count.ToString();
             lbDatum.Text = wedstrijd.Datum.ToString();
             BaanUpdate();
             //foreach (Baan B in wedstrijd.getBanen())
@@ -32,12 +32,18 @@ namespace ArcheryApplication.GUIs
 
         private void btNieuweSchutter_Click(object sender, EventArgs e)
         {
-            SchutterAanmelden SA = new SchutterAanmelden();
-            SA.ShowDialog();
-
-            wedstrijd.schutterAanmelden(new Schutter(SA.Bondsnummer, SA.Naam, SA._Klasse, SA._Discipline, SA._Geslacht, SA.Geboortedatum, SA.Opmerking));
-
-            lbAantalSchutters.Text = wedstrijd.getSchutters().Count.ToString();
+            SchutterAanmelden sa = new SchutterAanmelden();
+            sa.ShowDialog();
+            var geselecteerdebaan = lbBanen.SelectedItem as Baan;
+            if (geselecteerdebaan != null)
+            {
+                Wedstrijd.SchutterAanmeldenOpBaan(new Schutter(sa.Bondsnummer, sa.Naam, sa.Klasse, sa.Discipline, sa.Geslacht, sa.Geboortedatum, sa.Opmerking, geselecteerdebaan));
+            }
+            else
+            {
+                Wedstrijd.SchutterAanmelden(new Schutter(sa.Bondsnummer, sa.Naam, sa.Klasse, sa.Discipline, sa.Geslacht, sa.Geboortedatum, sa.Opmerking));
+            }
+            lbAantalSchutters.Text = Wedstrijd.GetSchutters().Count.ToString();
             BaanUpdate();
         }
 
@@ -48,9 +54,9 @@ namespace ArcheryApplication.GUIs
         private void BaanUpdate()
         {
             lbBanen.Items.Clear();
-            foreach (Baan B in wedstrijd.getBanen())
+            foreach (Baan b in Wedstrijd.GetBanen())
             {
-                lbBanen.Items.Add(B);
+                lbBanen.Items.Add(b);
             }
         }
 
@@ -59,17 +65,11 @@ namespace ArcheryApplication.GUIs
             var geselecteerd = lbBanen.SelectedItem as Baan;
             if (geselecteerd.Schutter != null)
             {
-                SchutterAanmelden SE = new SchutterAanmelden();
-                SE.editSchutter(geselecteerd.Schutter.Bondsnummer, geselecteerd.Schutter.Naam, geselecteerd.Schutter.Geboortedatum, geselecteerd.Schutter.Discipline, geselecteerd.Schutter.Klasse, geselecteerd.Schutter.Geslacht, geselecteerd.Schutter.Opmerking);
+                SchutterAanmelden se = new SchutterAanmelden();
+                se.EditSchutter(geselecteerd.Schutter.Bondsnummer, geselecteerd.Schutter.Naam, geselecteerd.Schutter.Geboortedatum, geselecteerd.Schutter.Discipline, geselecteerd.Schutter.Klasse, geselecteerd.Schutter.Geslacht, geselecteerd.Schutter.Opmerking);
 
-                SE.ShowDialog();
-                geselecteerd.Schutter.Bondsnummer = SE.Bondsnummer;
-                geselecteerd.Schutter.Naam = SE.Naam;
-                geselecteerd.Schutter.Geboortedatum = SE.Geboortedatum;
-                geselecteerd.Schutter.Discipline = SE._Discipline;
-                geselecteerd.Schutter.Klasse = SE._Klasse;
-                geselecteerd.Schutter.Geslacht = SE._Geslacht;
-                geselecteerd.Schutter.Opmerking = SE.Opmerking;
+                se.ShowDialog();
+                geselecteerd.Schutter.EditSchutter(se.Bondsnummer, se.Naam, se.Klasse, se.Discipline, se.Geslacht, se.Geboortedatum, se.Opmerking);
                 BaanUpdate();
             }
             else if (geselecteerd.Schutter == null)
@@ -88,8 +88,15 @@ namespace ArcheryApplication.GUIs
                 {
                     if (baan.Schutter != null)
                     {
-                        baan.Schutter.AddScore(new Score(Convert.ToInt32(textBox1.Text), baan.Afstand));
-                        BaanUpdate();
+                        try
+                        {
+                            baan.Schutter.AddScore(new Score(Convert.ToInt32(textBox1.Text), baan.Afstand));
+                            BaanUpdate();
+                        }
+                        catch (ScoreException sex)
+                        {
+                            MessageBox.Show(sex.Message);
+                        }
                     }
                     else
                     {

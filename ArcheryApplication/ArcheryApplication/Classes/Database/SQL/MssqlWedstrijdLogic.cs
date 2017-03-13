@@ -2,9 +2,6 @@
 using System.Collections.Generic;
 using System.Data;
 using System.Data.SqlClient;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
 using ArcheryApplication.Classes.Database.Interfaces;
 using ArcheryApplication.Classes.Enums;
 using ArcheryApplication.Exceptions;
@@ -13,7 +10,7 @@ namespace ArcheryApplication.Classes.Database.SQL
 {
     public class MssqlWedstrijdLogic : IWedstrijdServices
     {
-        private readonly string connectie = @"Data Source=.;Initial Catalog = Archery; Integrated Security = True;";
+        private readonly string _connectie = @"Data Source=.;Initial Catalog = Archery; Integrated Security = True;";
 
         public void AddBaanToWedstrijd(Baan baan, int wedstrijdId)
         {
@@ -50,7 +47,7 @@ namespace ArcheryApplication.Classes.Database.SQL
             try
             {
                 List<Wedstrijd> wedstrijden = new List<Wedstrijd>();
-                using (SqlConnection conn = new SqlConnection(connectie))
+                using (SqlConnection conn = new SqlConnection(_connectie))
                 {
                     if (conn.State != ConnectionState.Open)
                     {

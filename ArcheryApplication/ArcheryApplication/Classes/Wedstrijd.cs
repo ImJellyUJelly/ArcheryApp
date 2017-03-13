@@ -1,9 +1,5 @@
 ﻿using System;
 using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
-using ArcheryApplication.Classes;
 using ArcheryApplication.Classes.Enums;
 using ArcheryApplication.Exceptions;
 using System.Windows.Forms;
@@ -12,22 +8,22 @@ namespace ArcheryApplication.Classes
 {
     public class Wedstrijd
     {
-        List<Baan> banen = new List<Baan>();
-        List<Schutter> schutters = new List<Schutter>();
-        public int ID { get; set; }
-        public string Naam { get; set; }
-        public Soort Soort { get; set; }
-        public string Datum { get; set; }
+        List<Baan> _banen = new List<Baan>();
+        List<Schutter> _schutters = new List<Schutter>();
+        public int Id { get; private set; }
+        public string Naam { get; private set; }
+        public Soort Soort { get; private set; }
+        public string Datum { get; private set; }
 
         public Wedstrijd(int id, string naam, Soort soort, string datum)
         {
-            ID = id;
+            Id = id;
             Naam = naam;
             Soort = soort;
             Datum = datum;
-            aantalBanenBepalen();
-            testSchutters();
-            schuttersaanbaantoevoegen();
+            AantalBanenBepalen();
+            //testSchutters();
+            //schuttersaanbaantoevoegen();
 
             //banen = db.GetBanen();
             //schutters = db.GetSchutters();
@@ -38,76 +34,88 @@ namespace ArcheryApplication.Classes
             Naam = naam;
             Soort = soort;
             Datum = datum;
-            aantalBanenBepalen();
-            testSchutters();
-            schuttersaanbaantoevoegen();
+            AantalBanenBepalen();
+            //testSchutters();
+            //schuttersaanbaantoevoegen();
 
             //banen = db.GetBanen();
             //schutters = db.GetSchutters();
         }
 
         //edit stuff
-        public void veranderNaam(string naam)
+        public void BewerkWedstrijd(string naam, Soort soort, string datum)
         {
             Naam = naam;
-        }
-        public void veranderSoort(Soort soort)
-        {
             Soort = soort;
+            Datum = datum;
         }
 
-        public void schutterAanmelden(Schutter nieuweSchutter)
+        public void SchutterAanmelden(Schutter nieuweSchutter)
         {
-            if (schutterCheck(nieuweSchutter.Bondsnummer))
+            if (SchutterCheck(nieuweSchutter.Bondsnummer))
             {
-                schutters.Add(nieuweSchutter);
-                MessageBox.Show($"{nieuweSchutter.Naam} is aangemeld voor {Soort.ToString()}");
-                schuttersaanbaantoevoegen();
+                _schutters.Add(nieuweSchutter);
+                MessageBox.Show(string.Format("Gelukt! {0} is aangemeld voor {1}", nieuweSchutter.Naam, Naam));
+                if (nieuweSchutter.Baan == null)
+                {
+                    Schuttersaanbaantoevoegen();
+                }
             }
             else
             {
                 MessageBox.Show($"Error: {nieuweSchutter.Naam} met bondsnummer {nieuweSchutter.Bondsnummer} is al aangemeld voor {Soort.ToString()}");
             }
         }
-        public void testSchutters()
+        public void SchutterAanmeldenOpBaan(Schutter nieuweSchutter)
+        {
+            SchutterAanmelden(nieuweSchutter);
+            foreach (Baan b in _banen)
+            {
+                if (b.BaanId == nieuweSchutter.Baan.BaanId)
+                {
+                    b.VoegSchutterToe(nieuweSchutter);
+                }
+            }
+        }
+        public void TestSchutters()
         {
             //testdata schutters
-            schutters.Add(new Schutter(161378, "Jelle Schraeder", Klasse.Senior, Discipline.Recurve, Geslacht.Heren, DateTime.Now, ""));
-            schutters.Add(new Schutter(111111, "Florentina Schwanen", Klasse.Junior, Discipline.Compound, Geslacht.Dames, DateTime.Now, ""));
-            schutters.Add(new Schutter(222222, "Stijn Koijen", Klasse.Senior, Discipline.Compound, Geslacht.Heren, DateTime.Now, ""));
-            schutters.Add(new Schutter(333333, "Mark van Broekhoven", Klasse.Cadet, Discipline.Recurve, Geslacht.Heren, DateTime.Now, ""));
-            schutters.Add(new Schutter(444444, "Ad van Vught", Klasse.Veteraan, Discipline.Barebow, Geslacht.Heren, DateTime.Now, ""));
+            _schutters.Add(new Schutter(161378, "Jelle Schraeder", Klasse.Senior, Discipline.Recurve, Geslacht.Heren, DateTime.Now, ""));
+            _schutters.Add(new Schutter(111111, "Florentina Schwanen", Klasse.Junior, Discipline.Compound, Geslacht.Dames, DateTime.Now, ""));
+            _schutters.Add(new Schutter(222222, "Stijn Koijen", Klasse.Senior, Discipline.Compound, Geslacht.Heren, DateTime.Now, ""));
+            _schutters.Add(new Schutter(333333, "Mark van Broekhoven", Klasse.Cadet, Discipline.Recurve, Geslacht.Heren, DateTime.Now, ""));
+            _schutters.Add(new Schutter(444444, "Ad van Vught", Klasse.Veteraan, Discipline.Barebow, Geslacht.Heren, DateTime.Now, ""));
         }
 
-        public bool schutterCheck(int bondsnummer)
+        private bool SchutterCheck(int bondsnummer)
         {
-            foreach (Schutter s in schutters)
+            foreach (Schutter s in _schutters)
             {
                 if (bondsnummer == s.Bondsnummer)
                 {
-                    return false;
+                    throw new SchutterException("Schutter is al aangemeld voor deze wedstrijd.");
                 }
             }
             return true;
         }
 
-        private void aantalBanenBepalen()
+        private void AantalBanenBepalen()
         {
             int banen;
-            if (Soort == Soort.WA1440)
+            if (Soort == Soort.Wa1440)
             {
                 banen = 18;
-                banenAanmaken(banen);
+                BanenAanmaken(banen);
             }
-            else if (Soort == Soort.JeugdFITA)
+            else if (Soort == Soort.JeugdFita)
             {
                 banen = 18;
-                banenAanmaken(banen);
+                BanenAanmaken(banen);
             }
             else if (Soort == Soort.Indoorcompetitie)
             {
                 banen = 10;
-                banenAanmaken(banen);
+                BanenAanmaken(banen);
             }
             else if (Soort == Soort.Veld)
             {
@@ -119,30 +127,31 @@ namespace ArcheryApplication.Classes
             }
         }
 
-        public List<Schutter> getSchutters()
+        public List<Schutter> GetSchutters()
         {
-            return schutters;
+            return _schutters;
         }
-        public List<Baan> getBanen()
+        public List<Baan> GetBanen()
         {
-            return banen;
+            return _banen;
         }
-        public void schuttersaanbaantoevoegen()
+        // Als de schutter geen baan heeft geselecteerd
+        public void Schuttersaanbaantoevoegen()
         {
-            if (schutters != null)
+            if (_schutters != null)
             {
-                foreach (Schutter S in schutters)
+                foreach (Schutter s in _schutters)
                 {
-                    if (S.Baan == null)
+                    if (s.Baan == null)
                     {
-                        foreach (Baan B in banen)
+                        foreach (Baan b in _banen)
                         {
-                            if (B.Schutter == null)
+                            if (b.Schutter == null)
                             {
-                                B.VoegSchutterToe(S);
-                                S.Baan = B;
+                                b.VoegSchutterToe(s);
+                                s.GeefSchutterEenBaan(b);
                             }
-                            if (S.Baan != null)
+                            if (s.Baan != null)
                             {
                                 break;
                             }
@@ -152,7 +161,7 @@ namespace ArcheryApplication.Classes
             }
         }
 
-        private void banenAanmaken(int aantalBanen)
+        private void BanenAanmaken(int aantalBanen)
         {
             for (int baannr = 1; baannr <= aantalBanen; baannr++)
             {
@@ -162,22 +171,22 @@ namespace ArcheryApplication.Classes
 
                     if (letter == 0)
                     {
-                        banen.Add(new Baan(baannr, "A", 70));
+                        _banen.Add(new Baan(baannr, "A", 70));
                         letter++;
                     }
                     else if (letter == 1)
                     {
-                        banen.Add(new Baan(baannr, "B", 70));
+                        _banen.Add(new Baan(baannr, "B", 70));
                         letter++;
                     }
                     else if (letter == 2)
                     {
-                        banen.Add(new Baan(baannr, "C", 70));
+                        _banen.Add(new Baan(baannr, "C", 70));
                         letter++;
                     }
                     else if (letter == 3)
                     {
-                        banen.Add(new Baan(baannr, "D", 70));
+                        _banen.Add(new Baan(baannr, "D", 70));
                         letter = 0;
                     }
                 }
@@ -185,7 +194,7 @@ namespace ArcheryApplication.Classes
         }
         public override string ToString()
         {
-            return $"Naam: {Naam}, datum: {Datum}, Soort: {Soort} Aantal schutters: {schutters.Count}";
+            return $"Naam: {Naam}, datum: {Datum}, Soort: {Soort} Aantal schutters: {_schutters.Count}";
         }
     }
 }

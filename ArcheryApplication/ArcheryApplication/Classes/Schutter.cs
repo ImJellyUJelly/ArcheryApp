@@ -1,26 +1,22 @@
 ﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
-using ArcheryApplication.Classes.Enums;
 
 namespace ArcheryApplication.Classes
 {
     public class Schutter
     {
-        public int ID { get; private set; }
-        public int Bondsnummer { get; set; }
-        public string Naam { get; set; }
-        public DateTime Geboortedatum { get; set; }
-        public Baan Baan { get; set; }
-        public Klasse Klasse { get; set; }
-        public Discipline Discipline { get; set; }
-        public Geslacht Geslacht { get; set; }
-        public string Opmerking { get; set; }
+        public int Id { get; private set; }
+        public int Bondsnummer { get; private set; }
+        public string Naam { get; private set; }
+        public DateTime Geboortedatum { get; private set; }
+        public Baan Baan { get; private set; }
+        public Klasse Klasse { get; private set; }
+        public Discipline Discipline { get; private set; }
+        public Geslacht Geslacht { get; private set; }
+        public string Opmerking { get; private set; }
         public Scoreformulier ScoreFormulier { get; private set; }
-        public Vereniging Vereniging { get; set; }
+        public Vereniging Vereniging { get; private set; }
 
+        // Algemene constructor
         public Schutter(int bondsnr, string naam, Klasse k, Discipline d, Geslacht g, DateTime geb, string opmerking)
         {
             Bondsnummer = bondsnr;
@@ -32,22 +28,25 @@ namespace ArcheryApplication.Classes
             Opmerking = opmerking;
             ScoreFormulier = new Scoreformulier();
         }
-        public Schutter(int id, int bondsnr, string naam, Klasse k, Discipline d, Geslacht g, DateTime geb, string opmerking, Vereniging vereniging)
+        // Algemene constructor met ID (voor Database)
+        public Schutter(int id, int bondsnr, string naam, Klasse k, Discipline d, Geslacht g, DateTime geb, string opmerking) : this(bondsnr, naam, k, d, g, geb, opmerking)
         {
-            ID = id;
-            Bondsnummer = bondsnr;
-            Naam = naam;
-            Klasse = k;
-            Discipline = d;
-            Geslacht = g;
-            Geboortedatum = geb;
-            Opmerking = opmerking;
-            ScoreFormulier = new Scoreformulier();
+            Id = id;
+        }
+        // Als een schutter op een bepaalde baan wil staan
+        public Schutter(int bondsnr, string naam, Klasse k, Discipline d, Geslacht g, DateTime geb, string opmerking, Baan baan) : this(bondsnr, naam, k, d, g, geb, opmerking)
+        {
+            Baan = baan;
+        }
+        // Constructor met een Verenging
+        public Schutter(int id, int bondsnr, string naam, Klasse k, Discipline d, Geslacht g, DateTime geb, string opmerking, Vereniging vereniging) : this(id, bondsnr, naam, k, d, g, geb, opmerking)
+        {
             Vereniging = vereniging;
         }
 
-        public void editSchutter(string naam, Klasse k, Discipline d, Geslacht g, DateTime geb, string opmerking)
+        public void EditSchutter(int bondsnr, string naam, Klasse k, Discipline d, Geslacht g, DateTime geb, string opmerking)
         {
+            Bondsnummer = bondsnr;
             Naam = naam;
             Klasse = k;
             Discipline = d;
@@ -61,8 +60,12 @@ namespace ArcheryApplication.Classes
         {
             ScoreFormulier.AddScore(score);
         }
+        public void GeefSchutterEenBaan(Baan b)
+        {
+            Baan = b;
+        }
 
-        public int compareSchutters(Schutter andereSchutter)
+        public int CompareSchutters(Schutter andereSchutter)
         {
             int result = Bondsnummer.CompareTo(andereSchutter.Bondsnummer);
             return result;

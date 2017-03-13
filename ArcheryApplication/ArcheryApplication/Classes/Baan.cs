@@ -1,15 +1,8 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
-using ArcheryApplication.Classes.Enums;
-
-namespace ArcheryApplication.Classes
+﻿namespace ArcheryApplication.Classes
 {
     public class Baan
     {
-        public int ID { get; private set; }
+        public int Id { get; private set; }
         public string BaanId { get; private set; }
         public int Baannummer { get; private set; }
         public string Letter { get; private set; }
@@ -25,7 +18,7 @@ namespace ArcheryApplication.Classes
         }
         public Baan(int id, int baannummer, string letter, int afstand)
         {
-            ID = id;
+            Id = id;
             Baannummer = baannummer;
             Letter = letter;
             Afstand = afstand;

@@ -1,58 +1,66 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
+﻿using System.Collections.Generic;
 
 namespace ArcheryApplication.Classes
 {
     public class Scoreformulier
     {
-        private int totaalScore;
-        public List<Score> Scores { get; private set; }
-        public int TotaalScore { get { return totaalScore; } private set { value = totaalScore; } }
+        public List<Score> ScorePerAfstand { get; private set; } // 1 score is het aantal pijlen dat op 1 afstand geschoten wordt (bijv. 36 pijlen op 70m. = max. 360 punten)
+        public int TotaalScore { get; private set; } // de scores van alle afstanden opgeteld
         public Scoreformulier()
         {
-            Scores = new List<Score>();
+            ScorePerAfstand = new List<Score>();
             TotaalScore = 0;
         }
         //update
         public bool AddScore(Score score)
         {
-            Scores.Add(score);
-            return true;
+            try
+            {
+                ScorePerAfstand.Add(score);
+                BerekenTotaalScore(ScorePerAfstand);
+                return true;
+            }
+            catch (ScoreException sex)
+            {
+                throw sex;
+            }
         }
         public bool ChangeScore(Score score)
         {
-            foreach (Score S in Scores)
+            try
             {
-                if (S.ID == score.ID)
+                foreach (Score s in ScorePerAfstand)
                 {
-                    S.ChangeScore(score.AantalPunten);
-                    S.ChangeAfstand(score.Afstand);
-                    return true;
+                    if (s.Id == score.Id)
+                    {
+                        s.ChangeScore(score.AantalPunten);
+                        s.ChangeAfstand(score.Afstand);
+                        BerekenTotaalScore(ScorePerAfstand);
+
+                        return true;
+                    }
                 }
+            }
+            catch (ScoreException sex)
+            {
+                throw sex;
             }
             return false;
         }
         public bool RemoveScore(Score score)
         {
-            Scores.Remove(score);
+            ScorePerAfstand.Remove(score);
+            BerekenTotaalScore(ScorePerAfstand);
             return true;
         }
         private void BerekenTotaalScore(List<Score> scores)
         {
             int totaal = 0;
-            foreach (Score S in scores)
+            foreach (Score s in scores)
             {
-                if (S.AantalPunten == 0)
-                {
-                    break;
-                }
-                totaal += S.AantalPunten;
+                totaal += s.AantalPunten;
             }
-            totaalScore = totaal;
-
+            TotaalScore = totaal;
         }
     }
 }

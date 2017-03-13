@@ -1,63 +1,59 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
+﻿using System.Collections.Generic;
 using ArcheryApplication.Classes.Database.Interfaces;
 
 namespace ArcheryApplication.Classes.Database.Repositories
 {
     public class BaanRepository
     {
-        private IBaanServices baanLogic;
+        private IBaanServices _baanLogic;
         public BaanRepository(IBaanServices baanLogic)
         {
-            this.baanLogic = baanLogic;
+            this._baanLogic = baanLogic;
         }
 
         public void AddBaan(Baan baan)
         {
-            baanLogic.AddBaan(baan);
+            _baanLogic.AddBaan(baan);
         }
 
         public void AddSchutterTobaan(Schutter schutter, int baanId)
         {
-            baanLogic.AddSchutterTobaan(schutter, baanId);
+            _baanLogic.AddSchutterTobaan(schutter, baanId);
         }
 
         public void EditBaan(Baan baan)
         {
-            baanLogic.EditBaan(baan);
+            _baanLogic.EditBaan(baan);
         }
 
-        public Baan GetBaanByID(int baanId)
+        public Baan GetBaanById(int baanId)
         {
-            return baanLogic.GetBaanByID(baanId);
+            return _baanLogic.GetBaanById(baanId);
         }
 
         public Baan GetBaanByNummer(int baanNummer)
         {
-            return baanLogic.GetBaanByNummer(baanNummer);
+            return _baanLogic.GetBaanByNummer(baanNummer);
         }
 
         public List<Baan> ListBanen()
         {
-            return baanLogic.ListBanen();
+            return _baanLogic.ListBanen();
         }
 
         public List<Schutter> ListSchuttersOpBaan(int baanId)
         {
-            return baanLogic.ListSchuttersOpBaan(baanId);
+            return _baanLogic.ListSchuttersOpBaan(baanId);
         }
 
         public void RemoveBaan(Baan baan)
         {
-            baanLogic.RemoveBaan(baan);
+            _baanLogic.RemoveBaan(baan);
         }
 
         public void RemoveSchutterFromBaan(Schutter schutter, int baanId)
         {
-            baanLogic.RemoveSchutterFromBaan(schutter, baanId);
+            _baanLogic.RemoveSchutterFromBaan(schutter, baanId);
         }
     }
 }

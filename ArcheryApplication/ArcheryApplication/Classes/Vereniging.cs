@@ -1,19 +1,13 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
-
-namespace ArcheryApplication.Classes
+﻿namespace ArcheryApplication.Classes
 {
     public class Vereniging
     {
-        private int VerNr { get; set; }
-        private string Naam { get; set; }
-        private string Straatnaam { get; set; }
-        private string Huisnummer { get; set; }
-        private string Postcode { get; set; }
-        private string Plaats { get; set; }
+        public int VerNr { get; private set; }
+        public string Naam { get; private set; }
+        public string Straatnaam { get; private set; }
+        public string Huisnummer { get; private set; }
+        public string Postcode { get; private set; }
+        public string Plaats { get; private set; }
 
         public Vereniging(int nr, string naam, string straat, string hnr, string postcode, string plaats)
         {
@@ -48,20 +42,6 @@ namespace ArcheryApplication.Classes
         {
             Plaats = plaats;
             return true;
-        }
-
-        //get
-        public int GetNr()
-        {
-            return VerNr;
-        }
-        public string GetNaam()
-        {
-            return Naam;
-        }
-        public string GetPlaats()
-        {
-            return Plaats;
         }
     }
 }

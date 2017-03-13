@@ -17,9 +17,9 @@ namespace ArcheryApplication.GUIs
         public int Bondsnummer { get; set; }
         public string Naam { get; set; }
         public DateTime Geboortedatum { get; set; }
-        public Discipline _Discipline { get; set; }
-        public Klasse _Klasse { get; set; }
-        public Geslacht _Geslacht { get; set; }
+        public Discipline Discipline { get; set; }
+        public Klasse Klasse { get; set; }
+        public Geslacht Geslacht { get; set; }
         public string Opmerking { get; set; }
 
         public SchutterAanmelden()
@@ -39,9 +39,9 @@ namespace ArcheryApplication.GUIs
                     Bondsnummer = -1;
                     Naam = tbNaam.Text;
                     Geboortedatum = dtLeeftijd.Value;
-                    _Discipline = (Discipline)cbDiscipline.SelectedItem;
-                    _Klasse = (Klasse)cbKlasse.SelectedItem;
-                    _Geslacht = (Geslacht)cbGeslacht.SelectedItem;
+                    Discipline = (Discipline)cbDiscipline.SelectedItem;
+                    Klasse = (Klasse)cbKlasse.SelectedItem;
+                    Geslacht = (Geslacht)cbGeslacht.SelectedItem;
                     Opmerking = tbOpmerking.Text;
 
                     tbBN.Clear();
@@ -55,9 +55,9 @@ namespace ArcheryApplication.GUIs
                     Bondsnummer = Convert.ToInt32(tbBN.Text);
                     Naam = tbNaam.Text;
                     Geboortedatum = dtLeeftijd.Value;
-                    _Discipline = (Discipline)cbDiscipline.SelectedItem;
-                    _Klasse = (Klasse)cbKlasse.SelectedItem;
-                    _Geslacht = (Geslacht)cbGeslacht.SelectedItem;
+                    Discipline = (Discipline)cbDiscipline.SelectedItem;
+                    Klasse = (Klasse)cbKlasse.SelectedItem;
+                    Geslacht = (Geslacht)cbGeslacht.SelectedItem;
                     Opmerking = tbOpmerking.Text;
 
                     tbBN.Clear();
@@ -73,25 +73,25 @@ namespace ArcheryApplication.GUIs
             }
         }
 
-        public void editSchutter(int b, string n, DateTime G, Discipline D, Klasse K, Geslacht Ge, string O)
+        public void EditSchutter(int b, string n, DateTime g, Discipline d, Klasse k, Geslacht ge, string o)
         {
-            string Dis = D.ToString();
-            string Kla = K.ToString();
-            string Ges = G.ToString();
+            string dis = d.ToString();
+            string kla = k.ToString();
+            string ges = g.ToString();
             tbBN.Text = b.ToString();
             tbNaam.Text = n;
-            dtLeeftijd.Value = G;
-            cbDiscipline.Text = Dis;
-            cbKlasse.Text = Kla;
-            cbGeslacht.Text = Ges;
-            tbOpmerking.Text = O;
+            dtLeeftijd.Value = g;
+            cbDiscipline.Text = dis;
+            cbKlasse.Text = kla;
+            cbGeslacht.Text = ges;
+            tbOpmerking.Text = o;
 
             Bondsnummer = Convert.ToInt32(tbBN.Text);
             Naam = tbNaam.Text;
             Geboortedatum = dtLeeftijd.Value;
-            _Discipline = (Discipline)cbDiscipline.SelectedItem;
-            _Klasse = (Klasse)cbKlasse.SelectedItem;
-            _Geslacht = (Geslacht)cbGeslacht.SelectedItem;
+            Discipline = (Discipline)cbDiscipline.SelectedItem;
+            Klasse = (Klasse)cbKlasse.SelectedItem;
+            Geslacht = (Geslacht)cbGeslacht.SelectedItem;
             Opmerking = tbOpmerking.Text;
         }
 

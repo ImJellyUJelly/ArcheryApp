@@ -2,19 +2,16 @@
 using System.Collections.Generic;
 using System.Data;
 using System.Data.SqlClient;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
 using ArcheryApplication.Classes.Database.Interfaces;
 
 namespace ArcheryApplication.Classes.Database.SQL
 {
     public class MssqlBaanLogic : IBaanServices
     {
-        private readonly string connectie = "";
+        private readonly string _connectie = "";
         public void AddBaan(Baan baan)
         {
-            using (SqlConnection conn = new SqlConnection(connectie))
+            using (SqlConnection conn = new SqlConnection(_connectie))
             {
                 if (conn.State != ConnectionState.Open)
                 {
@@ -54,7 +51,7 @@ namespace ArcheryApplication.Classes.Database.SQL
 
         public void EditBaan(Baan baan)
         {
-            using (SqlConnection conn = new SqlConnection(connectie))
+            using (SqlConnection conn = new SqlConnection(_connectie))
             {
                 if (conn.State != ConnectionState.Open)
                 {
@@ -88,9 +85,9 @@ namespace ArcheryApplication.Classes.Database.SQL
             }
         }
 
-        public Baan GetBaanByID(int baanId)
+        public Baan GetBaanById(int baanId)
         {
-            using (SqlConnection conn = new SqlConnection(connectie))
+            using (SqlConnection conn = new SqlConnection(_connectie))
             {
                 if (conn.State != ConnectionState.Open)
                 {
@@ -135,7 +132,7 @@ namespace ArcheryApplication.Classes.Database.SQL
 
         public Baan GetBaanByNummer(int baanNummer)
         {
-            using (SqlConnection conn = new SqlConnection(connectie))
+            using (SqlConnection conn = new SqlConnection(_connectie))
             {
                 if (conn.State != ConnectionState.Open)
                 {
@@ -181,7 +178,7 @@ namespace ArcheryApplication.Classes.Database.SQL
         public List<Baan> ListBanen()
         {
             List<Baan> banen = new List<Baan>();
-            using (SqlConnection conn = new SqlConnection(connectie))
+            using (SqlConnection conn = new SqlConnection(_connectie))
             {
                 if (conn.State != ConnectionState.Open)
                 {
@@ -227,7 +224,7 @@ namespace ArcheryApplication.Classes.Database.SQL
         public List<Schutter> ListSchuttersOpBaan(int baanId)
         {
             List<Schutter> schutters = new List<Schutter>();
-            using (SqlConnection conn = new SqlConnection(connectie))
+            using (SqlConnection conn = new SqlConnection(_connectie))
             {
                 if (conn.State != ConnectionState.Open)
                 {
@@ -309,7 +306,7 @@ namespace ArcheryApplication.Classes.Database.SQL
 
         public void RemoveBaan(Baan baan)
         {
-            using (SqlConnection conn = new SqlConnection(connectie))
+            using (SqlConnection conn = new SqlConnection(_connectie))
             {
                 if (conn.State != ConnectionState.Open)
                 {
@@ -342,7 +339,7 @@ namespace ArcheryApplication.Classes.Database.SQL
 
         public void RemoveSchutterFromBaan(Schutter schutter, int baanId)
         {
-            using (SqlConnection conn = new SqlConnection(connectie))
+            using (SqlConnection conn = new SqlConnection(_connectie))
             {
                 if (conn.State != ConnectionState.Open)
                 {
@@ -356,7 +353,7 @@ namespace ArcheryApplication.Classes.Database.SQL
                                 "DELETE FROM SchutterOpBaan WHERE SchutterID = @schutterId AND BaanID = @baanId;";
                             cmd.Connection = conn;
 
-                            cmd.Parameters.AddWithValue("@schutterId", schutter.ID);
+                            cmd.Parameters.AddWithValue("@schutterId", schutter.Id);
                             cmd.Parameters.AddWithValue("@baanId", baanId);
 
                             cmd.ExecuteNonQuery();

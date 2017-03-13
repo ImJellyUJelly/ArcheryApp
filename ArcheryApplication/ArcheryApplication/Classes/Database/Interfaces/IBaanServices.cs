@@ -1,14 +1,10 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
+﻿using System.Collections.Generic;
 
 namespace ArcheryApplication.Classes.Database.Interfaces
 {
     public interface IBaanServices
     {
-        Baan GetBaanByID(int baanId);
+        Baan GetBaanById(int baanId);
         Baan GetBaanByNummer(int baanNummer);
         List<Baan> ListBanen();
         List<Schutter> ListSchuttersOpBaan(int baanId);

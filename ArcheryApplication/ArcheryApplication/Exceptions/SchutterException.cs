@@ -8,13 +8,13 @@ using ArcheryApplication.Classes;
 
 namespace ArcheryApplication.Exceptions
 {
-    public class AlAangemeldException : Exception
+    public class SchutterException : Exception
     {
-        public AlAangemeldException()
+        public SchutterException()
         {
             
         }
-        public AlAangemeldException(string message) : base(message)
+        public SchutterException(string message) : base(message)
         {
 
         }

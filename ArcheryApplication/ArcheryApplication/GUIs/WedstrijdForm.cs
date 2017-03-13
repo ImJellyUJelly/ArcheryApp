@@ -19,7 +19,7 @@ namespace ArcheryApplication
     public partial class WedstrijdForm : Form
     {
         //WedstrijdRepository wedstrijdRepo = new WedstrijdRepository(new MssqlWedstrijdLogic());
-        List<Wedstrijd> wedstrijden = new List<Wedstrijd>();
+        List<Wedstrijd> _wedstrijden = new List<Wedstrijd>();
         public WedstrijdForm()
         {
             InitializeComponent();
@@ -32,11 +32,11 @@ namespace ArcheryApplication
             {
                 MessageBox.Show(ex.Message);
             }
-            if (wedstrijden != null)
+            if (_wedstrijden != null)
             {
-                foreach (Wedstrijd W in wedstrijden)
+                foreach (Wedstrijd w in _wedstrijden)
                 {
-                    lbWedstrijden.Items.Add(W);
+                    lbWedstrijden.Items.Add(w);
                 }
             }
         }
@@ -54,9 +54,9 @@ namespace ArcheryApplication
                             var dateAndTime = dtDatum.Value;
                             var date = dateAndTime.ToString("dd/MM/yyyy");
                             Soort geselecteerd = (Soort)cbSoort.SelectedItem;
-                            wedstrijden.Add(new Wedstrijd(tbNaam.Text, geselecteerd, date));
+                            _wedstrijden.Add(new Wedstrijd(tbNaam.Text, geselecteerd, date));
                             lbWedstrijden.Items.Clear();
-                            foreach (Wedstrijd wedstrijd in wedstrijden)
+                            foreach (Wedstrijd wedstrijd in _wedstrijden)
                             {
                                 lbWedstrijden.Items.Add(wedstrijd);
                             }
@@ -84,29 +84,29 @@ namespace ArcheryApplication
 
         private void lbWedstrijden_MouseDoubleClick(object sender, MouseEventArgs e)
         {
-            selectedWedstrijd();
+            SelectedWedstrijd();
         }
 
         //om de listboxen op het form te refreshen, nadat er changes hebben plaatsgevonden
         private void RefreshListboxen()
         {
-            if (wedstrijden != null)
+            if (_wedstrijden != null)
             {
                 lbWedstrijden.Items.Clear();
-                foreach (Wedstrijd W in wedstrijden)
+                foreach (Wedstrijd w in _wedstrijden)
                 {
-                    lbWedstrijden.Items.Add(W);
+                    lbWedstrijden.Items.Add(w);
                 }
             }
         }
-        private void selectedWedstrijd()
+        private void SelectedWedstrijd()
         {
             try
             {
                 var geselecteerd = lbWedstrijden.SelectedItem as Wedstrijd;
 
-                Wedstrijdoverzicht WO = new Wedstrijdoverzicht(geselecteerd);
-                WO.ShowDialog();
+                Wedstrijdoverzicht wo = new Wedstrijdoverzicht(geselecteerd);
+                wo.ShowDialog();
                 RefreshListboxen();
             }
             catch (Exception ex)
@@ -141,12 +141,11 @@ namespace ArcheryApplication
                 var geselecteerdeWedstrijd = lbWedstrijden.SelectedItem as Wedstrijd;
                 if (geselecteerdeWedstrijd != null)
                 {
+                    //om de tijd korter te maken
                     var dateAndTime = dtDatum.Value;
                     var date = dateAndTime.ToString("dd/MM/yyyy");
 
-                    geselecteerdeWedstrijd.Naam = tbNaam.Text;
-                    geselecteerdeWedstrijd.Datum = date;
-                    geselecteerdeWedstrijd.Soort = (Soort)cbSoort.SelectedItem;
+                    geselecteerdeWedstrijd.BewerkWedstrijd(tbNaam.Text, (Soort)cbSoort.SelectedItem, date);
 
                     RefreshListboxen();
                 }
@@ -164,12 +163,12 @@ namespace ArcheryApplication
                 var geselecteerdeWedstrijd = lbWedstrijden.SelectedItem as Wedstrijd;
                 if (geselecteerdeWedstrijd != null)
                 {
-                    WarningBox WB = new WarningBox();
-                    WB.ShowDialog();
-                    if (WB.Doorgaan() == false)
+                    WarningBox wb = new WarningBox();
+                    wb.ShowDialog();
+                    if (wb.Doorgaan() == false)
                     {
                         MessageBox.Show("Wedstrijd is verwijderd.");
-                        wedstrijden.Remove(geselecteerdeWedstrijd);
+                        _wedstrijden.Remove(geselecteerdeWedstrijd);
                         RefreshListboxen();
                     }
                     else

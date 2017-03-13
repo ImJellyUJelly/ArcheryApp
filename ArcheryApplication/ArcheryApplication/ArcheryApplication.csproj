@@ -60,14 +60,14 @@
     <Compile Include="Classes\Enums\Discipline.cs" />
     <Compile Include="Classes\Enums\Geslacht.cs" />
     <Compile Include="Classes\Enums\Klasse.cs" />
-    <Compile Include="Classes\Enums\EnumLetter.cs" />
     <Compile Include="Classes\Enums\Soort.cs" />
     <Compile Include="Classes\Schutter.cs" />
     <Compile Include="Classes\Score.cs" />
+    <Compile Include="Exceptions\ScoreException.cs" />
     <Compile Include="Classes\Scoreformulier.cs" />
     <Compile Include="Classes\Vereniging.cs" />
     <Compile Include="Classes\Wedstrijd.cs" />
-    <Compile Include="Exceptions\AlAangemeldException.cs" />
+    <Compile Include="Exceptions\SchutterException.cs" />
     <Compile Include="Exceptions\NormalException.cs" />
     <Compile Include="GUIs\WarningBox.cs">
       <SubType>Form</SubType>
