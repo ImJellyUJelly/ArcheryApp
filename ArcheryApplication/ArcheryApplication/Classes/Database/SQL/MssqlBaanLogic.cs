@@ -8,6 +8,7 @@ namespace ArcheryApplication.Classes.Database.SQL
 {
     public class MssqlBaanLogic : IBaanServices
     {
+        // https://www.connectionstrings.com/sql-server/
         private readonly string _connectie = "";
         public void AddBaan(Baan baan)
         {
