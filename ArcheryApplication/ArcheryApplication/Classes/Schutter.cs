@@ -70,6 +70,7 @@ namespace ArcheryApplication.Classes
             int result = Bondsnummer.CompareTo(andereSchutter.Bondsnummer);
             return result;
         }
+
         public override string ToString()
         {
             return $"{Bondsnummer} { Naam }, Klasse: { Klasse }, Geslacht: { Geslacht } Discipline: { Discipline }, Geb.Datum: { Geboortedatum.ToShortDateString() } - Score: { ScoreFormulier.TotaalScore.ToString() }";

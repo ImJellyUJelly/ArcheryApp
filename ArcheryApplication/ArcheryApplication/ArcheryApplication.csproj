@@ -61,6 +61,7 @@
     <Compile Include="Classes\Enums\Geslacht.cs" />
     <Compile Include="Classes\Enums\Klasse.cs" />
     <Compile Include="Classes\Enums\Soort.cs" />
+    <Compile Include="Exceptions\LoadFileException.cs" />
     <Compile Include="Classes\Schutter.cs" />
     <Compile Include="Classes\Score.cs" />
     <Compile Include="Exceptions\ScoreException.cs" />
@@ -131,6 +132,9 @@
   </ItemGroup>
   <ItemGroup>
     <Folder Include="Interfaces\" />
+  </ItemGroup>
+  <ItemGroup>
+    <Content Include="Rescourses\wedstrijdenData.txt" />
   </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
   <!-- To modify your build process, add your task inside one of the targets below and uncomment it. 

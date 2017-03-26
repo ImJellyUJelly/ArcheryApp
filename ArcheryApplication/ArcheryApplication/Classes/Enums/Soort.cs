@@ -2,9 +2,10 @@
 {
     public enum Soort
     {
-        JeugdFita,
-        Wa1440,
+        JeugdFITA,
+        WA1440,
         Indoorcompetitie,
-        Veld
+        Veld,
+        Face2Face
     }
 }

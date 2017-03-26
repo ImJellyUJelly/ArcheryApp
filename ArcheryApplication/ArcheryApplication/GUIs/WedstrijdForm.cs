@@ -4,10 +4,12 @@ using System.ComponentModel;
 using System.Data;
 using System.Drawing;
 using System.Globalization;
+using System.IO;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 using System.Windows.Forms;
+using System.Windows.Forms.VisualStyles;
 using ArcheryApplication.Classes;
 using ArcheryApplication.Classes.Enums;
 using ArcheryApplication.GUIs;
@@ -18,15 +20,44 @@ namespace ArcheryApplication
 {
     public partial class WedstrijdForm : Form
     {
-        //WedstrijdRepository wedstrijdRepo = new WedstrijdRepository(new MssqlWedstrijdLogic());
         List<Wedstrijd> _wedstrijden = new List<Wedstrijd>();
         public WedstrijdForm()
         {
             InitializeComponent();
             cbSoort.DataSource = Enum.GetValues(typeof(Soort));
+            LaadWedstrijden();
+        }
+
+        private void LaadFile(string path)
+        {
+            List<string> wedstrijd = new List<string>();
+            StreamReader reader;
+            FileStream file;
+            if (path != "")
+            {
+                file = new FileStream(path, FileMode.Open, FileAccess.Read);
+                using (reader = new StreamReader(file))
+                {
+                    string line;
+                    while (!reader.EndOfStream)
+                    {
+                        wedstrijd.Add(reader.ReadLine());
+                    }
+                }
+                file.Close();
+            }
+            foreach (string s in wedstrijd)
+            {
+                string[] uitkomst = s.Split(';');
+                _wedstrijden.Add(new Wedstrijd(Convert.ToInt32(uitkomst[0]), uitkomst[1], (Soort)Enum.Parse(typeof(Soort), uitkomst[2]), uitkomst[3]));
+            }
+        }
+
+        private void LaadWedstrijden()
+        {
             try
             {
-                //wedstrijden = wedstrijdRepo.ListWedstrijden();
+                LaadFile("wedstrijdenData.txt");
             }
             catch (Exception ex)
             {

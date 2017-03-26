@@ -1,5 +1,7 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.IO;
+using System.Globalization;
 using ArcheryApplication.Classes.Enums;
 using ArcheryApplication.Exceptions;
 using System.Windows.Forms;
@@ -22,7 +24,7 @@ namespace ArcheryApplication.Classes
             Soort = soort;
             Datum = datum;
             AantalBanenBepalen();
-            //testSchutters();
+            LaadSchutters();
             //schuttersaanbaantoevoegen();
 
             //banen = db.GetBanen();
@@ -77,14 +79,47 @@ namespace ArcheryApplication.Classes
                 }
             }
         }
-        public void TestSchutters()
+        public void LaadSchutters()
         {
-            //testdata schutters
-            _schutters.Add(new Schutter(161378, "Jelle Schraeder", Klasse.Senior, Discipline.Recurve, Geslacht.Heren, DateTime.Now, ""));
-            _schutters.Add(new Schutter(111111, "Florentina Schwanen", Klasse.Junior, Discipline.Compound, Geslacht.Dames, DateTime.Now, ""));
-            _schutters.Add(new Schutter(222222, "Stijn Koijen", Klasse.Senior, Discipline.Compound, Geslacht.Heren, DateTime.Now, ""));
-            _schutters.Add(new Schutter(333333, "Mark van Broekhoven", Klasse.Cadet, Discipline.Recurve, Geslacht.Heren, DateTime.Now, ""));
-            _schutters.Add(new Schutter(444444, "Ad van Vught", Klasse.Veteraan, Discipline.Barebow, Geslacht.Heren, DateTime.Now, ""));
+            FileStream file;
+            OpenFileDialog OFD = new OpenFileDialog();
+            List<string> schutters = new List<string>();
+            try
+            {
+                if (OFD.ShowDialog() == DialogResult.OK)
+                {
+                    file = new FileStream(OFD.FileName, FileMode.Open, FileAccess.Read);
+                    using (StreamReader reader = new StreamReader(file))
+                    {
+                        string line;
+                        while (!reader.EndOfStream)
+                        {
+                            schutters.Add(reader.ReadLine());
+                        }
+                    }
+                    file.Close();
+
+                    foreach (string s in schutters)
+                    {
+                        string[] uitkomst = s.Split(';');
+                        DateTime geboortedatum = DateTime.Parse(uitkomst[6]);
+                        _schutters.Add(new Schutter(
+                            Convert.ToInt32(uitkomst[0]), 
+                            Convert.ToInt32(uitkomst[1]), 
+                            uitkomst[2],
+                            (Klasse)Enum.Parse(typeof(Klasse), uitkomst[3]),
+                            (Discipline)Enum.Parse(typeof(Discipline), uitkomst[4]),
+                            (Geslacht)Enum.Parse(typeof(Geslacht), uitkomst[5]),
+                            geboortedatum,
+                            uitkomst[7]
+                            ));
+                    }
+                }
+            }
+            catch (Exception ex)
+            {
+                throw new LoadFileException(ex.Message);
+            }
         }
 
         private bool SchutterCheck(int bondsnummer)
@@ -93,7 +128,10 @@ namespace ArcheryApplication.Classes
             {
                 if (bondsnummer == s.Bondsnummer)
                 {
-                    throw new SchutterException("Schutter is al aangemeld voor deze wedstrijd.");
+                    if (bondsnummer != -1)
+                    {
+                        throw new SchutterException("Schutter is al aangemeld voor deze wedstrijd.");
+                    }
                 }
             }
             return true;
@@ -102,12 +140,12 @@ namespace ArcheryApplication.Classes
         private void AantalBanenBepalen()
         {
             int banen;
-            if (Soort == Soort.Wa1440)
+            if (Soort == Soort.WA1440)
             {
                 banen = 18;
                 BanenAanmaken(banen);
             }
-            else if (Soort == Soort.JeugdFita)
+            else if (Soort == Soort.JeugdFITA)
             {
                 banen = 18;
                 BanenAanmaken(banen);
@@ -149,7 +187,6 @@ namespace ArcheryApplication.Classes
                             if (b.Schutter == null)
                             {
                                 b.VoegSchutterToe(s);
-                                s.GeefSchutterEenBaan(b);
                             }
                             if (s.Baan != null)
                             {

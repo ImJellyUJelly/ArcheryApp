@@ -14,7 +14,7 @@
             Baannummer = baanNummer;
             Letter = letter;
             Afstand = afstand;
-            BaanId = Baannummer.ToString() + Letter;
+            CreeerBaanId();
         }
         public Baan(int id, int baannummer, string letter, int afstand)
         {
@@ -22,18 +22,24 @@
             Baannummer = baannummer;
             Letter = letter;
             Afstand = afstand;
-            BaanId = Baannummer.ToString() + Letter;
+            CreeerBaanId();
         }
         public void VoegSchutterToe(Schutter schutter)
         {
             if (Schutter == null)
             {
                 Schutter = schutter;
+                schutter.GeefSchutterEenBaan(this);   
             }
         }
         public void VerwijderSchutter(Schutter schutter)
         {
             //ToDo
+        }
+
+        private void CreeerBaanId()
+        {
+            BaanId = Baannummer.ToString() + Letter;
         }
         public override string ToString()
         {
