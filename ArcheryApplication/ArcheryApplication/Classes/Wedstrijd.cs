@@ -1,7 +1,6 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.IO;
-using System.Globalization;
 using ArcheryApplication.Classes.Enums;
 using ArcheryApplication.Exceptions;
 using System.Windows.Forms;
@@ -24,12 +23,7 @@ namespace ArcheryApplication.Classes
             Soort = soort;
             Datum = datum;
             AantalBanenBepalen();
-            LaadSchutters();
-            //schuttersaanbaantoevoegen();
-
-            //banen = db.GetBanen();
-            //schutters = db.GetSchutters();
-
+            //LaadSchutters();
         }
         public Wedstrijd(string naam, Soort soort, string datum)
         {
@@ -37,11 +31,6 @@ namespace ArcheryApplication.Classes
             Soort = soort;
             Datum = datum;
             AantalBanenBepalen();
-            //testSchutters();
-            //schuttersaanbaantoevoegen();
-
-            //banen = db.GetBanen();
-            //schutters = db.GetSchutters();
         }
 
         //edit stuff
@@ -65,7 +54,8 @@ namespace ArcheryApplication.Classes
             }
             else
             {
-                MessageBox.Show($"Error: {nieuweSchutter.Naam} met bondsnummer {nieuweSchutter.Bondsnummer} is al aangemeld voor {Soort.ToString()}");
+                MessageBox.Show(string.Format("Error: {0} met bondsnummer {1} is al aangemeld voor {2}",
+                    nieuweSchutter.Naam, nieuweSchutter.Bondsnummer, Soort.ToString()));
             }
         }
         public void SchutterAanmeldenOpBaan(Schutter nieuweSchutter)
@@ -82,16 +72,15 @@ namespace ArcheryApplication.Classes
         public void LaadSchutters()
         {
             FileStream file;
-            OpenFileDialog OFD = new OpenFileDialog();
+            OpenFileDialog ofd = new OpenFileDialog();
             List<string> schutters = new List<string>();
             try
             {
-                if (OFD.ShowDialog() == DialogResult.OK)
+                if (ofd.ShowDialog() == DialogResult.OK)
                 {
-                    file = new FileStream(OFD.FileName, FileMode.Open, FileAccess.Read);
+                    file = new FileStream(ofd.FileName, FileMode.Open, FileAccess.Read);
                     using (StreamReader reader = new StreamReader(file))
                     {
-                        string line;
                         while (!reader.EndOfStream)
                         {
                             schutters.Add(reader.ReadLine());
@@ -157,11 +146,17 @@ namespace ArcheryApplication.Classes
             }
             else if (Soort == Soort.Veld)
             {
-                MessageBox.Show("Kies een andere soort, wij organiseren geen veld.");
+                MessageBox.Show(@"Kies een andere soort, wij organiseren geen veld.");
+            }
+            else if (Soort == Soort.Face2Face)
+            {
+                banen = 19;
+                BanenAanmaken(banen);
             }
             else
+
             {
-                MessageBox.Show("Volgens mij gaat er wat mis, aantal banen is niet bepaald.");
+                MessageBox.Show(@"Volgens mij gaat er wat mis, aantal banen is niet bepaald.");
             }
         }
 
@@ -231,7 +226,7 @@ namespace ArcheryApplication.Classes
         }
         public override string ToString()
         {
-            return $"Naam: {Naam}, datum: {Datum}, Soort: {Soort} Aantal schutters: {_schutters.Count}";
+            return $"{Naam} - datum: {Datum} - Soort: {Soort} - Aantal schutters: {_schutters.Count}";
         }
     }
 }
