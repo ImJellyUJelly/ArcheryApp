@@ -68,6 +68,7 @@ namespace ArcheryApplication.Classes.Database.SQL
                                     {
                                         int id = reader.GetInt32(0);
                                         string naam;
+                                        // Volgens mij hoeft dit niet eens, naam is namelijk verplicht.
                                         if (!reader.IsDBNull(1))
                                         {
                                             naam = reader.GetString(1);
@@ -113,7 +114,7 @@ namespace ArcheryApplication.Classes.Database.SQL
             throw new NotImplementedException();
         }
 
-        public List<Baan> WedstrijdBanen(int wedstrijdId)
+        public List<Baan> GetWedstrijdBanen(int wedstrijdId)
         {
             throw new NotImplementedException();
         }

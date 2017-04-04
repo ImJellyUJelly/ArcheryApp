@@ -1,29 +1,24 @@
 ﻿using System;
 using System.Collections.Generic;
-using System.ComponentModel;
-using System.Data;
-using System.Drawing;
-using System.Globalization;
 using System.IO;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
 using System.Windows.Forms;
-using System.Windows.Forms.VisualStyles;
 using ArcheryApplication.Classes;
 using ArcheryApplication.Classes.Enums;
 using ArcheryApplication.GUIs;
-using ArcheryApplication.Classes.Database.Repositories;
-using ArcheryApplication.Classes.Database.SQL;
 
 namespace ArcheryApplication
 {
     public partial class WedstrijdForm : Form
     {
-        List<Wedstrijd> _wedstrijden = new List<Wedstrijd>();
-        public WedstrijdForm()
+        private readonly List<Wedstrijd> _wedstrijden;
+        private StreamReader _reader;
+        private FileStream _file;
+        private StreamWriter _writer;
+        public WedstrijdForm(List<Wedstrijd> wedstrijden)
         {
             InitializeComponent();
+            _wedstrijden = wedstrijden;
+
             cbSoort.DataSource = Enum.GetValues(typeof(Soort));
             LaadWedstrijden();
         }
@@ -31,25 +26,38 @@ namespace ArcheryApplication
         private void LaadFile(string path)
         {
             List<string> wedstrijd = new List<string>();
-            StreamReader reader;
-            FileStream file;
+
             if (path != "")
             {
-                file = new FileStream(path, FileMode.Open, FileAccess.Read);
-                using (reader = new StreamReader(file))
+                _file = new FileStream(path, FileMode.Open, FileAccess.Read);
+                using (_reader = new StreamReader(_file))
                 {
-                    string line;
-                    while (!reader.EndOfStream)
+                    while (!_reader.EndOfStream)
                     {
-                        wedstrijd.Add(reader.ReadLine());
+                        wedstrijd.Add(_reader.ReadLine());
                     }
                 }
-                file.Close();
+                _file.Close();
             }
             foreach (string s in wedstrijd)
             {
                 string[] uitkomst = s.Split(';');
                 _wedstrijden.Add(new Wedstrijd(Convert.ToInt32(uitkomst[0]), uitkomst[1], (Soort)Enum.Parse(typeof(Soort), uitkomst[2]), uitkomst[3]));
+            }
+        }
+
+        public void SchrijfWedstrijdBij(Wedstrijd wedstrijd, string path)
+        {
+            using (_writer = new StreamWriter(path, true))
+            {
+                if (wedstrijd.Id != 0)
+                {
+                    _writer.WriteLine($"{wedstrijd.Id};{wedstrijd.Naam};{wedstrijd.Soort};{wedstrijd.Datum}");
+                }
+                else
+                {
+                    _writer.WriteLine($"-1;{wedstrijd.Naam};{wedstrijd.Soort};{wedstrijd.Datum}");
+                }
             }
         }
 
@@ -78,14 +86,16 @@ namespace ArcheryApplication
             {
                 if (cbSoort.SelectedItem != null)
                 {
-                    if (dtDatum.Value != null)
+                    if (!(dtDatum.Value > DateTime.Now))
                     {
                         if (tbNaam.Text != "")
                         {
                             var dateAndTime = dtDatum.Value;
                             var date = dateAndTime.ToString("dd/MM/yyyy");
                             Soort geselecteerd = (Soort)cbSoort.SelectedItem;
-                            _wedstrijden.Add(new Wedstrijd(tbNaam.Text, geselecteerd, date));
+                            Wedstrijd nieuweWedstrijd = new Wedstrijd(tbNaam.Text, geselecteerd, date);
+                            _wedstrijden.Add(nieuweWedstrijd);
+                            SchrijfWedstrijdBij(nieuweWedstrijd, "wedstrijdenData.txt");
                             lbWedstrijden.Items.Clear();
                             foreach (Wedstrijd wedstrijd in _wedstrijden)
                             {
@@ -94,17 +104,17 @@ namespace ArcheryApplication
                         }
                         else
                         {
-                            MessageBox.Show("Vul een naam in.");
+                            MessageBox.Show(@"Vul een naam in.");
                         }
                     }
                     else
                     {
-                        MessageBox.Show("Vul een datum in.");
+                        MessageBox.Show(@"Vul een datum in.");
                     }
                 }
                 else
                 {
-                    MessageBox.Show("Vul een wedstrijdsoort in.");
+                    MessageBox.Show(@"Vul een wedstrijdsoort in.");
                 }
             }
             catch (Exception ex)
@@ -198,13 +208,13 @@ namespace ArcheryApplication
                     wb.ShowDialog();
                     if (wb.Doorgaan() == false)
                     {
-                        MessageBox.Show("Wedstrijd is verwijderd.");
+                        MessageBox.Show(@"Wedstrijd is verwijderd.");
                         _wedstrijden.Remove(geselecteerdeWedstrijd);
                         RefreshListboxen();
                     }
                     else
                     {
-                        MessageBox.Show("U bent niet gemachtigd een wedstrijd te verwijderen. Raadpleeg uw nerd voor meer informatie.");
+                        MessageBox.Show(@"U bent niet gemachtigd een wedstrijd te verwijderen. Raadpleeg uw nerd voor meer informatie.");
                     }
                 }
             }

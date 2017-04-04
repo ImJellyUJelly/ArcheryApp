@@ -73,7 +73,7 @@ namespace ArcheryApplication.Classes
 
         public override string ToString()
         {
-            return $"{Bondsnummer} { Naam }, Klasse: { Klasse }, Geslacht: { Geslacht } Discipline: { Discipline }, Geb.Datum: { Geboortedatum.ToShortDateString() } - Score: { ScoreFormulier.TotaalScore.ToString() }";
+            return $"{Bondsnummer} { Naam } - Klasse: { Klasse } - Geslacht: { Geslacht } - Discipline: { Discipline } - Geb.Datum: { Geboortedatum.ToShortDateString() } - Score: { ScoreFormulier.TotaalScore.ToString() }";
         }
     }
 }

@@ -3,6 +3,7 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Threading.Tasks;
 using System.Windows.Forms;
+using ArcheryApplication.Classes;
 
 namespace ArcheryApplication
 {
@@ -16,7 +17,8 @@ namespace ArcheryApplication
         {
             Application.EnableVisualStyles();
             Application.SetCompatibleTextRenderingDefault(false);
-            Application.Run(new WedstrijdForm());
+            List<Wedstrijd> wedstrijden = new List<Wedstrijd>();
+            Application.Run(new WedstrijdForm(wedstrijden));
         }
     }
 }

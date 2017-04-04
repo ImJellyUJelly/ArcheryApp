@@ -59,7 +59,7 @@ namespace ArcheryApplication.Classes.Database.Repositories
 
         public List<Baan> WedstrijdBanen(int wedstrijdId)
         {
-            return _wedstrijdLogic.WedstrijdBanen(wedstrijdId);
+            return _wedstrijdLogic.GetWedstrijdBanen(wedstrijdId);
         }
     }
 }
