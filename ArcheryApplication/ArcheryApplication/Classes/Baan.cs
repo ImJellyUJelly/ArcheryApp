@@ -32,9 +32,12 @@
                 schutter.GeefSchutterEenBaan(this);   
             }
         }
-        public void VerwijderSchutter(Schutter schutter)
+        public void VerwijderSchutter()
         {
-            //ToDo
+            if (Schutter != null)
+            {
+                Schutter = null;
+            }
         }
 
         private void CreeerBaanId()
