@@ -8,6 +8,7 @@ namespace ArcheryApplication.Classes
         public int Bondsnummer { get; private set; }
         public string Naam { get; private set; }
         public DateTime Geboortedatum { get; private set; }
+        public string EmailAdres { get; private set; }
         public Baan Baan { get; private set; }
         public Klasse Klasse { get; private set; }
         public Discipline Discipline { get; private set; }
@@ -17,10 +18,11 @@ namespace ArcheryApplication.Classes
         public Vereniging Vereniging { get; private set; }
 
         // Algemene constructor
-        public Schutter(int bondsnr, string naam, Klasse k, Discipline d, Geslacht g, DateTime geb, string opmerking)
+        public Schutter(int bondsnr, string naam, string email, Klasse k, Discipline d, Geslacht g, DateTime geb, string opmerking)
         {
             Bondsnummer = bondsnr;
             Naam = naam;
+            EmailAdres = email;
             Klasse = k;
             Discipline = d;
             Geslacht = g;
@@ -29,17 +31,17 @@ namespace ArcheryApplication.Classes
             ScoreFormulier = new Scoreformulier();
         }
         // Algemene constructor met ID (voor Database)
-        public Schutter(int id, int bondsnr, string naam, Klasse k, Discipline d, Geslacht g, DateTime geb, string opmerking) : this(bondsnr, naam, k, d, g, geb, opmerking)
+        public Schutter(int id, int bondsnr, string naam, string email, Klasse k, Discipline d, Geslacht g, DateTime geb, string opmerking) : this(bondsnr, naam, email, k, d, g, geb, opmerking)
         {
             Id = id;
         }
         // Als een schutter op een bepaalde baan wil staan
-        public Schutter(int bondsnr, string naam, Klasse k, Discipline d, Geslacht g, DateTime geb, string opmerking, Baan baan) : this(bondsnr, naam, k, d, g, geb, opmerking)
+        public Schutter(int bondsnr, string naam, string email, Klasse k, Discipline d, Geslacht g, DateTime geb, string opmerking, Baan baan) : this(bondsnr, naam, email, k, d, g, geb, opmerking)
         {
             Baan = baan;
         }
         // Constructor met een Verenging
-        public Schutter(int id, int bondsnr, string naam, Klasse k, Discipline d, Geslacht g, DateTime geb, string opmerking, Vereniging vereniging) : this(id, bondsnr, naam, k, d, g, geb, opmerking)
+        public Schutter(int id, int bondsnr, string naam, string email, Klasse k, Discipline d, Geslacht g, DateTime geb, string opmerking, Vereniging vereniging) : this(id, bondsnr, naam, email, k, d, g, geb, opmerking)
         {
             Vereniging = vereniging;
         }

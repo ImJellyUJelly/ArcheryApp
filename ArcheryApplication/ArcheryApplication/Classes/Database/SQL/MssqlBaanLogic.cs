@@ -8,11 +8,11 @@ namespace ArcheryApplication.Classes.Database.SQL
 {
     public class MssqlBaanLogic : IBaanServices
     {
-        // https://www.connectionstrings.com/sql-server/
-        private readonly string _connectie = @"Server=(localdb)\Archery;Integrated Security=true;";
+        readonly Connectie _connectie = new Connectie();
+
         public void AddBaan(Baan baan)
         {
-            using (SqlConnection conn = new SqlConnection(_connectie))
+            using (SqlConnection conn = new SqlConnection(_connectie.ConnectieString))
             {
                 if (conn.State != ConnectionState.Open)
                 {
@@ -47,12 +47,40 @@ namespace ArcheryApplication.Classes.Database.SQL
 
         public void AddSchutterTobaan(Schutter schutter, int baanId)
         {
-            throw new NotImplementedException();
+            using (SqlConnection conn = new SqlConnection(_connectie.ConnectieString))
+            {
+                if (conn.State != ConnectionState.Open)
+                {
+                    conn.Open();
+
+                    using (SqlCommand cmd = new SqlCommand())
+                    {
+                        try
+                        {
+                            cmd.CommandText =
+                                "UPDATE Baan SET Schutter = @schutter, Letter = @letter, Afstand = @afstand WHERE ID = @baanId;";
+                            cmd.Connection = conn;
+
+                            // Parameters
+
+                            cmd.ExecuteNonQuery();
+                        }
+                        catch (Exception ex)
+                        {
+                            throw new DataException(ex.Message);
+                        }
+                        finally
+                        {
+                            conn.Close();
+                        }
+                    }
+                }
+            }
         }
 
         public void EditBaan(Baan baan)
         {
-            using (SqlConnection conn = new SqlConnection(_connectie))
+            using (SqlConnection conn = new SqlConnection(_connectie.ConnectieString))
             {
                 if (conn.State != ConnectionState.Open)
                 {
@@ -88,7 +116,7 @@ namespace ArcheryApplication.Classes.Database.SQL
 
         public Baan GetBaanById(int baanId)
         {
-            using (SqlConnection conn = new SqlConnection(_connectie))
+            using (SqlConnection conn = new SqlConnection(_connectie.ConnectieString))
             {
                 if (conn.State != ConnectionState.Open)
                 {
@@ -133,7 +161,7 @@ namespace ArcheryApplication.Classes.Database.SQL
 
         public Baan GetBaanByNummer(int baanNummer)
         {
-            using (SqlConnection conn = new SqlConnection(_connectie))
+            using (SqlConnection conn = new SqlConnection(_connectie.ConnectieString))
             {
                 if (conn.State != ConnectionState.Open)
                 {
@@ -179,7 +207,7 @@ namespace ArcheryApplication.Classes.Database.SQL
         public List<Baan> ListBanen()
         {
             List<Baan> banen = new List<Baan>();
-            using (SqlConnection conn = new SqlConnection(_connectie))
+            using (SqlConnection conn = new SqlConnection(_connectie.ConnectieString))
             {
                 if (conn.State != ConnectionState.Open)
                 {
@@ -225,7 +253,7 @@ namespace ArcheryApplication.Classes.Database.SQL
         public List<Schutter> ListSchuttersOpBaan(int baanId)
         {
             List<Schutter> schutters = new List<Schutter>();
-            using (SqlConnection conn = new SqlConnection(_connectie))
+            using (SqlConnection conn = new SqlConnection(_connectie.ConnectieString))
             {
                 if (conn.State != ConnectionState.Open)
                 {
@@ -286,7 +314,7 @@ namespace ArcheryApplication.Classes.Database.SQL
                                     Geslacht geslacht = (Geslacht)Enum.Parse(typeof(Geslacht), reader.GetString(8));
                                     Vereniging vereniging = new Vereniging(reader.GetInt32(9), reader.GetString(10), reader.GetString(11), reader.GetString(12), reader.GetString(13), reader.GetString(14));
 
-                                    schutters.Add(new Schutter(id, bondsnr, naam, klasse, discipline, geslacht, gebdatum, opmerking, vereniging));
+                                    schutters.Add(new Schutter(id, bondsnr, naam, email, klasse, discipline, geslacht, gebdatum, opmerking, vereniging));
                                 }
                                 return schutters;
                             }
@@ -307,7 +335,7 @@ namespace ArcheryApplication.Classes.Database.SQL
 
         public void RemoveBaan(Baan baan)
         {
-            using (SqlConnection conn = new SqlConnection(_connectie))
+            using (SqlConnection conn = new SqlConnection(_connectie.ConnectieString))
             {
                 if (conn.State != ConnectionState.Open)
                 {
@@ -340,7 +368,7 @@ namespace ArcheryApplication.Classes.Database.SQL
 
         public void RemoveSchutterFromBaan(Schutter schutter, int baanId)
         {
-            using (SqlConnection conn = new SqlConnection(_connectie))
+            using (SqlConnection conn = new SqlConnection(_connectie.ConnectieString))
             {
                 if (conn.State != ConnectionState.Open)
                 {
