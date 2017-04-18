@@ -13,26 +13,33 @@ namespace ArcheryApplication
         /// Dit is de facade. De GUI krijgt alleen wat in deze class gecodeerd staat.
         /// </summary>
         private WedstrijdRepository wedstrijdrepo = new WedstrijdRepository(new MysqlWedstrijdLogic());
+
+        private List<Wedstrijd> _wedstrijden;
         public App()
         {
-
+            _wedstrijden = GetWedstrijdenFromDB();
         }
         #region Wedstrijden 
         /// <summary>
         /// Geeft alle wedstrijden.
         /// </summary>
         /// <returns>Een list van wedstrijden.</returns>
-        public List<Wedstrijd> GetWedstrijden()
+        private List<Wedstrijd> GetWedstrijdenFromDB()
         {
             return wedstrijdrepo.ListWedstrijden();
         }
 
-        public Wedstrijd AddWedstrijd(string naam, string date, string wedsoort)
+        public List<Wedstrijd> GetWedstrijden()
+        {
+            _wedstrijden = GetWedstrijdenFromDB();
+            return _wedstrijden;
+        }
+
+        public void AddWedstrijd(string naam, string date, string wedsoort)
         {
             Soort soort = (Soort) Enum.Parse(typeof(Soort), wedsoort);
             Wedstrijd wedstrijd = new Wedstrijd(naam, soort, date);
             wedstrijdrepo.AddWedstrijd(wedstrijd);
-            return wedstrijd;
         }
 
         public void BewerkWedstrijd(string naam, string date)
@@ -59,7 +66,16 @@ namespace ArcheryApplication
         /// <param name="date">Datum van de wedstrijd, format: dd/MM/yyyy </param>
         public void VerwijderWedstrijd(string naam, string date)
         {
-            throw new NotImplementedException();
+            foreach (Wedstrijd w in wedstrijdrepo.ListWedstrijden())
+            {
+                if (w.Naam == naam)
+                {
+                    if (w.Datum == date)
+                    {
+                        wedstrijdrepo.RemoveWedstrijd(w);
+                    }
+                }
+            }
         }
         #endregion
         #region Schutters

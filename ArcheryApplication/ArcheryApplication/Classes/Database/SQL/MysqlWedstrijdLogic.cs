@@ -259,7 +259,42 @@ namespace ArcheryApplication.Classes.Database.SQL
 
         public void RemoveWedstrijd(Wedstrijd wedstrijd)
         {
-            throw new NotImplementedException();
+            try
+            {
+                using (MySqlConnection conn = new MySqlConnection(_connectie))
+                {
+                    if (conn.State != ConnectionState.Open)
+                    {
+                        conn.Open();
+
+                        using (MySqlCommand cmd = new MySqlCommand())
+                        {
+                            try
+                            {
+                                cmd.CommandText = "DELETE FROM Wedstrijd WHERE WedID = @wedId;";
+
+                                cmd.Parameters.AddWithValue("@wedId", wedstrijd.Id);
+
+                                cmd.Connection = conn;
+
+                                cmd.ExecuteNonQuery();
+                            }
+                            catch (Exception ex)
+                            {
+                                throw new DataException(ex.Message);
+                            }
+                            finally
+                            {
+                                conn.Close();
+                            }
+                        }
+                    }
+                }
+            }
+            catch (NormalException ex)
+            {
+                throw new NormalException(ex.Message);
+            }
         }
 
         public List<Baan> GetWedstrijdBanen(Wedstrijd wedstrijd)

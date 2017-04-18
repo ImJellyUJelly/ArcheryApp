@@ -10,13 +10,11 @@ namespace ArcheryApplication
 {
     public partial class WedstrijdForm : Form
     {
-        private readonly List<Wedstrijd> _wedstrijden;
         public App App { get; private set; }
         public WedstrijdForm(App app)
         {
             InitializeComponent();
             App = app;
-            _wedstrijden = app.GetWedstrijden();
 
             cbSoort.DataSource = Enum.GetValues(typeof(Soort));
             LaadWedstrijden();
@@ -24,9 +22,9 @@ namespace ArcheryApplication
 
         private void LaadWedstrijden()
         {
-            if (_wedstrijden != null)
+            if (App.GetWedstrijden() != null)
             {
-                foreach (Wedstrijd w in _wedstrijden)
+                foreach (Wedstrijd w in App.GetWedstrijden())
                 {
                     lbWedstrijden.Items.Add(w);
                 }
@@ -46,7 +44,7 @@ namespace ArcheryApplication
                             var dateAndTime = dtDatum.Value;
                             var date = dateAndTime.ToString("dd/MM/yyyy");
                             string soort = cbSoort.Text;
-                            _wedstrijden.Add(App.AddWedstrijd(tbNaam.Text, date, soort));
+                            App.AddWedstrijd(tbNaam.Text, date, soort);
                             RefreshListboxen();
                         }
                         else
@@ -78,10 +76,10 @@ namespace ArcheryApplication
         //om de listboxen op het form te refreshen, nadat er changes hebben plaatsgevonden
         private void RefreshListboxen()
         {
-            if (_wedstrijden != null)
+            if (App.GetWedstrijden() != null)
             {
                 lbWedstrijden.Items.Clear();
-                foreach (Wedstrijd w in _wedstrijden)
+                foreach (Wedstrijd w in App.GetWedstrijden())
                 {
                     lbWedstrijden.Items.Add(w);
                 }
@@ -153,10 +151,10 @@ namespace ArcheryApplication
                 {
                     WarningBox wb = new WarningBox();
                     wb.ShowDialog();
-                    if (wb.Doorgaan() == false)
+                    if (wb.Doorgaan())
                     {
                         MessageBox.Show(@"Wedstrijd is verwijderd.");
-                        _wedstrijden.Remove(geselecteerdeWedstrijd);
+                        App.VerwijderWedstrijd(geselecteerdeWedstrijd.Naam, geselecteerdeWedstrijd.Datum);
                         RefreshListboxen();
                     }
                     else
