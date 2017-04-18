@@ -17,8 +17,8 @@ namespace ArcheryApplication
         {
             Application.EnableVisualStyles();
             Application.SetCompatibleTextRenderingDefault(false);
-            List<Wedstrijd> wedstrijden = new List<Wedstrijd>();
-            Application.Run(new WedstrijdForm(wedstrijden));
+            App app = new App();
+            Application.Run(new WedstrijdForm(app.GetWedstrijden()));
         }
     }
 }

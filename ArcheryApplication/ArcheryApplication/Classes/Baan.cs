@@ -8,7 +8,7 @@
         public string Letter { get; private set; }
         public Schutter Schutter { get; private set; }
         public int Afstand { get; private set; }
-
+        public Wedstrijd Wedstrijd { get; private set; }
         public Baan(int baanNummer, string letter, int afstand)
         {
             Baannummer = baanNummer;
@@ -16,12 +16,13 @@
             Afstand = afstand;
             CreeerBaanId();
         }
-        public Baan(int id, int baannummer, string letter, int afstand)
+        public Baan(int id, int baannummer, string letter, int afstand, Wedstrijd wedstrijd)
         {
             Id = id;
             Baannummer = baannummer;
             Letter = letter;
             Afstand = afstand;
+            Wedstrijd = wedstrijd;
             CreeerBaanId();
         }
         public void VoegSchutterToe(Schutter schutter)
@@ -42,7 +43,7 @@
 
         private void CreeerBaanId()
         {
-            BaanId = Baannummer.ToString() + Letter;
+            BaanId = Baannummer + Letter;
         }
         public override string ToString()
         {

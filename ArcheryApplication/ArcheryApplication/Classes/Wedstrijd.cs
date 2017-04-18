@@ -4,33 +4,37 @@ using System.IO;
 using ArcheryApplication.Classes.Enums;
 using ArcheryApplication.Exceptions;
 using System.Windows.Forms;
+using ArcheryApplication.Classes.Database;
+using ArcheryApplication.Classes.Database.Repositories;
+using ArcheryApplication.Classes.Database.SQL;
 
 namespace ArcheryApplication.Classes
 {
     public class Wedstrijd
     {
+        private WedstrijdRepository wedstrijdrepo = new WedstrijdRepository(new MysqlWedstrijdLogic());
         List<Baan> _banen = new List<Baan>();
         List<Schutter> _schutters = new List<Schutter>();
         public int Id { get; private set; }
         public string Naam { get; private set; }
         public Soort Soort { get; private set; }
         public string Datum { get; private set; }
-
-        public Wedstrijd(int id, string naam, Soort soort, string datum)
+        public Vereniging Vereniging { get; private set; }
+        public Wedstrijd(int id, string naam, Soort soort, string datum, Vereniging vereniging)
         {
             Id = id;
             Naam = naam;
             Soort = soort;
             Datum = datum;
-            AantalBanenBepalen();
-            //LaadSchutters();
+            Vereniging = vereniging;
+            LaadBanen();
         }
         public Wedstrijd(string naam, Soort soort, string datum)
         {
             Naam = naam;
             Soort = soort;
             Datum = datum;
-            AantalBanenBepalen();
+            LaadBanen();
         }
 
         //edit stuff
@@ -69,47 +73,6 @@ namespace ArcheryApplication.Classes
                 }
             }
         }
-        //public void LaadSchutters()
-        //{
-        //    FileStream file;
-        //    OpenFileDialog ofd = new OpenFileDialog();
-        //    List<string> schutters = new List<string>();
-        //    try
-        //    {
-        //        if (ofd.ShowDialog() == DialogResult.OK)
-        //        {
-        //            file = new FileStream(ofd.FileName, FileMode.Open, FileAccess.Read);
-        //            using (StreamReader reader = new StreamReader(file))
-        //            {
-        //                while (!reader.EndOfStream)
-        //                {
-        //                    schutters.Add(reader.ReadLine());
-        //                }
-        //            }
-        //            file.Close();
-
-        //            foreach (string s in schutters)
-        //            {
-        //                string[] uitkomst = s.Split(';');
-        //                DateTime geboortedatum = DateTime.Parse(uitkomst[6]);
-        //                _schutters.Add(new Schutter(
-        //                    Convert.ToInt32(uitkomst[0]), 
-        //                    Convert.ToInt32(uitkomst[1]), 
-        //                    uitkomst[2],
-        //                    (Klasse)Enum.Parse(typeof(Klasse), uitkomst[3]),
-        //                    (Discipline)Enum.Parse(typeof(Discipline), uitkomst[4]),
-        //                    (Geslacht)Enum.Parse(typeof(Geslacht), uitkomst[5]),
-        //                    geboortedatum,
-        //                    uitkomst[7]
-        //                    ));
-        //            }
-        //        }
-        //    }
-        //    catch (Exception ex)
-        //    {
-        //        throw new LoadFileException(ex.Message);
-        //    }
-        //}
 
         private bool SchutterCheck(int bondsnummer)
         {
@@ -124,6 +87,19 @@ namespace ArcheryApplication.Classes
                 }
             }
             return true;
+        }
+
+        private void LaadBanen()
+        {
+            List<Baan> banenUitDB = wedstrijdrepo.WedstrijdBanen(Id);
+            if (banenUitDB != null)
+            {
+                _banen = banenUitDB;
+            }
+            else
+            {
+                AantalBanenBepalen();
+            }
         }
 
         private void AantalBanenBepalen()

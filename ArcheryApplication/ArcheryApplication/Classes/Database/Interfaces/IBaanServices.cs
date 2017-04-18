@@ -6,7 +6,7 @@ namespace ArcheryApplication.Classes.Database.Interfaces
     {
         Baan GetBaanById(int baanId);
         Baan GetBaanByNummer(int baanNummer);
-        List<Baan> ListBanen();
+        List<Baan> ListBanen(int wedId);
         List<Schutter> ListSchuttersOpBaan(int baanId);
         void AddBaan(Baan baan);
         void EditBaan(Baan baan);

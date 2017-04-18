@@ -1,6 +1,9 @@
 ﻿using System;
 using System.Collections.Generic;
 using ArcheryApplication.Classes;
+using ArcheryApplication.Classes.Database;
+using ArcheryApplication.Classes.Database.Repositories;
+using ArcheryApplication.Classes.Database.SQL;
 
 namespace ArcheryApplication
 {
@@ -9,20 +12,10 @@ namespace ArcheryApplication
         /// <summary>
         /// Dit is de facade. De GUI krijgt alleen wat in deze class gecodeerd staat.
         /// </summary>
-        private List<Wedstrijd> _wedstrijden;
-
+        private WedstrijdRepository wedstrijdrepo = new WedstrijdRepository(new MysqlWedstrijdLogic());
         public App()
         {
-            List<Wedstrijd> lala = GetWedstrijden();
-            if (lala != null)
-            {
-                _wedstrijden = new List<Wedstrijd>();
-                _wedstrijden = lala;
-            }
-            else
-            {
-                _wedstrijden = new List<Wedstrijd>();
-            }
+
         }
         #region Wedstrijden 
         /// <summary>
@@ -31,7 +24,7 @@ namespace ArcheryApplication
         /// <returns>Een list van wedstrijden.</returns>
         public List<Wedstrijd> GetWedstrijden()
         {
-            throw new NotFiniteNumberException();
+            return wedstrijdrepo.ListWedstrijden();
         }
 
         public void BewerkWedstrijd(string naam, string date)

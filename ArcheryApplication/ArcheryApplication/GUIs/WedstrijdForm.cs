@@ -11,9 +11,6 @@ namespace ArcheryApplication
     public partial class WedstrijdForm : Form
     {
         private readonly List<Wedstrijd> _wedstrijden;
-        private StreamReader _reader;
-        private FileStream _file;
-        private StreamWriter _writer;
         public WedstrijdForm(List<Wedstrijd> wedstrijden)
         {
             InitializeComponent();
@@ -23,54 +20,8 @@ namespace ArcheryApplication
             LaadWedstrijden();
         }
 
-        private void LaadFile(string path)
-        {
-            List<string> wedstrijd = new List<string>();
-
-            if (path != "")
-            {
-                _file = new FileStream(path, FileMode.Open, FileAccess.Read);
-                using (_reader = new StreamReader(_file))
-                {
-                    while (!_reader.EndOfStream)
-                    {
-                        wedstrijd.Add(_reader.ReadLine());
-                    }
-                }
-                _file.Close();
-            }
-            foreach (string s in wedstrijd)
-            {
-                string[] uitkomst = s.Split(';');
-                _wedstrijden.Add(new Wedstrijd(Convert.ToInt32(uitkomst[0]), uitkomst[1], (Soort)Enum.Parse(typeof(Soort), uitkomst[2]), uitkomst[3]));
-            }
-        }
-
-        public void SchrijfWedstrijdBij(Wedstrijd wedstrijd, string path)
-        {
-            using (_writer = new StreamWriter(path, true))
-            {
-                if (wedstrijd.Id != 0)
-                {
-                    _writer.WriteLine($"{wedstrijd.Id};{wedstrijd.Naam};{wedstrijd.Soort};{wedstrijd.Datum}");
-                }
-                else
-                {
-                    _writer.WriteLine($"-1;{wedstrijd.Naam};{wedstrijd.Soort};{wedstrijd.Datum}");
-                }
-            }
-        }
-
         private void LaadWedstrijden()
         {
-            try
-            {
-                LaadFile("wedstrijdenData.txt");
-            }
-            catch (Exception ex)
-            {
-                MessageBox.Show(ex.Message);
-            }
             if (_wedstrijden != null)
             {
                 foreach (Wedstrijd w in _wedstrijden)
@@ -95,7 +46,6 @@ namespace ArcheryApplication
                             Soort geselecteerd = (Soort)cbSoort.SelectedItem;
                             Wedstrijd nieuweWedstrijd = new Wedstrijd(tbNaam.Text, geselecteerd, date);
                             _wedstrijden.Add(nieuweWedstrijd);
-                            SchrijfWedstrijdBij(nieuweWedstrijd, "wedstrijdenData.txt");
                             lbWedstrijden.Items.Clear();
                             foreach (Wedstrijd wedstrijd in _wedstrijden)
                             {
