@@ -66,6 +66,7 @@
   <ItemGroup>
     <Compile Include="App.cs" />
     <Compile Include="Classes\Baan.cs" />
+    <Compile Include="Classes\Database\Interfaces\Connectie.cs" />
     <Compile Include="Classes\Database\Interfaces\IBaanServices.cs" />
     <Compile Include="Classes\Database\Interfaces\ISchutterServices.cs" />
     <Compile Include="Classes\Database\Interfaces\IWedstrijdServices.cs" />
