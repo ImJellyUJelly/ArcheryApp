@@ -17,8 +17,7 @@ namespace ArcheryApplication
         {
             Application.EnableVisualStyles();
             Application.SetCompatibleTextRenderingDefault(false);
-            App app = new App();
-            Application.Run(new WedstrijdForm(app.GetWedstrijden()));
+            Application.Run(new WedstrijdForm(new App()));
         }
     }
 }

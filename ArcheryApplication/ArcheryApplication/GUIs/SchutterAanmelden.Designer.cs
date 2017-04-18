@@ -44,6 +44,8 @@
             this.btCancel = new System.Windows.Forms.Button();
             this.groupBox7 = new System.Windows.Forms.GroupBox();
             this.tbBN = new System.Windows.Forms.TextBox();
+            this.groupBox8 = new System.Windows.Forms.GroupBox();
+            this.tbEmail = new System.Windows.Forms.TextBox();
             this.groupBox1.SuspendLayout();
             this.groupBox2.SuspendLayout();
             this.groupBox3.SuspendLayout();
@@ -51,6 +53,7 @@
             this.groupBox5.SuspendLayout();
             this.groupBox6.SuspendLayout();
             this.groupBox7.SuspendLayout();
+            this.groupBox8.SuspendLayout();
             this.SuspendLayout();
             // 
             // groupBox1
@@ -76,7 +79,7 @@
             // groupBox2
             // 
             this.groupBox2.Controls.Add(this.dtLeeftijd);
-            this.groupBox2.Location = new System.Drawing.Point(11, 101);
+            this.groupBox2.Location = new System.Drawing.Point(11, 146);
             this.groupBox2.Margin = new System.Windows.Forms.Padding(2);
             this.groupBox2.Name = "groupBox2";
             this.groupBox2.Padding = new System.Windows.Forms.Padding(2);
@@ -96,7 +99,7 @@
             // groupBox3
             // 
             this.groupBox3.Controls.Add(this.cbDiscipline);
-            this.groupBox3.Location = new System.Drawing.Point(11, 147);
+            this.groupBox3.Location = new System.Drawing.Point(11, 192);
             this.groupBox3.Margin = new System.Windows.Forms.Padding(2);
             this.groupBox3.Name = "groupBox3";
             this.groupBox3.Padding = new System.Windows.Forms.Padding(2);
@@ -118,7 +121,7 @@
             // groupBox4
             // 
             this.groupBox4.Controls.Add(this.cbKlasse);
-            this.groupBox4.Location = new System.Drawing.Point(11, 195);
+            this.groupBox4.Location = new System.Drawing.Point(11, 240);
             this.groupBox4.Margin = new System.Windows.Forms.Padding(2);
             this.groupBox4.Name = "groupBox4";
             this.groupBox4.Padding = new System.Windows.Forms.Padding(2);
@@ -140,7 +143,7 @@
             // groupBox5
             // 
             this.groupBox5.Controls.Add(this.cbGeslacht);
-            this.groupBox5.Location = new System.Drawing.Point(11, 244);
+            this.groupBox5.Location = new System.Drawing.Point(11, 289);
             this.groupBox5.Margin = new System.Windows.Forms.Padding(2);
             this.groupBox5.Name = "groupBox5";
             this.groupBox5.Padding = new System.Windows.Forms.Padding(2);
@@ -162,7 +165,7 @@
             // groupBox6
             // 
             this.groupBox6.Controls.Add(this.tbOpmerking);
-            this.groupBox6.Location = new System.Drawing.Point(11, 293);
+            this.groupBox6.Location = new System.Drawing.Point(11, 338);
             this.groupBox6.Margin = new System.Windows.Forms.Padding(2);
             this.groupBox6.Name = "groupBox6";
             this.groupBox6.Padding = new System.Windows.Forms.Padding(2);
@@ -182,7 +185,7 @@
             // 
             // btOpslaan
             // 
-            this.btOpslaan.Location = new System.Drawing.Point(11, 397);
+            this.btOpslaan.Location = new System.Drawing.Point(11, 442);
             this.btOpslaan.Margin = new System.Windows.Forms.Padding(2);
             this.btOpslaan.Name = "btOpslaan";
             this.btOpslaan.Size = new System.Drawing.Size(85, 29);
@@ -193,7 +196,7 @@
             // 
             // btCancel
             // 
-            this.btCancel.Location = new System.Drawing.Point(118, 397);
+            this.btCancel.Location = new System.Drawing.Point(118, 442);
             this.btCancel.Margin = new System.Windows.Forms.Padding(2);
             this.btCancel.Name = "btCancel";
             this.btCancel.Size = new System.Drawing.Size(76, 29);
@@ -222,20 +225,41 @@
             this.tbBN.Size = new System.Drawing.Size(175, 20);
             this.tbBN.TabIndex = 0;
             // 
+            // groupBox8
+            // 
+            this.groupBox8.Controls.Add(this.tbEmail);
+            this.groupBox8.Location = new System.Drawing.Point(11, 101);
+            this.groupBox8.Margin = new System.Windows.Forms.Padding(2);
+            this.groupBox8.Name = "groupBox8";
+            this.groupBox8.Padding = new System.Windows.Forms.Padding(2);
+            this.groupBox8.Size = new System.Drawing.Size(183, 41);
+            this.groupBox8.TabIndex = 1;
+            this.groupBox8.TabStop = false;
+            this.groupBox8.Text = "Emailadres";
+            // 
+            // tbEmail
+            // 
+            this.tbEmail.Location = new System.Drawing.Point(4, 17);
+            this.tbEmail.Margin = new System.Windows.Forms.Padding(2);
+            this.tbEmail.Name = "tbEmail";
+            this.tbEmail.Size = new System.Drawing.Size(175, 20);
+            this.tbEmail.TabIndex = 0;
+            // 
             // SchutterAanmelden
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
-            this.ClientSize = new System.Drawing.Size(205, 435);
-            this.Controls.Add(this.groupBox7);
+            this.ClientSize = new System.Drawing.Size(205, 479);
+            this.Controls.Add(this.groupBox8);
+            this.Controls.Add(this.groupBox2);
             this.Controls.Add(this.btCancel);
+            this.Controls.Add(this.groupBox7);
+            this.Controls.Add(this.groupBox3);
+            this.Controls.Add(this.groupBox1);
             this.Controls.Add(this.btOpslaan);
-            this.Controls.Add(this.groupBox6);
             this.Controls.Add(this.groupBox5);
             this.Controls.Add(this.groupBox4);
-            this.Controls.Add(this.groupBox3);
-            this.Controls.Add(this.groupBox2);
-            this.Controls.Add(this.groupBox1);
+            this.Controls.Add(this.groupBox6);
             this.FormBorderStyle = System.Windows.Forms.FormBorderStyle.None;
             this.Margin = new System.Windows.Forms.Padding(2);
             this.Name = "SchutterAanmelden";
@@ -251,6 +275,8 @@
             this.groupBox6.PerformLayout();
             this.groupBox7.ResumeLayout(false);
             this.groupBox7.PerformLayout();
+            this.groupBox8.ResumeLayout(false);
+            this.groupBox8.PerformLayout();
             this.ResumeLayout(false);
 
         }
@@ -273,5 +299,7 @@
         private System.Windows.Forms.Button btCancel;
         private System.Windows.Forms.GroupBox groupBox7;
         private System.Windows.Forms.TextBox tbBN;
+        private System.Windows.Forms.GroupBox groupBox8;
+        private System.Windows.Forms.TextBox tbEmail;
     }
 }

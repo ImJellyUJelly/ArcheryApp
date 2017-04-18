@@ -14,12 +14,103 @@ namespace ArcheryApplication.Classes.Database.SQL
 
         public void AddBaanToWedstrijd(Baan baan, int wedstrijdId)
         {
-            throw new NotImplementedException();
+            try
+            {
+                using (MySqlConnection conn = new MySqlConnection(_connectie))
+                {
+                    if (conn.State != ConnectionState.Open)
+                    {
+                        conn.Open();
+
+                        using (MySqlCommand cmd = new MySqlCommand())
+                        {
+                            try
+                            {
+                                cmd.CommandText = "";
+
+                                cmd.Parameters.AddWithValue("", wedstrijdId);
+                                cmd.Connection = conn;
+
+                                using (MySqlDataReader reader = cmd.ExecuteReader())
+                                {
+                                    while (reader.Read())
+                                    {
+                                        int wedId = reader.GetInt32(0);
+                                        string wedNaam = reader.GetString(1);
+                                        Soort wedSoort = (Soort)Enum.Parse(typeof(Soort), reader.GetString(2));
+                                        string wedDatum = reader.GetString(3);
+                                        int verNr = reader.GetInt32(4);
+
+                                        Vereniging vereniging = GetVerenigingByNummer(verNr);
+                                    }
+                                }
+                            }
+                            catch (Exception ex)
+                            {
+                                throw new DataException(ex.Message);
+                            }
+                            finally
+                            {
+                                conn.Close();
+                            }
+                        }
+                    }
+                }
+            }
+            catch (NormalException ex)
+            {
+                throw new NormalException(ex.Message);
+            }
         }
 
         public void AddWedstrijd(Wedstrijd wedstrijd)
         {
-            throw new NotImplementedException();
+            try
+            {
+                using (MySqlConnection conn = new MySqlConnection(_connectie))
+                {
+                    if (conn.State != ConnectionState.Open)
+                    {
+                        conn.Open();
+
+                        using (MySqlCommand cmd = new MySqlCommand())
+                        {
+                            try
+                            {
+                                cmd.CommandText = "INSERT INTO Wedstrijd (WedNaam, WedSoort, WedDatum, WedVerNr) VALUES (@wednaam, @wedsoort, @weddatum, @wedvernr)";
+
+                                cmd.Parameters.AddWithValue("@wednaam", wedstrijd.Naam);
+                                cmd.Parameters.AddWithValue("@wedsoort", wedstrijd.Soort);
+                                cmd.Parameters.AddWithValue("@weddatum", wedstrijd.Datum);
+                                if (wedstrijd.Vereniging != null)
+                                {
+                                    cmd.Parameters.AddWithValue("@wedvernr", wedstrijd.Vereniging.VerNr);
+                                }
+                                else
+                                {
+                                    cmd.Parameters.AddWithValue("@wedvernr", 1034);
+                                }
+
+                                cmd.Connection = conn;
+
+                                cmd.ExecuteNonQuery();
+                            }
+                            catch (Exception ex)
+                            {
+                                throw new DataException(ex.Message);
+                            }
+                            finally
+                            {
+                                conn.Close();
+                            }
+                        }
+                    }
+                }
+            }
+            catch (NormalException ex)
+            {
+                throw new NormalException(ex.Message);
+            }
         }
 
         public void EditBaanFromWedstrijd(Baan baan, int wedstrijdId)
@@ -56,7 +147,7 @@ namespace ArcheryApplication.Classes.Database.SQL
                                     "FROM Wedstrijd Wed LEFT JOIN Vereniging Ver ON Ver.VerNr = Wed.WedVerNr" +
                                     "WHERE WedID = @wedid;";
 
-                                cmd.Parameters.AddWithValue("@wedid", wedstrijdId);
+                                cmd.Parameters.AddWithValue("@wedId", wedstrijdId);
                                 cmd.Connection = conn;
 
                                 using (MySqlDataReader reader = cmd.ExecuteReader())
@@ -65,7 +156,7 @@ namespace ArcheryApplication.Classes.Database.SQL
                                     {
                                         int wedId = reader.GetInt32(0);
                                         string wedNaam = reader.GetString(1);
-                                        Soort wedSoort = (Soort) Enum.Parse(typeof(Soort), reader.GetString(2));
+                                        Soort wedSoort = (Soort)Enum.Parse(typeof(Soort), reader.GetString(2));
                                         string wedDatum = reader.GetString(3);
                                         int verNr = reader.GetInt32(4);
 
@@ -171,7 +262,7 @@ namespace ArcheryApplication.Classes.Database.SQL
             throw new NotImplementedException();
         }
 
-        public List<Baan> GetWedstrijdBanen(int wedstrijdId)
+        public List<Baan> GetWedstrijdBanen(Wedstrijd wedstrijd)
         {
             List<Baan> banen = new List<Baan>();
             try
@@ -184,59 +275,49 @@ namespace ArcheryApplication.Classes.Database.SQL
 
                         using (MySqlCommand cmd = new MySqlCommand())
                         {
-                            try
+                            cmd.CommandText = "SELECT BaanID, BaanNr, BaanLetter, WedID " +
+                                              "FROM Baanindeling BaanInd " +
+                                              "LEFT JOIN Wedstrijd Wed ON Wed.WedID = BaanInd.BaIndelWedID " +
+                                              "LEFT JOIN Baan ba ON ba.BaanID = BaanInd.BaIndelBaanID " +
+                                              "WHERE WedID = @wedId;";
+
+                            cmd.Parameters.AddWithValue("@wedId", wedstrijd.Id);
+                            cmd.Connection = conn;
+
+
+                            using (MySqlDataReader reader = cmd.ExecuteReader())
                             {
-                                cmd.CommandText = "SELECT BaanID, BaanNr, BaanLetter, WedID " +
-                                                  "FROM Baanindeling BaanInd " +
-                                                  "LEFT JOIN Wedstrijd Wed ON Wed.WedID = BaanInd.BaIndelWedID " +
-                                                  "LEFT JOIN Baan ba ON ba.BaanID = BaanInd.BaIndelBaanID " +
-                                                  "WHERE WedID = @wedId;";
-
-                                cmd.Parameters.AddWithValue("@wedId", wedstrijdId);
-                                cmd.Connection = conn;
-
-
-                                using (MySqlDataReader reader = cmd.ExecuteReader())
+                                while (reader.Read())
                                 {
-                                    while (reader.Read())
+                                    int baanId = reader.GetInt32(0);
+                                    int baanNr = reader.GetInt32(1);
+                                    string baanLetter = reader.GetString(2);
+                                    int afstand;
+                                    if (!reader.IsDBNull(3))
                                     {
-                                        int baanId = reader.GetInt32(0);
-                                        int baanNr = reader.GetInt32(1);
-                                        string baanLetter = reader.GetString(2);
-                                        int afstand;
-                                        if (!reader.IsDBNull(3))
-                                        {
-                                            afstand = reader.GetInt32(3);
-                                        }
-                                        else
-                                        {
-                                            afstand = 0;
-                                        }
-
-                                        Wedstrijd wedstrijd = GetWedstrijdById(wedstrijdId);
-
-                                        banen.Add(new Baan(baanId, baanNr, baanLetter, afstand, wedstrijd));
+                                        afstand = reader.GetInt32(3);
                                     }
+                                    else
+                                    {
+                                        afstand = 0;
+                                    }
+
+                                    banen.Add(new Baan(baanId, baanNr, baanLetter, afstand, wedstrijd));
+                                }
+                                if (banen.Count >= 1)
+                                {
                                     return banen;
                                 }
-                            }
-                            catch (Exception ex)
-                            {
-                                throw new DataException(ex.Message);
-                            }
-                            finally
-                            {
-                                conn.Close();
                             }
                         }
                     }
                 }
-                return null;
             }
             catch (NormalException ex)
             {
                 throw new NormalException(ex.Message);
             }
+            return null;
         }
 
         public Vereniging GetVerenigingByNummer(int verNr)
@@ -251,35 +332,25 @@ namespace ArcheryApplication.Classes.Database.SQL
 
                         using (MySqlCommand cmd = new MySqlCommand())
                         {
-                            try
+                            cmd.CommandText =
+                                "SELECT VerNr, VerNaam, VerStraatNaam, VerHuisNr, VerPostcode, VerStad FROM Vereniging WHERE VerNr = @vernr;";
+
+                            cmd.Parameters.AddWithValue("@vernr", verNr);
+                            cmd.Connection = conn;
+
+                            using (MySqlDataReader reader = cmd.ExecuteReader())
                             {
-                                cmd.CommandText = "";
-
-                                cmd.Parameters.AddWithValue("@vernr", verNr);
-                                cmd.Connection = conn;
-
-                                using (MySqlDataReader reader = cmd.ExecuteReader())
+                                while (reader.Read())
                                 {
-                                    while (reader.Read())
-                                    {
-                                        int vernr = reader.GetInt32(0);
-                                        string vernaam = reader.GetString(1);
-                                        string verstraat = reader.GetString(2);
-                                        string verhuisnr = reader.GetString(3);
-                                        string verpostcode = reader.GetString(4);
-                                        string verstad = reader.GetString(5);
+                                    int vernr = reader.GetInt32(0);
+                                    string vernaam = reader.GetString(1);
+                                    string verstraat = reader.GetString(2);
+                                    string verhuisnr = reader.GetString(3);
+                                    string verpostcode = reader.GetString(4);
+                                    string verstad = reader.GetString(5);
 
-                                        return new Vereniging(vernr, vernaam, verstraat, verhuisnr, verpostcode, verstad);
-                                    }
+                                    return new Vereniging(vernr, vernaam, verstraat, verhuisnr, verpostcode, verstad);
                                 }
-                            }
-                            catch (Exception ex)
-                            {
-                                throw new DataException(ex.Message);
-                            }
-                            finally
-                            {
-                                conn.Close();
                             }
                         }
                     }

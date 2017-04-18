@@ -1,7 +1,7 @@
 ﻿using System;
 using System.Collections.Generic;
 using ArcheryApplication.Classes;
-using ArcheryApplication.Classes.Database;
+using ArcheryApplication.Classes.Enums;
 using ArcheryApplication.Classes.Database.Repositories;
 using ArcheryApplication.Classes.Database.SQL;
 
@@ -25,6 +25,14 @@ namespace ArcheryApplication
         public List<Wedstrijd> GetWedstrijden()
         {
             return wedstrijdrepo.ListWedstrijden();
+        }
+
+        public Wedstrijd AddWedstrijd(string naam, string date, string wedsoort)
+        {
+            Soort soort = (Soort) Enum.Parse(typeof(Soort), wedsoort);
+            Wedstrijd wedstrijd = new Wedstrijd(naam, soort, date);
+            wedstrijdrepo.AddWedstrijd(wedstrijd);
+            return wedstrijd;
         }
 
         public void BewerkWedstrijd(string naam, string date)

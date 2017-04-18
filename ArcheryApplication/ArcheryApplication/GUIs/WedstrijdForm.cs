@@ -11,10 +11,12 @@ namespace ArcheryApplication
     public partial class WedstrijdForm : Form
     {
         private readonly List<Wedstrijd> _wedstrijden;
-        public WedstrijdForm(List<Wedstrijd> wedstrijden)
+        public App App { get; private set; }
+        public WedstrijdForm(App app)
         {
             InitializeComponent();
-            _wedstrijden = wedstrijden;
+            App = app;
+            _wedstrijden = app.GetWedstrijden();
 
             cbSoort.DataSource = Enum.GetValues(typeof(Soort));
             LaadWedstrijden();
@@ -43,14 +45,9 @@ namespace ArcheryApplication
                         {
                             var dateAndTime = dtDatum.Value;
                             var date = dateAndTime.ToString("dd/MM/yyyy");
-                            Soort geselecteerd = (Soort)cbSoort.SelectedItem;
-                            Wedstrijd nieuweWedstrijd = new Wedstrijd(tbNaam.Text, geselecteerd, date);
-                            _wedstrijden.Add(nieuweWedstrijd);
-                            lbWedstrijden.Items.Clear();
-                            foreach (Wedstrijd wedstrijd in _wedstrijden)
-                            {
-                                lbWedstrijden.Items.Add(wedstrijd);
-                            }
+                            string soort = cbSoort.Text;
+                            _wedstrijden.Add(App.AddWedstrijd(tbNaam.Text, date, soort));
+                            RefreshListboxen();
                         }
                         else
                         {

@@ -11,7 +11,7 @@ namespace ArcheryApplication.Classes.Database.Interfaces
         void AddWedstrijd(Wedstrijd wedstrijd);
         void EditWedstrijd(Wedstrijd wedstrijd);
         void RemoveWedstrijd(Wedstrijd wedstrijd);
-        List<Baan> GetWedstrijdBanen(int wedstrijdId);
+        List<Baan> GetWedstrijdBanen(Wedstrijd wedstrijd);
         void AddBaanToWedstrijd(Baan baan, int wedstrijdId);
         void EditBaanFromWedstrijd(Baan baan, int wedstrijdId);
         void RemoveBaanFromWedstrijd(Baan baan, int wedstrijdId);

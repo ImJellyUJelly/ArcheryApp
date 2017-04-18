@@ -37,11 +37,11 @@ namespace ArcheryApplication.GUIs
             var geselecteerdebaan = lbBanen.SelectedItem as Baan;
             if (geselecteerdebaan != null)
             {
-                Wedstrijd.SchutterAanmeldenOpBaan(new Schutter(sa.Bondsnummer, sa.Naam, sa.Klasse, sa.Discipline, sa.Geslacht, sa.Geboortedatum, sa.Opmerking, geselecteerdebaan));
+                Wedstrijd.SchutterAanmeldenOpBaan(new Schutter(sa.Bondsnummer, sa.Naam, sa.Email, sa.Klasse, sa.Discipline, sa.Geslacht, sa.Geboortedatum, sa.Opmerking, geselecteerdebaan));
             }
             else
             {
-                Wedstrijd.SchutterAanmelden(new Schutter(sa.Bondsnummer, sa.Naam, sa.Klasse, sa.Discipline, sa.Geslacht, sa.Geboortedatum, sa.Opmerking));
+                Wedstrijd.SchutterAanmelden(new Schutter(sa.Bondsnummer, sa.Naam, sa.Email, sa.Klasse, sa.Discipline, sa.Geslacht, sa.Geboortedatum, sa.Opmerking));
             }
             lbAantalSchutters.Text = Wedstrijd.GetSchutters().Count.ToString();
             BaanUpdate();
@@ -66,7 +66,7 @@ namespace ArcheryApplication.GUIs
             if (geselecteerd.Schutter != null)
             {
                 SchutterAanmelden se = new SchutterAanmelden();
-                se.EditSchutter(geselecteerd.Schutter.Bondsnummer, geselecteerd.Schutter.Naam, geselecteerd.Schutter.Geboortedatum, geselecteerd.Schutter.Discipline, geselecteerd.Schutter.Klasse, geselecteerd.Schutter.Geslacht, geselecteerd.Schutter.Opmerking);
+                se.EditSchutter(geselecteerd.Schutter.Bondsnummer, geselecteerd.Schutter.Naam, geselecteerd.Schutter.EmailAdres, geselecteerd.Schutter.Geboortedatum, geselecteerd.Schutter.Discipline, geselecteerd.Schutter.Klasse, geselecteerd.Schutter.Geslacht, geselecteerd.Schutter.Opmerking);
 
                 se.ShowDialog();
                 geselecteerd.Schutter.EditSchutter(se.Bondsnummer, se.Naam, se.Klasse, se.Discipline, se.Geslacht, se.Geboortedatum, se.Opmerking);

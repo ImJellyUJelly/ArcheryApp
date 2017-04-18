@@ -4,7 +4,7 @@ using System.IO;
 using ArcheryApplication.Classes.Enums;
 using ArcheryApplication.Exceptions;
 using System.Windows.Forms;
-using ArcheryApplication.Classes.Database;
+using ArcheryApplication.Exceptions;
 using ArcheryApplication.Classes.Database.Repositories;
 using ArcheryApplication.Classes.Database.SQL;
 
@@ -91,14 +91,21 @@ namespace ArcheryApplication.Classes
 
         private void LaadBanen()
         {
-            List<Baan> banenUitDB = wedstrijdrepo.WedstrijdBanen(Id);
-            if (banenUitDB != null)
+            try
             {
-                _banen = banenUitDB;
+                List<Baan> banenUitDB = wedstrijdrepo.WedstrijdBanen(this);
+                if (banenUitDB != null)
+                {
+                    _banen = banenUitDB;
+                }
+                else
+                {
+                    AantalBanenBepalen();
+                }
             }
-            else
+            catch (Exception ex)
             {
-                AantalBanenBepalen();
+                throw new Exception(ex.Message);
             }
         }
 

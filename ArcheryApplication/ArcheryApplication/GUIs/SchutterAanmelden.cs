@@ -16,6 +16,7 @@ namespace ArcheryApplication.GUIs
     {
         public int Bondsnummer { get; set; }
         public string Naam { get; set; }
+        public string Email { get; set; }
         public DateTime Geboortedatum { get; set; }
         public Discipline Discipline { get; set; }
         public Klasse Klasse { get; set; }
@@ -39,6 +40,7 @@ namespace ArcheryApplication.GUIs
                     Bondsnummer = -1;
                     Naam = tbNaam.Text;
                     Geboortedatum = dtLeeftijd.Value;
+                    Email = tbEmail.Text;
                     Discipline = (Discipline)cbDiscipline.SelectedItem;
                     Klasse = (Klasse)cbKlasse.SelectedItem;
                     Geslacht = (Geslacht)cbGeslacht.SelectedItem;
@@ -46,6 +48,7 @@ namespace ArcheryApplication.GUIs
 
                     tbBN.Clear();
                     tbNaam.Clear();
+                    tbEmail.Clear();
                     dtLeeftijd.Value = DateTime.Now;
                     tbOpmerking.Clear();
                     Close();
@@ -55,6 +58,7 @@ namespace ArcheryApplication.GUIs
                     Bondsnummer = Convert.ToInt32(tbBN.Text);
                     Naam = tbNaam.Text;
                     Geboortedatum = dtLeeftijd.Value;
+                    Email = tbEmail.Text;
                     Discipline = (Discipline)cbDiscipline.SelectedItem;
                     Klasse = (Klasse)cbKlasse.SelectedItem;
                     Geslacht = (Geslacht)cbGeslacht.SelectedItem;
@@ -62,6 +66,7 @@ namespace ArcheryApplication.GUIs
 
                     tbBN.Clear();
                     tbNaam.Clear();
+                    tbEmail.Clear();
                     dtLeeftijd.Value = DateTime.Now;
                     tbOpmerking.Clear();
                     Close();
@@ -73,7 +78,7 @@ namespace ArcheryApplication.GUIs
             }
         }
 
-        public void EditSchutter(int b, string n, DateTime g, Discipline d, Klasse k, Geslacht ge, string o)
+        public void EditSchutter(int b, string n, string em, DateTime g, Discipline d, Klasse k, Geslacht ge, string o)
         {
             string dis = d.ToString();
             string kla = k.ToString();
@@ -81,6 +86,7 @@ namespace ArcheryApplication.GUIs
             tbBN.Text = b.ToString();
             tbNaam.Text = n;
             dtLeeftijd.Value = g;
+            tbEmail.Text = em;
             cbDiscipline.Text = dis;
             cbKlasse.Text = kla;
             cbGeslacht.Text = ges;
@@ -89,6 +95,7 @@ namespace ArcheryApplication.GUIs
             Bondsnummer = Convert.ToInt32(tbBN.Text);
             Naam = tbNaam.Text;
             Geboortedatum = dtLeeftijd.Value;
+            Email = tbEmail.Text;
             Discipline = (Discipline)cbDiscipline.SelectedItem;
             Klasse = (Klasse)cbKlasse.SelectedItem;
             Geslacht = (Geslacht)cbGeslacht.SelectedItem;
