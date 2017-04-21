@@ -1,10 +1,8 @@
 ﻿using System;
 using System.Collections.Generic;
-using System.IO;
 using ArcheryApplication.Classes.Enums;
 using ArcheryApplication.Exceptions;
 using System.Windows.Forms;
-using ArcheryApplication.Exceptions;
 using ArcheryApplication.Classes.Database.Repositories;
 using ArcheryApplication.Classes.Database.SQL;
 
@@ -13,6 +11,7 @@ namespace ArcheryApplication.Classes
     public class Wedstrijd
     {
         private WedstrijdRepository wedstrijdrepo = new WedstrijdRepository(new MysqlWedstrijdLogic());
+        private BaanRepository banenrepo = new BaanRepository(new MysqlBaanLogic());
         List<Baan> _banen = new List<Baan>();
         List<Schutter> _schutters = new List<Schutter>();
         public int Id { get; private set; }
@@ -93,10 +92,10 @@ namespace ArcheryApplication.Classes
         {
             try
             {
-                List<Baan> banenUitDB = wedstrijdrepo.WedstrijdBanen(this);
-                if (banenUitDB != null)
+                List<Baan> banenUitDb = wedstrijdrepo.WedstrijdBanen(this);
+                if (banenUitDb != null)
                 {
-                    _banen = banenUitDB;
+                    _banen = banenUitDb;
                 }
                 else
                 {
@@ -178,31 +177,51 @@ namespace ArcheryApplication.Classes
 
         private void BanenAanmaken(int aantalBanen)
         {
+            List<Baan> banen = banenrepo.ListBanen(Id);
             for (int baannr = 1; baannr <= aantalBanen; baannr++)
             {
                 int letter = 0;
+                Baan baan;
                 for (int i = 0; i < 4; i++)
                 {
-
-                    if (letter == 0)
+                    try
                     {
-                        _banen.Add(new Baan(baannr, "A", 70));
-                        letter++;
+                        if (letter == 0)
+                        {
+                            baan = banen[baannr];
+                            baan.Afstand = 70;
+                            wedstrijdrepo.AddBaanToWedstrijd(baan, Id);
+                            _banen.Add(baan);
+                            letter++;
+                        }
+                        else if (letter == 1)
+                        {
+                            baan = banen[baannr];
+                            baan.Afstand = 70;
+                            wedstrijdrepo.AddBaanToWedstrijd(baan, Id);
+                            _banen.Add(baan);
+                            letter++;
+                        }
+                        else if (letter == 2)
+                        {
+                            baan = banen[baannr];
+                            baan.Afstand = 70;
+                            wedstrijdrepo.AddBaanToWedstrijd(baan, Id);
+                            _banen.Add(baan);
+                            letter++;
+                        }
+                        else if (letter == 3)
+                        {
+                            baan = banen[baannr];
+                            baan.Afstand = 70;
+                            wedstrijdrepo.AddBaanToWedstrijd(baan, Id);
+                            _banen.Add(baan);
+                            letter = 0;
+                        }
                     }
-                    else if (letter == 1)
+                    catch (Exception exception)
                     {
-                        _banen.Add(new Baan(baannr, "B", 70));
-                        letter++;
-                    }
-                    else if (letter == 2)
-                    {
-                        _banen.Add(new Baan(baannr, "C", 70));
-                        letter++;
-                    }
-                    else if (letter == 3)
-                    {
-                        _banen.Add(new Baan(baannr, "D", 70));
-                        letter = 0;
+                        throw new Exception(exception.Message);
                     }
                 }
             }

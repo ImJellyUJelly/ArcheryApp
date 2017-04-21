@@ -7,7 +7,7 @@
         public int Baannummer { get; private set; }
         public string Letter { get; private set; }
         public Schutter Schutter { get; private set; }
-        public int Afstand { get; private set; }
+        public int Afstand { get; set; }
         public Wedstrijd Wedstrijd { get; private set; }
         public Baan(int baanNummer, string letter, int afstand)
         {
@@ -23,6 +23,14 @@
             Letter = letter;
             Afstand = afstand;
             Wedstrijd = wedstrijd;
+            CreeerBaanId();
+        }
+        public Baan(int id, int baannummer, string letter, int afstand)
+        {
+            Id = id;
+            Baannummer = baannummer;
+            Letter = letter;
+            Afstand = afstand;
             CreeerBaanId();
         }
         public void VoegSchutterToe(Schutter schutter)
@@ -49,7 +57,7 @@
         {
             if (Schutter != null)
             {
-                return $"{ BaanId }: { Schutter.ToString() }";
+                return $"{ BaanId }: { Schutter }";
             }
             return $"{ BaanId }: Geen schutter";
 

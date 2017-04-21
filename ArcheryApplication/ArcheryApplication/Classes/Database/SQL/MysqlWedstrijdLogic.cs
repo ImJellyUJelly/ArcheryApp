@@ -26,24 +26,14 @@ namespace ArcheryApplication.Classes.Database.SQL
                         {
                             try
                             {
-                                cmd.CommandText = "";
+                                cmd.CommandText = "INSERT INTO Baanindeling (BaIndelBaanId, BaIndelWedID, Afstand) VALUES (@baindelbaanid, @baindelwedid, @afstand);";
 
-                                cmd.Parameters.AddWithValue("", wedstrijdId);
+                                cmd.Parameters.AddWithValue("@baindelbaanid", baan.Id);
+                                cmd.Parameters.AddWithValue("@baindelwedid", wedstrijdId);
+                                cmd.Parameters.AddWithValue("@afstand", baan.Afstand);
+
                                 cmd.Connection = conn;
-
-                                using (MySqlDataReader reader = cmd.ExecuteReader())
-                                {
-                                    while (reader.Read())
-                                    {
-                                        int wedId = reader.GetInt32(0);
-                                        string wedNaam = reader.GetString(1);
-                                        Soort wedSoort = (Soort)Enum.Parse(typeof(Soort), reader.GetString(2));
-                                        string wedDatum = reader.GetString(3);
-                                        int verNr = reader.GetInt32(4);
-
-                                        Vereniging vereniging = GetVerenigingByNummer(verNr);
-                                    }
-                                }
+                                cmd.ExecuteNonQuery();
                             }
                             catch (Exception ex)
                             {
@@ -143,9 +133,9 @@ namespace ArcheryApplication.Classes.Database.SQL
                             try
                             {
                                 cmd.CommandText =
-                                    "SELECT WedID, WedNaam, WedSoort, WedDatum, VerNr, VerNaam, VerStraatNaam, VerHuisNr, VerPostcode, VerStad " +
+                                    "SELECT WedID, WedNaam, WedSoort, WedDatum, VerNr " +
                                     "FROM Wedstrijd Wed LEFT JOIN Vereniging Ver ON Ver.VerNr = Wed.WedVerNr" +
-                                    "WHERE WedID = @wedid;";
+                                    "WHERE WedID = @wedId;";
 
                                 cmd.Parameters.AddWithValue("@wedId", wedstrijdId);
                                 cmd.Connection = conn;

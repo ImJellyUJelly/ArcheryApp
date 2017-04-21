@@ -3,21 +3,21 @@ using System.Collections.Generic;
 using System.Data;
 using MySql.Data.MySqlClient;
 using ArcheryApplication.Classes.Database.Interfaces;
-using ArcheryApplication.Classes.Enums;
 using ArcheryApplication.Exceptions;
 
 namespace ArcheryApplication.Classes.Database.SQL
 {
     public class MysqlBaanLogic : IBaanServices
     {
-        // https://www.connectionstrings.com/sql-server/
-        private readonly string _connectie = @"Server=(localdb)\Archery;Integrated Security=true;";
+        private MysqlWedstrijdLogic wedstrijdlogic = new MysqlWedstrijdLogic();
 
-        public List<Baan> ListBanen(int wedId)
+        private readonly string _connectie = "Server = studmysql01.fhict.local;Uid=dbi299244;Database=dbi299244;Pwd=Geschiedenis1500;";
+
+        public List<Baan> ListBanen(int wedstrijdId)
         {
-            List<Baan> banen = new List<Baan>();
             try
             {
+                List<Baan> banen = new List<Baan>();
                 using (MySqlConnection conn = new MySqlConnection(_connectie))
                 {
                     if (conn.State != ConnectionState.Open)
@@ -28,39 +28,23 @@ namespace ArcheryApplication.Classes.Database.SQL
                         {
                             try
                             {
-                                cmd.CommandText = "SELECT BaanInd.BaanId, BaanInd.BaanNr, BaanInd.BaanLetter, BaanInd.BaanVerNr FROM BaanIndeling BaanInd";
-                                cmd.Connection = conn;
+                                cmd.CommandText = "SELECT BaanID, BaanNr, Baanletter FROM Baan WHERE BaanVerNr = @baanvernr;";
 
+                                cmd.Parameters.AddWithValue("@baanvernr",
+                                    wedstrijdlogic.GetWedstrijdById(wedstrijdId).Vereniging.VerNr);
+
+                                cmd.Connection = conn;
 
                                 using (MySqlDataReader reader = cmd.ExecuteReader())
                                 {
                                     while (reader.Read())
                                     {
-                                        int id = reader.GetInt32(0);
-                                        string naam;
-                                        // Volgens mij hoeft dit niet eens, naam is namelijk verplicht.
-                                        if (!reader.IsDBNull(1))
-                                        {
-                                            naam = reader.GetString(1);
-                                        }
-                                        else
-                                        {
-                                            naam = "Geen naam";
-                                        }
-                                        Soort soort = (Soort)Enum.Parse(typeof(Soort), reader.GetString(2));
-                                        string datum = reader.GetString(3);
+                                        int baanid = reader.GetInt32(0);
+                                        int baannummer = reader.GetInt32(1);
+                                        string baanletter = reader.GetString(2);
+                                        int afstand = reader.GetInt32(3);
 
-                                        // Vereniging
-                                        int vernr = reader.GetInt32(4);
-                                        string vernaam = reader.GetString(5);
-                                        string verstraat = reader.GetString(6);
-                                        string verhuisnr = reader.GetString(7);
-                                        string verpostcode = reader.GetString(8);
-                                        string verstad = reader.GetString(9);
-
-                                        Vereniging vereniging = new Vereniging(vernr, vernaam, verstraat, verhuisnr, verpostcode, verstad);
-
-                                        //banen.Add(new Baan());
+                                        banen.Add(new Baan(baanid, baannummer, baanletter, afstand));
                                     }
                                     return banen;
                                 }
