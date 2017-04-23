@@ -37,6 +37,11 @@ namespace ArcheryApplication.Classes.Database.Repositories
             return _wedstrijdLogic.GetWedstrijdByDate(date);
         }
 
+        public Wedstrijd GetWedstrijdByName(string naam)
+        {
+            return _wedstrijdLogic.GetWedstrijdByName(naam);
+        }
+
         public Wedstrijd GetWedstrijdById(int wedstrijdId)
         {
             return _wedstrijdLogic.GetWedstrijdById(wedstrijdId);
@@ -60,6 +65,11 @@ namespace ArcheryApplication.Classes.Database.Repositories
         public List<Baan> WedstrijdBanen(Wedstrijd wedstrijd)
         {
             return _wedstrijdLogic.GetWedstrijdBanen(wedstrijd);
+        }
+
+        public Vereniging GetVerenigingById(int verNr)
+        {
+            return _wedstrijdLogic.GetVerenigingById(verNr);
         }
     }
 }

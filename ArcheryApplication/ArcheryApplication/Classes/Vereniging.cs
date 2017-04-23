@@ -17,6 +17,7 @@
             Huisnummer = hnr;
             Postcode = postcode;
             Plaats = plaats;
+       
         }
         public Vereniging(int nr, string naam)
         {

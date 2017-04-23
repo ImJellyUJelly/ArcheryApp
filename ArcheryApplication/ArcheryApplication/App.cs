@@ -40,6 +40,7 @@ namespace ArcheryApplication
             Soort soort = (Soort) Enum.Parse(typeof(Soort), wedsoort);
             Wedstrijd wedstrijd = new Wedstrijd(naam, soort, date);
             wedstrijdrepo.AddWedstrijd(wedstrijd);
+            wedstrijdrepo.GetWedstrijdByName(wedstrijd.Naam).LaadBanen();
         }
 
         public void BewerkWedstrijd(string naam, string date)

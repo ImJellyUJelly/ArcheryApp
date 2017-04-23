@@ -24,10 +24,6 @@ namespace ArcheryApplication.GUIs
             lbAantalSchutters.Text = wedstrijd.GetSchutters().Count.ToString();
             lbDatum.Text = wedstrijd.Datum.ToString();
             BaanUpdate();
-            //foreach (Baan B in wedstrijd.getBanen())
-            //{
-            //    lbBanen.Items.Add(B);
-            //}
         }
 
         private void btNieuweSchutter_Click(object sender, EventArgs e)

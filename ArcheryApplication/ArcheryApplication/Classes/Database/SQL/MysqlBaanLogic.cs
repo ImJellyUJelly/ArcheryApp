@@ -9,11 +9,9 @@ namespace ArcheryApplication.Classes.Database.SQL
 {
     public class MysqlBaanLogic : IBaanServices
     {
-        private MysqlWedstrijdLogic wedstrijdlogic = new MysqlWedstrijdLogic();
-
         private readonly string _connectie = "Server = studmysql01.fhict.local;Uid=dbi299244;Database=dbi299244;Pwd=Geschiedenis1500;";
 
-        public List<Baan> ListBanen(int wedstrijdId)
+        public List<Baan> ListBanen(int VerNr)
         {
             try
             {
@@ -30,8 +28,7 @@ namespace ArcheryApplication.Classes.Database.SQL
                             {
                                 cmd.CommandText = "SELECT BaanID, BaanNr, Baanletter FROM Baan WHERE BaanVerNr = @baanvernr;";
 
-                                cmd.Parameters.AddWithValue("@baanvernr",
-                                    wedstrijdlogic.GetWedstrijdById(wedstrijdId).Vereniging.VerNr);
+                                cmd.Parameters.AddWithValue("@baanvernr", VerNr);
 
                                 cmd.Connection = conn;
 
@@ -42,9 +39,8 @@ namespace ArcheryApplication.Classes.Database.SQL
                                         int baanid = reader.GetInt32(0);
                                         int baannummer = reader.GetInt32(1);
                                         string baanletter = reader.GetString(2);
-                                        int afstand = reader.GetInt32(3);
 
-                                        banen.Add(new Baan(baanid, baannummer, baanletter, afstand));
+                                        banen.Add(new Baan(baanid, baannummer, baanletter));
                                     }
                                     return banen;
                                 }

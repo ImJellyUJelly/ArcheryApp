@@ -5,6 +5,7 @@ namespace ArcheryApplication.Classes.Database.Interfaces
 {
     public interface IWedstrijdServices
     {
+        Wedstrijd GetWedstrijdByName(string naam);
         Wedstrijd GetWedstrijdById(int wedstrijdId);
         Wedstrijd GetWedstrijdByDate(DateTime date);
         List<Wedstrijd> ListWedstrijden();
@@ -15,5 +16,6 @@ namespace ArcheryApplication.Classes.Database.Interfaces
         void AddBaanToWedstrijd(Baan baan, int wedstrijdId);
         void EditBaanFromWedstrijd(Baan baan, int wedstrijdId);
         void RemoveBaanFromWedstrijd(Baan baan, int wedstrijdId);
+        Vereniging GetVerenigingById(int verNr);
     }
 }

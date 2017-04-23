@@ -36,9 +36,9 @@ namespace ArcheryApplication.Classes.Database.Repositories
             return _baanLogic.GetBaanByNummer(baanNummer);
         }
 
-        public List<Baan> ListBanen(int wedId)
+        public List<Baan> ListBanen(int VerNr)
         {
-            return _baanLogic.ListBanen(wedId);
+            return _baanLogic.ListBanen(VerNr);
         }
 
         public List<Schutter> ListSchuttersOpBaan(int baanId)

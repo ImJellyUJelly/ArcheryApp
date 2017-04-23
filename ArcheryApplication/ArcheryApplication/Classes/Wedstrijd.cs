@@ -25,7 +25,7 @@ namespace ArcheryApplication.Classes
             Naam = naam;
             Soort = soort;
             Datum = datum;
-            Vereniging = vereniging;
+            Vereniging = wedstrijdrepo.GetVerenigingById(1034);
             LaadBanen();
         }
         public Wedstrijd(string naam, Soort soort, string datum)
@@ -33,6 +33,7 @@ namespace ArcheryApplication.Classes
             Naam = naam;
             Soort = soort;
             Datum = datum;
+            Vereniging = wedstrijdrepo.GetVerenigingById(1034);
             LaadBanen();
         }
 
@@ -88,18 +89,21 @@ namespace ArcheryApplication.Classes
             return true;
         }
 
-        private void LaadBanen()
+        public void LaadBanen()
         {
             try
             {
-                List<Baan> banenUitDb = wedstrijdrepo.WedstrijdBanen(this);
-                if (banenUitDb != null)
+                if (Id != 0)
                 {
-                    _banen = banenUitDb;
-                }
-                else
-                {
-                    AantalBanenBepalen();
+                    List<Baan> banenUitDb = wedstrijdrepo.WedstrijdBanen(this);
+                    if (banenUitDb != null)
+                    {
+                        _banen = banenUitDb;
+                    }
+                    else
+                    {
+                        AantalBanenBepalen();
+                    }
                 }
             }
             catch (Exception ex)
@@ -114,17 +118,17 @@ namespace ArcheryApplication.Classes
             if (Soort == Soort.WA1440)
             {
                 banen = 18;
-                BanenAanmaken(banen);
+                BaanIndelingMaken(banen);
             }
             else if (Soort == Soort.JeugdFITA)
             {
                 banen = 18;
-                BanenAanmaken(banen);
+                BaanIndelingMaken(banen);
             }
             else if (Soort == Soort.Indoorcompetitie)
             {
                 banen = 10;
-                BanenAanmaken(banen);
+                BaanIndelingMaken(banen);
             }
             else if (Soort == Soort.Veld)
             {
@@ -133,7 +137,7 @@ namespace ArcheryApplication.Classes
             else if (Soort == Soort.Face2Face)
             {
                 banen = 19;
-                BanenAanmaken(banen);
+                BaanIndelingMaken(banen);
             }
             else
 
@@ -175,57 +179,25 @@ namespace ArcheryApplication.Classes
             }
         }
 
-        private void BanenAanmaken(int aantalBanen)
+        private void BaanIndelingMaken(int aantalBanen)
         {
-            List<Baan> banen = banenrepo.ListBanen(Id);
-            for (int baannr = 1; baannr <= aantalBanen; baannr++)
+            aantalBanen *= 4;
+            List<Baan> banen = banenrepo.ListBanen(Vereniging.VerNr);
+            for (int baannr = 0; baannr < aantalBanen; baannr++)
             {
-                int letter = 0;
-                Baan baan;
-                for (int i = 0; i < 4; i++)
-                {
-                    try
-                    {
-                        if (letter == 0)
-                        {
-                            baan = banen[baannr];
-                            baan.Afstand = 70;
-                            wedstrijdrepo.AddBaanToWedstrijd(baan, Id);
-                            _banen.Add(baan);
-                            letter++;
-                        }
-                        else if (letter == 1)
-                        {
-                            baan = banen[baannr];
-                            baan.Afstand = 70;
-                            wedstrijdrepo.AddBaanToWedstrijd(baan, Id);
-                            _banen.Add(baan);
-                            letter++;
-                        }
-                        else if (letter == 2)
-                        {
-                            baan = banen[baannr];
-                            baan.Afstand = 70;
-                            wedstrijdrepo.AddBaanToWedstrijd(baan, Id);
-                            _banen.Add(baan);
-                            letter++;
-                        }
-                        else if (letter == 3)
-                        {
-                            baan = banen[baannr];
-                            baan.Afstand = 70;
-                            wedstrijdrepo.AddBaanToWedstrijd(baan, Id);
-                            _banen.Add(baan);
-                            letter = 0;
-                        }
-                    }
-                    catch (Exception exception)
-                    {
-                        throw new Exception(exception.Message);
-                    }
-                }
+                CreateBaan(banen, baannr);
             }
         }
+
+        private void CreateBaan(List<Baan> banen, int baanid)
+        {
+            Baan baan;
+            baan = banen[baanid];
+            baan.SetAfstand(70);
+            wedstrijdrepo.AddBaanToWedstrijd(baan, Id);
+            _banen.Add(baan);
+        }
+
         public override string ToString()
         {
             return $"{Naam} - datum: {Datum} - Soort: {Soort} - Aantal schutters: {_schutters.Count}";

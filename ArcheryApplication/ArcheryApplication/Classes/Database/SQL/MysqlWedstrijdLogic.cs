@@ -118,6 +118,63 @@ namespace ArcheryApplication.Classes.Database.SQL
             throw new NotImplementedException();
         }
 
+        public Wedstrijd GetWedstrijdByName(string naam)
+        {
+            try
+            {
+                using (MySqlConnection conn = new MySqlConnection(_connectie))
+                {
+                    if (conn.State != ConnectionState.Open)
+                    {
+                        conn.Open();
+
+                        using (MySqlCommand cmd = new MySqlCommand())
+                        {
+                            try
+                            {
+                                cmd.CommandText =
+                                    "SELECT WedID, WedNaam, WedSoort, WedDatum, VerNr " +
+                                    "FROM Wedstrijd Wed LEFT JOIN Vereniging Ver ON Ver.VerNr = Wed.WedVerNr " +
+                                    "WHERE WedNaam = @WedNaam;";
+
+                                cmd.Parameters.AddWithValue("@WedNaam", naam);
+                                cmd.Connection = conn;
+
+                                using (MySqlDataReader reader = cmd.ExecuteReader())
+                                {
+                                    while (reader.Read())
+                                    {
+                                        int wedId = reader.GetInt32(0);
+                                        string wedNaam = reader.GetString(1);
+                                        Soort wedSoort = (Soort)Enum.Parse(typeof(Soort), reader.GetString(2));
+                                        string wedDatum = reader.GetString(3);
+                                        int verNr = reader.GetInt32(4);
+
+                                        Vereniging vereniging = GetVerenigingById(verNr);
+
+                                        return new Wedstrijd(wedId, wedNaam, wedSoort, wedDatum, vereniging);
+                                    }
+                                }
+                            }
+                            catch (Exception ex)
+                            {
+                                throw new DataException(ex.Message);
+                            }
+                            finally
+                            {
+                                conn.Close();
+                            }
+                        }
+                    }
+                }
+                return null;
+            }
+            catch (NormalException ex)
+            {
+                throw new NormalException(ex.Message);
+            }
+        }
+
         public Wedstrijd GetWedstrijdById(int wedstrijdId)
         {
             try
@@ -150,7 +207,7 @@ namespace ArcheryApplication.Classes.Database.SQL
                                         string wedDatum = reader.GetString(3);
                                         int verNr = reader.GetInt32(4);
 
-                                        Vereniging vereniging = GetVerenigingByNummer(verNr);
+                                        Vereniging vereniging = GetVerenigingById(verNr);
 
                                         return new Wedstrijd(wedId, wedNaam, wedSoort, wedDatum, vereniging);
                                     }
@@ -216,7 +273,7 @@ namespace ArcheryApplication.Classes.Database.SQL
                                         int verNr = reader.GetInt32(4);
                                         // Vereniging
 
-                                        Vereniging vereniging = GetVerenigingByNummer(verNr);
+                                        Vereniging vereniging = GetVerenigingById(verNr);
 
                                         wedstrijden.Add(new Wedstrijd(id, naam, soort, datum, vereniging));
                                     }
@@ -345,7 +402,7 @@ namespace ArcheryApplication.Classes.Database.SQL
             return null;
         }
 
-        public Vereniging GetVerenigingByNummer(int verNr)
+        public Vereniging GetVerenigingById(int verNr)
         {
             try
             {

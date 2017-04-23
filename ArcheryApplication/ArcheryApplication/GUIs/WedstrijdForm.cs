@@ -37,7 +37,7 @@ namespace ArcheryApplication
             {
                 if (cbSoort.SelectedItem != null)
                 {
-                    if (!(dtDatum.Value > DateTime.Now))
+                    if (dtDatum.Value >= DateTime.Now)
                     {
                         if (tbNaam.Text != "")
                         {

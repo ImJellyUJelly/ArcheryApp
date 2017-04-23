@@ -54,3 +54,4 @@ C:\Users\jelle\Source\Repos\AppArchery\ArcheryApp\ArcheryApplication\ArcheryAppl
 C:\Users\jelle\Source\Repos\AppArchery\ArcheryApp\ArcheryApplication\ArcheryApplication\bin\Debug\MySql.Data.dll
 C:\Users\jelle\Source\Repos\AppArchery\ArcheryApp\ArcheryApplication\ArcheryApplication\bin\Debug\System.Runtime.InteropServices.RuntimeInformation.dll
 C:\Users\jelle\Source\Repos\AppArchery\ArcheryApp\ArcheryApplication\ArcheryApplication\bin\Debug\Google.Protobuf.xml
+C:\Users\jelle\Source\Repos\AppArchery\ArcheryApp\ArcheryApplication\ArcheryApplication\bin\Debug\MySql.Data.xml
