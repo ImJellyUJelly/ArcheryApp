@@ -80,6 +80,7 @@
     <Compile Include="Classes\Enums\Geslacht.cs" />
     <Compile Include="Classes\Enums\Klasse.cs" />
     <Compile Include="Classes\Enums\Soort.cs" />
+    <Compile Include="Exceptions\WedstrijdException.cs" />
     <Compile Include="Exceptions\LoadFileException.cs" />
     <Compile Include="Classes\Schutter.cs" />
     <Compile Include="Classes\Score.cs" />

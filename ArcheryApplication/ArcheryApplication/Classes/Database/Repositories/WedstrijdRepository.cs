@@ -67,6 +67,11 @@ namespace ArcheryApplication.Classes.Database.Repositories
             return _wedstrijdLogic.GetWedstrijdBanen(wedstrijd);
         }
 
+        public List<Schutter> GetWedstrijdSchutters(Wedstrijd wedstrijd)
+        {
+            return _wedstrijdLogic.GetWedstrijdSchutters(wedstrijd);
+        }
+
         public Vereniging GetVerenigingById(int verNr)
         {
             return _wedstrijdLogic.GetVerenigingById(verNr);

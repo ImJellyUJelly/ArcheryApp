@@ -2,7 +2,6 @@
 using System.Collections.Generic;
 using ArcheryApplication.Classes.Enums;
 using ArcheryApplication.Exceptions;
-using System.Windows.Forms;
 using ArcheryApplication.Classes.Database.Repositories;
 using ArcheryApplication.Classes.Database.SQL;
 
@@ -45,21 +44,21 @@ namespace ArcheryApplication.Classes
             Datum = datum;
         }
 
-        public void SchutterAanmelden(Schutter nieuweSchutter)
+        public string SchutterAanmelden(Schutter nieuweSchutter)
         {
             if (SchutterCheck(nieuweSchutter.Bondsnummer))
             {
                 _schutters.Add(nieuweSchutter);
-                MessageBox.Show(string.Format("Gelukt! {0} is aangemeld voor {1}", nieuweSchutter.Naam, Naam));
                 if (nieuweSchutter.Baan == null)
                 {
                     Schuttersaanbaantoevoegen();
                 }
+                return string.Format("Gelukt! {0} is aangemeld voor {1}", nieuweSchutter.Naam, Naam);
             }
             else
             {
-                MessageBox.Show(string.Format("Error: {0} met bondsnummer {1} is al aangemeld voor {2}",
-                    nieuweSchutter.Naam, nieuweSchutter.Bondsnummer, Soort.ToString()));
+                return string.Format("Error: {0} met bondsnummer {1} is al aangemeld voor {2}",
+                    nieuweSchutter.Naam, nieuweSchutter.Bondsnummer, Soort);
             }
         }
         public void SchutterAanmeldenOpBaan(Schutter nieuweSchutter)
@@ -132,7 +131,7 @@ namespace ArcheryApplication.Classes
             }
             else if (Soort == Soort.Veld)
             {
-                MessageBox.Show(@"Kies een andere soort, wij organiseren geen veld.");
+                throw new WedstrijdException(@"Kies een andere soort, wij organiseren geen veld.");
             }
             else if (Soort == Soort.Face2Face)
             {
@@ -142,7 +141,7 @@ namespace ArcheryApplication.Classes
             else
 
             {
-                MessageBox.Show(@"Volgens mij gaat er wat mis, aantal banen is niet bepaald.");
+                throw new WedstrijdException(@"Volgens mij gaat er wat mis, aantal banen is niet bepaald.");
             }
         }
 
@@ -150,6 +149,12 @@ namespace ArcheryApplication.Classes
         {
             return _schutters;
         }
+
+        private List<Schutter> GetSChuttersFromDB()
+        {
+            return wedstrijdrepo.GetWedstrijdSchutters(this);
+        }
+
         public List<Baan> GetBanen()
         {
             return _banen;

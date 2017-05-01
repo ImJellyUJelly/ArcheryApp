@@ -444,5 +444,52 @@ namespace ArcheryApplication.Classes.Database.SQL
                 throw new DataException(dex.Message);
             }
         }
+
+        public List<Schutter> GetWedstrijdSchutters(Wedstrijd wedstrijd)
+        {
+            List<Schutter> schutters = new List<Schutter>();
+            try
+            {
+                using (MySqlConnection conn = new MySqlConnection(_connectie))
+                {
+                    if (conn.State != ConnectionState.Open)
+                    {
+                        conn.Open();
+
+                        using (MySqlCommand cmd = new MySqlCommand())
+                        {
+                            cmd.CommandText = "SELECT BaanID, BaanNr, BaanLetter, WedID " +
+                                              "FROM Baanindeling BaanInd " +
+                                              "LEFT JOIN Wedstrijd Wed ON Wed.WedID = BaanInd.BaIndelWedID " +
+                                              "LEFT JOIN Baan ba ON ba.BaanID = BaanInd.BaIndelBaanID " +
+                                              "WHERE WedID = @wedId;";
+
+                            cmd.Parameters.AddWithValue("@wedId", wedstrijd.Id);
+                            cmd.Connection = conn;
+
+
+                            using (MySqlDataReader reader = cmd.ExecuteReader())
+                            {
+                                while (reader.Read())
+                                {
+
+
+                                    //schutters.Add(new Schutter());
+                                }
+                                if (schutters.Count >= 1)
+                                {
+                                    return schutters;
+                                }
+                            }
+                        }
+                    }
+                }
+            }
+            catch (NormalException ex)
+            {
+                throw new NormalException(ex.Message);
+            }
+            return null;
+        }
     }
 }
