@@ -20,7 +20,7 @@ namespace ArcheryApplication.GUIs
         public DateTime Geboortedatum { get; set; }
         public Discipline Discipline { get; set; }
         public Klasse Klasse { get; set; }
-        public Geslacht Geslacht { get; set; }
+        public string Geslacht { get; set; }
         public string Opmerking { get; set; }
 
         public SchutterAanmelden()
@@ -43,7 +43,7 @@ namespace ArcheryApplication.GUIs
                     Email = tbEmail.Text;
                     Discipline = (Discipline)cbDiscipline.SelectedItem;
                     Klasse = (Klasse)cbKlasse.SelectedItem;
-                    Geslacht = (Geslacht)cbGeslacht.SelectedItem;
+                    Geslacht = GeslachtCheck(cbGeslacht.Text);
                     Opmerking = tbOpmerking.Text;
 
                     tbBN.Clear();
@@ -61,7 +61,7 @@ namespace ArcheryApplication.GUIs
                     Email = tbEmail.Text;
                     Discipline = (Discipline)cbDiscipline.SelectedItem;
                     Klasse = (Klasse)cbKlasse.SelectedItem;
-                    Geslacht = (Geslacht)cbGeslacht.SelectedItem;
+                    Geslacht = GeslachtCheck(cbGeslacht.Text);
                     Opmerking = tbOpmerking.Text;
 
                     tbBN.Clear();
@@ -78,7 +78,7 @@ namespace ArcheryApplication.GUIs
             }
         }
 
-        public void EditSchutter(int b, string n, string em, DateTime g, Discipline d, Klasse k, Geslacht ge, string o)
+        public void EditSchutter(int b, string n, string em, DateTime g, Discipline d, Klasse k, string ge, string o)
         {
             string dis = d.ToString();
             string kla = k.ToString();
@@ -98,9 +98,23 @@ namespace ArcheryApplication.GUIs
             Email = tbEmail.Text;
             Discipline = (Discipline)cbDiscipline.SelectedItem;
             Klasse = (Klasse)cbKlasse.SelectedItem;
-            Geslacht = (Geslacht)cbGeslacht.SelectedItem;
+            Geslacht = GeslachtCheck(cbGeslacht.Text);
             Opmerking = tbOpmerking.Text;
         }
+
+        private string GeslachtCheck(string geslacht)
+        {
+            if (geslacht == "Heren")
+            {
+                return "H";
+            }
+            if (geslacht == "Dames")
+            {
+                return "D";
+            }
+            return "O";
+        }
+
 
         private void btCancel_Click(object sender, EventArgs e)
         {

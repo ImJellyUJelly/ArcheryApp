@@ -12,47 +12,54 @@ namespace ArcheryApplication.Classes
         public Baan Baan { get; private set; }
         public Klasse Klasse { get; private set; }
         public Discipline Discipline { get; private set; }
-        public Geslacht Geslacht { get; private set; }
+        public string Geslacht { get; private set; }
         public string Opmerking { get; private set; }
         public Scoreformulier ScoreFormulier { get; private set; }
         public Vereniging Vereniging { get; private set; }
 
         // Algemene constructor
-        public Schutter(int bondsnr, string naam, string email, Klasse k, Discipline d, Geslacht g, DateTime geb, string opmerking)
+        public Schutter(int bondsnr, string naam, string email, Klasse k, Discipline d, string g, DateTime geb, string opmerking)
         {
             Bondsnummer = bondsnr;
             Naam = naam;
             EmailAdres = email;
             Klasse = k;
             Discipline = d;
-            Geslacht = g;
+            Geslacht = GeslachtCheck(g);
             Geboortedatum = geb;
             Opmerking = opmerking;
             ScoreFormulier = new Scoreformulier();
         }
         // Algemene constructor met ID (voor Database)
-        public Schutter(int id, int bondsnr, string naam, string email, Klasse k, Discipline d, Geslacht g, DateTime geb, string opmerking) : this(bondsnr, naam, email, k, d, g, geb, opmerking)
+        public Schutter(int id, int bondsnr, string naam, string email, Klasse k, Discipline d, string g, DateTime geb, string opmerking) : this(bondsnr, naam, email, k, d, g, geb, opmerking)
         {
             Id = id;
         }
+
+        // Volledig uit DB met baan
+        public Schutter(int id, int bondsnr, string naam, string email, Klasse k, Discipline d, string g, DateTime geb, string opmerking, Baan baan, Vereniging vereniging) : this(id, bondsnr, naam, email, k, d, g, geb, opmerking)
+        {
+            Baan = baan;
+            Vereniging = vereniging;
+        }
         // Als een schutter op een bepaalde baan wil staan
-        public Schutter(int bondsnr, string naam, string email, Klasse k, Discipline d, Geslacht g, DateTime geb, string opmerking, Baan baan) : this(bondsnr, naam, email, k, d, g, geb, opmerking)
+        public Schutter(int bondsnr, string naam, string email, Klasse k, Discipline d, string g, DateTime geb, string opmerking, Baan baan) : this(bondsnr, naam, email, k, d, g, geb, opmerking)
         {
             Baan = baan;
         }
-        // Constructor met een Verenging
-        public Schutter(int id, int bondsnr, string naam, string email, Klasse k, Discipline d, Geslacht g, DateTime geb, string opmerking, Vereniging vereniging) : this(id, bondsnr, naam, email, k, d, g, geb, opmerking)
+        // Volledig uit DB
+        public Schutter(int id, int bondsnr, string naam, string email, Klasse k, Discipline d, string g, DateTime geb, string opmerking, Vereniging vereniging) : this(id, bondsnr, naam, email, k, d, g, geb, opmerking)
         {
             Vereniging = vereniging;
         }
 
-        public void EditSchutter(int bondsnr, string naam, Klasse k, Discipline d, Geslacht g, DateTime geb, string opmerking)
+        public void EditSchutter(int bondsnr, string naam, Klasse k, Discipline d, string g, DateTime geb, string opmerking)
         {
             Bondsnummer = bondsnr;
             Naam = naam;
             Klasse = k;
             Discipline = d;
-            Geslacht = g;
+            Geslacht = GeslachtCheck(g);
             Geboortedatum = geb;
             Opmerking = opmerking;
             ScoreFormulier = new Scoreformulier();
@@ -65,6 +72,19 @@ namespace ArcheryApplication.Classes
         public void GeefSchutterEenBaan(Baan b)
         {
             Baan = b;
+        }
+
+        private string GeslachtCheck(string geslacht)
+        {
+            if (geslacht == "Heren")
+            {
+                return "H";
+            }
+            if (geslacht == "Dames")
+            {
+                return "D";
+            }
+            return "O";
         }
 
         public int CompareSchutters(Schutter andereSchutter)

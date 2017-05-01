@@ -8,7 +8,7 @@ namespace ArcheryApplication.Classes.Database.Repositories
         private IBaanServices _baanLogic;
         public BaanRepository(IBaanServices baanLogic)
         {
-            this._baanLogic = baanLogic;
+            _baanLogic = baanLogic;
         }
 
         public void AddBaan(Baan baan)

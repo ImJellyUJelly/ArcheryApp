@@ -10,7 +10,8 @@ namespace ArcheryApplication.Classes.Database.SQL
 {
     public class MysqlWedstrijdLogic : IWedstrijdServices
     {
-        private readonly string _connectie = "Server = studmysql01.fhict.local;Uid=dbi299244;Database=dbi299244;Pwd=Geschiedenis1500;";
+        private const string _connectie =
+            "Server = studmysql01.fhict.local;Uid=dbi299244;Database=dbi299244;Pwd=Geschiedenis1500;";
 
         public void AddBaanToWedstrijd(Baan baan, int wedstrijdId)
         {
@@ -402,6 +403,68 @@ namespace ArcheryApplication.Classes.Database.SQL
             return null;
         }
 
+        public List<Schutter> GetWedstrijdSchutters(Wedstrijd wedstrijd)
+        {
+            List<Schutter> schutters = new List<Schutter>();
+            try
+            {
+                using (MySqlConnection conn = new MySqlConnection(_connectie))
+                {
+                    if (conn.State != ConnectionState.Open)
+                    {
+                        conn.Open();
+
+                        using (MySqlCommand cmd = new MySqlCommand())
+                        {
+                            cmd.CommandText = "";
+
+                            cmd.Parameters.AddWithValue("@wedId", wedstrijd.Id);
+                            cmd.Connection = conn;
+
+
+                            using (MySqlDataReader reader = cmd.ExecuteReader())
+                            {
+                                while (reader.Read())
+                                {
+                                    int schutterid = reader.GetInt32(0);
+                                    int bondsnummer = reader.GetInt32(1);
+                                    string naam = reader.GetString(2);
+                                    Discipline discipline = (Discipline)Enum.Parse(typeof(Discipline), reader.GetString(3));
+                                    string geslacht = reader.GetString(4);
+                                    string email = reader.GetString(5);
+                                    DateTime gebdatum = DateTime.Parse(reader.GetString(6));
+                                    string opmerking;
+                                    if (!reader.IsDBNull(7))
+                                    {
+                                        opmerking = reader.GetString(7);
+                                    }
+                                    else
+                                    {
+                                        opmerking = "";
+                                    }
+                                    Klasse klasse = (Klasse) Enum.Parse(typeof(Klasse), reader.GetString(8));
+
+
+                                    Vereniging vereniging = GetVerenigingById(reader.GetInt32(9));
+
+                                    schutters.Add(new Schutter(schutterid, bondsnummer, naam, email, klasse, discipline, geslacht, gebdatum, opmerking, vereniging));
+                                }
+                                if (schutters.Count >= 1)
+                                {
+                                    return schutters;
+                                }
+                            }
+                        }
+                    }
+                }
+            }
+            catch (NormalException ex)
+            {
+                throw new NormalException(ex.Message);
+            }
+            return null;
+        }
+
         public Vereniging GetVerenigingById(int verNr)
         {
             try
@@ -442,6 +505,47 @@ namespace ArcheryApplication.Classes.Database.SQL
             catch (DataException dex)
             {
                 throw new DataException(dex.Message);
+            }
+        }
+
+        public void AddSchutterToBaan(int schutterId, int wedstrijdId, int baanId)
+        {
+            try
+            {
+                using (MySqlConnection conn = new MySqlConnection(_connectie))
+                {
+                    if (conn.State != ConnectionState.Open)
+                    {
+                        conn.Open();
+
+                        using (MySqlCommand cmd = new MySqlCommand())
+                        {
+                            try
+                            {
+                                cmd.CommandText = "";
+
+                                //cmd.Parameters.AddWithValue("", );
+                                //cmd.Parameters.AddWithValue("", );
+                                //cmd.Parameters.AddWithValue("", );
+
+                                cmd.Connection = conn;
+                                cmd.ExecuteNonQuery();
+                            }
+                            catch (Exception ex)
+                            {
+                                throw new DataException(ex.Message);
+                            }
+                            finally
+                            {
+                                conn.Close();
+                            }
+                        }
+                    }
+                }
+            }
+            catch (NormalException ex)
+            {
+                throw new NormalException(ex.Message);
             }
         }
     }

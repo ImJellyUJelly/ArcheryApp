@@ -1,15 +1,17 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.Data;
-using MySql.Data.MySqlClient;
 using ArcheryApplication.Classes.Database.Interfaces;
+using ArcheryApplication.Classes.Enums;
 using ArcheryApplication.Exceptions;
+using MySql.Data.MySqlClient;
 
 namespace ArcheryApplication.Classes.Database.SQL
 {
     public class MysqlBaanLogic : IBaanServices
     {
-        private readonly string _connectie = "Server = studmysql01.fhict.local;Uid=dbi299244;Database=dbi299244;Pwd=Geschiedenis1500;";
+        private const string _connectie =
+            "Server = studmysql01.fhict.local;Uid=dbi299244;Database=dbi299244;Pwd=Geschiedenis1500;";
 
         public List<Baan> ListBanen(int VerNr)
         {

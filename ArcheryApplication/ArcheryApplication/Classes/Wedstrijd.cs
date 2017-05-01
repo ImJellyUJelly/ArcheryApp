@@ -19,6 +19,7 @@ namespace ArcheryApplication.Classes
         public Soort Soort { get; private set; }
         public string Datum { get; private set; }
         public Vereniging Vereniging { get; private set; }
+
         public Wedstrijd(int id, string naam, Soort soort, string datum, Vereniging vereniging)
         {
             Id = id;
@@ -28,6 +29,7 @@ namespace ArcheryApplication.Classes
             Vereniging = wedstrijdrepo.GetVerenigingById(1034);
             LaadBanen();
         }
+
         public Wedstrijd(string naam, Soort soort, string datum)
         {
             Naam = naam;
@@ -62,6 +64,7 @@ namespace ArcheryApplication.Classes
                     nieuweSchutter.Naam, nieuweSchutter.Bondsnummer, Soort.ToString()));
             }
         }
+
         public void SchutterAanmeldenOpBaan(Schutter nieuweSchutter)
         {
             SchutterAanmelden(nieuweSchutter);
@@ -99,6 +102,29 @@ namespace ArcheryApplication.Classes
                     if (banenUitDb != null)
                     {
                         _banen = banenUitDb;
+                    }
+                    else
+                    {
+                        AantalBanenBepalen();
+                    }
+                }
+            }
+            catch (Exception ex)
+            {
+                throw new Exception(ex.Message);
+            }
+        }
+
+        public void LaadSchutters()
+        {
+            try
+            {
+                if (Id != 0)
+                {
+                    List<Schutter> schuttersUitDB = wedstrijdrepo.GetWedstrijdSchutters(this);
+                    if (schuttersUitDB != null)
+                    {
+                        _schutters = schuttersUitDB;
                     }
                     else
                     {

@@ -9,7 +9,7 @@ namespace ArcheryApplication.Classes.Database.Repositories
         private IWedstrijdServices _wedstrijdLogic;
         public WedstrijdRepository(IWedstrijdServices wedstrijdLogic)
         {
-            this._wedstrijdLogic = wedstrijdLogic;
+            _wedstrijdLogic = wedstrijdLogic;
         }
 
         public void AddBaanToWedstrijd(Baan baan, int wedstrijdId)
@@ -67,9 +67,19 @@ namespace ArcheryApplication.Classes.Database.Repositories
             return _wedstrijdLogic.GetWedstrijdBanen(wedstrijd);
         }
 
+        public List<Schutter> GetWedstrijdSchutters(Wedstrijd wedstrijd)
+        {
+            return _wedstrijdLogic.GetWedstrijdSchutters(wedstrijd);
+        }
+
         public Vereniging GetVerenigingById(int verNr)
         {
             return _wedstrijdLogic.GetVerenigingById(verNr);
+        }
+
+        public void AddSchutterToBaan(int schutterId, int wedstrijdId, int baanId)
+        {
+            _wedstrijdLogic.AddSchutterToBaan(schutterId, wedstrijdId, baanId);
         }
     }
 }
